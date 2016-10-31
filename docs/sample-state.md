@@ -45,6 +45,7 @@
         name: "Shoe"
       }
     },
+    // Ken: This information should be stored with the product.
     productDetail: {
       productId: 1,
       picture: "img_link",

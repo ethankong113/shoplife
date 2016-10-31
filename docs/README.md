@@ -1,11 +1,14 @@
 # ShopLife
 
+
 [Heroku link][heroku]
 
 [heroku]: www.herokuapp.com
 
 ## Minimum Viable Product
 ShopLife is a web application for discovering nearby products and organizing a shopping tour. It is built with Ruby on Rails and React/Redux.
+
+Ken: Add more description and wireframes. I don't really understand your app's purpose.
 
 - [ ] New account creation, login, and guest/demo login
 - [ ] A production README, replacing this README

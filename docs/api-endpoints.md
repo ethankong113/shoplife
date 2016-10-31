@@ -2,6 +2,8 @@
 
 ## HTML API
 
+Ken: Which API Endpoints is your search feature going to use?
+
 ### Root
 
 - `GET /` - loads React web app
@@ -44,6 +46,8 @@
 - `POST /api/followings`
 - `GET /api/followings/:id`
 - `DELETE /api/followings/:id`
+
+Ken: What do these endpoints below mean? Where do your coordinates come into play?
 
 ### ShopHasProducts
 - `POST /api/shophasproducts`
