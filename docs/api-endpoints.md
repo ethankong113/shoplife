@@ -19,38 +19,50 @@
 - `DELETE /api/session`
 - `GET /api/session`
 
-### Board
+### Shop
 
-- `POST /api/boards`
-- `GET /api/boards/:id`
-- `PATCH /api/boards/:id`
-- `DELETE /api/boards/:id`
+- `POST /api/shops`
+- `GET /api/shops`
+- `GET /api/shops/:id`
+- `PATCH /api/shops/:id`
+- `DELETE /api/shops/:id`
 
-### Tour
+### Trip
 
-- `POST /api/tours`
-- `GET /api/tours/:id`
-- `PATCH /api/tours/:id`
-- `DELETE /api/tours/:id`
+- `POST /api/trips`
+- `GET /api/trips`
+- `GET /api/trips/:id`
+- `PATCH /api/trips/:id`
+- `DELETE /api/trips/:id`
 
 ### Product
 
 - `POST /api/products`
+- `GET /api/products/`
 - `GET /api/products/:id`
 - `PATCH /api/products/:id`
 - `DELETE /api/products/:id`
 
 ### Following
 - `POST /api/followings`
+- `GET /api/followings`
 - `GET /api/followings/:id`
 - `DELETE /api/followings/:id`
 
-### ShopHasProducts
-- `POST /api/shophasproducts`
-- `GET /api/shophasproducts/:id`
-- `DELETE /api/shophasproducts/:id`
+### ShopsHaveProducts
+- `POST /api/shopshaveproducts`
+- `GET /api/shopshaveproducts`
+- `GET /api/shopshaveproducts/:id`
+- `DELETE /api/shopshaveproducts/:id`
 
-### TourHasProducts
-- `POST /api/tourhasproducts`
-- `GET /api/tourhasproducts/:id`
-- `DELETE /api/tourhasproducts/:id`
+### TripsHaveProducts
+- `POST /api/tripshasproducts`
+- `GET /api/tripshasproducts`
+- `GET /api/tripshasproducts/:id`
+- `DELETE /api/tripshasproducts/:id`
+
+### UsersFollowShops
+- `POST /api/tripshasproducts`
+- `GET /api/tripshasproducts`
+- `GET /api/tripshasproducts\:id`
+- `DELETE /api/tripshasproducts/:id`
