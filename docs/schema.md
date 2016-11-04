@@ -16,9 +16,9 @@ lastname        | string    |
 column name     | data type | details
 ----------------|-----------|-----------------------
 id              | integer   | not null, primary key
-name            | string    | not null, indexed, unique
+name            | string    | not null
 description     | text      |
-location        | string    | not null
+location        | string    | not null, indexed
 lat             | decimal   | not null, indexed
 lng             | decimal   | not null, indexed
 image_url       | string    |
