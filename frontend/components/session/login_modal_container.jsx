@@ -7,6 +7,7 @@ import { isEmpty } from 'lodash';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router';
 import { mediumModal } from '../../utils/modal_style';
+import { getCurrentUser } from '../../utils/selectors';
 
 class LoginModalContainer extends React.Component {
 
@@ -15,7 +16,7 @@ class LoginModalContainer extends React.Component {
     this.state = {openModal: false, formType: "signup"};
     this.toggleModal = this.toggleModal.bind(this);
     this.renderSessionButton = this.renderSessionButton.bind(this);
-    this.routeToProfile = this.routeToProfile.bind(this);
+    this.showProfile = this.showProfile.bind(this);
   }
 
   toggleModal(formType = null) {
@@ -35,10 +36,9 @@ class LoginModalContainer extends React.Component {
   }
 
   renderProfileButton() {
-    let currentUser = this.props.session.currentUser;
-    if (this._loggedIn(currentUser)) {
+    if (this._loggedIn()) {
       return (
-        <button className={"header-btn"} onClick={this.routeToProfile}>
+        <button className={"header-btn"} onClick={this.showProfile}>
           Profile
         </button>
       );
@@ -52,8 +52,7 @@ class LoginModalContainer extends React.Component {
   }
 
   renderSessionButton() {
-    let currentUser = this.props.session.currentUser;
-    if (this._loggedIn(currentUser)) {
+    if (this._loggedIn()) {
       return (
         <button onClick={this.props.logout} className={"header-btn"}>
           Log Out
@@ -68,32 +67,14 @@ class LoginModalContainer extends React.Component {
     }
   }
 
-  routeToProfile() {
-    this.props.router.push("/profile");
+  showProfile() {
+    let username = this.props.currentUser.username;
+    this.props.router.push(`/${username}`);
   }
 
-   _loggedIn(user) {
-     return user && !isEmpty(user);
-   }
-
-   _modalStyle() {
-     return {
-       overlay: {
-         backgroundColor: 'rgba(0,0,0,0.75)'
-       },
-       content: {
-         width: "360px",
-         top: "100px",
-         bottom: "100px",
-         left: "0px",
-         right: "0px",
-         overflow: "hidden",
-         borderRadius: "10px",
-         padding: "50px",
-         marginLeft: "auto",
-         marginRight: "auto"
-       }
-     };
+   _loggedIn() {
+     let currentUser = this.props.session.currentUser;
+     return currentUser;
    }
 
    render() {
@@ -110,7 +91,8 @@ class LoginModalContainer extends React.Component {
  }
 
  const mapStateToProps = (state) => ({
-    session: state.session
+    session: state.session,
+    currentUser: getCurrentUser(state.session)
   });
 
   const mapDispatchToProps = (dispatch) => ({

@@ -5,6 +5,7 @@ import { createShop } from '../../actions/shop_actions';
 import { getCurrentUser } from '../../utils/selectors';
 import { mediumModal } from '../../utils/modal_style';
 import { isEmpty } from 'lodash';
+import { withRouter } from 'react-router';
 
 class CreateShopModal extends React.Component {
   constructor(props) {
@@ -15,8 +16,7 @@ class CreateShopModal extends React.Component {
   componentWillUpdate(nextProps) {
     let shop = nextProps.shopDetail.shop;
     if (!isEmpty(shop)) {
-      console.log("Bang!")
-      nextProps.toggleModal();
+      nextProps.router.push(`shop/${shop.id}`);
     }
   }
 
@@ -28,7 +28,7 @@ class CreateShopModal extends React.Component {
     return e => {
       e.preventDefault();
       this.state.owner_id = props.currentUser.id;
-      props.createShop(this.state);
+      let result = props.createShop(this.state);
     };
   }
 
@@ -64,7 +64,7 @@ class CreateShopModal extends React.Component {
      return (
        <Modal isOpen={this.props.isOpen} style={mediumModal()} id="add-shop-modal">
          <button className="close-form-btn" onClick={this.props.toggleModal}>X</button>
-         <form onSubmit={this.handleSubmit(this.props)} className="add-shop-form">
+         <form method="post" onSubmit={this.handleSubmit(this.props)} className="add-shop-form">
            <label className="add-shop-label hide-label" id="shopname-label">Shop Name</label><br />
            <input className="add-shop-field" placeholder="Shop Name" type="text" name="shopname" onChange={this.update("shopname")} value={shopname}/><br />
            <label className="add-shop-label">Description{this.charLeft()}</label><br />
@@ -73,7 +73,7 @@ class CreateShopModal extends React.Component {
            <input className="add-shop-field" type="text" name="location" onChange={this.update("location")} value={location}/><br />
            <label className="add-shop-label">Image Link</label><br />
            <input className="add-shop-field" type="text" name="img_url" onChange={this.update("img_url")} value={img_url}/><br />
-           <button className="add-shop-btn">Create</button>
+           <button className="add-shop-btn">Create Shop</button>
          </form>
        </Modal>
      );
@@ -88,5 +88,7 @@ class CreateShopModal extends React.Component {
   const mapDispatchToProps = (dispatch) => ({
      createShop: (shop)=>{dispatch(createShop(shop));}
   });
+
+CreateShopModal = withRouter(CreateShopModal);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateShopModal);

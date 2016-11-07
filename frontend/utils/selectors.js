@@ -6,3 +6,9 @@ export const getCurrentUser = (session) => {
   }
   return null;
 };
+
+export const getProductList = (list) => {
+  if (list && !_.isEmpty(list.products)) {
+    return _.values(list.products);
+  }
+};

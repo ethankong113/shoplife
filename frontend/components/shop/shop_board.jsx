@@ -11,7 +11,7 @@ class ShopBoard extends React.Component {
   }
 
   renderAddShop() {
-    if (this.props.location.pathname === "/profile/shops") {
+    if (this._isOwner()) {
       return (
         <div className={"board-card"}>
           <button className={"add-shop-btn"} onClick={this.toggleModal}>
@@ -33,9 +33,16 @@ class ShopBoard extends React.Component {
     }
   }
 
+  _isOwner() {
+    if (this.props.currentUser) {
+      return this.props.params.username === this.props.currentUser.username;
+    }
+    return false;
+  }
+
    render() {
      return (
-       <div className={"shop-board-container"}>
+       <div className={"shop-board-wrapper"}>
          <div className={"shop-board"}>
            {this.renderAddShop()}
            {this.renderAddShop()}

@@ -9,13 +9,13 @@ const RequireAuthWrapper = (ComposedComponent) => {
 
     componentWillMount() {
       if (!this.props.currentUser) {
-        this.props.router.replace("/");
+        // this.props.router.replace("/");
       }
     }
 
     componentWillUpdate(nextProps) {
       if (!nextProps.currentUser) {
-        this.props.router.push("/");
+        // this.props.router.push("/");
       }
     }
 

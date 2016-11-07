@@ -36,7 +36,7 @@ $headerHeight: 55px;
   outline: none;
 }
 
-@mixin session-form-inputs() {
+@mixin form-inputs() {
   @include inline-block-center();
   @include remove-border-style();
   box-sizing: border-box;
@@ -99,13 +99,13 @@ $headerHeight: 55px;
 }
 
 @mixin input-full-field {
-  @include session-form-inputs();
+  @include form-inputs();
   width: 100%;
   border-bottom: 2px $indigo solid;
 }
 
 @mixin input-half-field {
-  @include session-form-inputs();
+  @include form-inputs();
   width: 50%;
   border-bottom: 2px $indigo solid;
 }
@@ -142,6 +142,10 @@ h1, h2, h3 {
   font-size: inherit;
   margin: 0;
   padding: 0;
+}
+
+ul {
+  list-style: none;
 }
 
 .hide-label {
@@ -367,7 +371,6 @@ input:focus {
       width: 60%;
       display: flex;
       justify-content: space-around;
-      list-style: none;
       flex-wrap: wrap;
       .list-item {
         font-size: 18px;
@@ -377,7 +380,7 @@ input:focus {
       }
     }
   }
-  .shop-board-container {
+  .shop-board-wrapper {
     @include flex-jc(center);
     margin-top: 80px;
     margin-bottom: 80px;
@@ -395,7 +398,7 @@ input:focus {
   width: 236px;
   border: white 10px solid;
   border-radius: 20px;
-  .add-shop-btn {
+  .add-shop-btn, .add-product-btn {
     @include remove-border-style();
     border-radius: 8px;
     border: 1px solid lightgrey;
@@ -404,7 +407,7 @@ input:focus {
     width: 100%;
     background-color: white;
     cursor: pointer;
-    .add-shop-content {
+    .add-shop-content, .add-product-content {
       @include block-center();
       height: 150px;
       width: 150px;
@@ -412,7 +415,7 @@ input:focus {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      .add-shop-sign {
+      .add-shop-sign, .add-product-sign {
         @include btn-preset(6px, 14px, 36px);
         padding-top: 0px;
         display: block;
@@ -420,7 +423,7 @@ input:focus {
         border-radius: 50%;
         color: white;
       }
-      .add-shop-text {
+      .add-shop-text, .add-product-text {
         margin-top: 20px;
         font-size: 18px;
         color: lightgrey;
@@ -461,5 +464,89 @@ input:focus {
 
   .add-shop-btn:active {
     @include cyan-btn-alt;
+  }
+}
+
+.shop-detail-wrapper {
+  .shop-detail {
+    @include block-center();
+    margin-top: 20px;
+    width: 60%;
+    .detail-options {
+      display: inline-block;
+      width: 100%;
+      .option-item {
+        float: left;
+        .option-btn {
+          @include remove-border-style();
+          @include indigo-btn-alt();
+          @include btn-preset(5px, 10px, 16px);
+          border-radius: 3px;
+          width: 80px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+      }
+    }
+    .detail-name {
+      font-size: 42px;
+    }
+    .detail-info {
+      @include flex-jc(space-between);
+      margin-top: 20px;
+    }
+  }
+
+  .product-board-wrapper {
+    @include flex-jc(center);
+    margin-top: 80px;
+    margin-bottom: 80px;
+    .product-board {
+      @include flex-jc(space-around);
+      flex-wrap: wrap;
+      width: 80%;
+    }
+  }
+}
+
+.add-product-form {
+  margin-top: 10px;
+
+  .add-product-field {
+    @include input-full-field();
+  }
+
+  .add-product-field:focus {
+    @include remove-border-style();
+    color: $cyan500;
+    border-bottom: 2px $cyan500 solid;
+  }
+
+  .add-product-textarea {
+    max-width: 100%;
+    max-height: 80px;
+  }
+
+  .add-product-btn {
+    @include large-submit-btn;
+  }
+
+  .add-product-btn:hover {
+    @include cyan-btn;
+  }
+
+  .add-product-btn:active {
+    @include cyan-btn-alt;
+  }
+
+  .add-product-price {
+    display: flex;
+    justify-content: space-between;
+    .add-product-sign {
+      font-size: 20px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      margin-right: 8px;
+    }
   }
 }

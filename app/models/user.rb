@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   has_many :shops,
   foreign_key: :owner_id
 
+  has_many :products,
+  through: :shops,
+  source: :products
+
   attr_reader :password;
 
   def self.find_by_credentials(username, password)

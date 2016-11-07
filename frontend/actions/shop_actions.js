@@ -5,6 +5,7 @@ export const DELETE_SHOP = "DELETE_SHOP";
 export const RECEIVE_SHOP = "RECEIVE_SHOP";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const REMOVE_SHOP = "REMOVE_SHOP";
+export const CLEAR_SHOP = "CLEAR_SHOP";
 
 export const createShop = (shop) => ({
   type: CREATE_SHOP,
@@ -39,4 +40,8 @@ export const removeShop = shop => ({
 export const receiveErrors = errors => ({
   type: RECEIVE_SHOP,
   errors
+});
+
+export const clearShop = () => ({
+  type: CLEAR_SHOP
 });

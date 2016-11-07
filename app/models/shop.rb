@@ -6,6 +6,8 @@ class Shop < ActiveRecord::Base
   belongs_to :user,
   foreign_key: :owner_id
 
+  has_many :products
+
   def auto_fill_coords
     if self.lat.nil? || self.lng.nil?
       self.lat = 37.7811

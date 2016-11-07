@@ -1,4 +1,4 @@
-import { RECEIVE_SHOP, REMOVE_SHOP, RECEIVE_ERRORS } from '../actions/shop_actions';
+import { RECEIVE_SHOP, REMOVE_SHOP, CLEAR_SHOP, RECEIVE_ERRORS } from '../actions/shop_actions';
 import { isEmpty, merge } from 'lodash';
 
 const _nullShop = {
@@ -13,6 +13,8 @@ const ShopDetailReducer = (state = _nullShop, action) => {
     case RECEIVE_SHOP:
       newState = merge({}, state, {shop: action.shop});
       return newState;
+    case CLEAR_SHOP:
+      return _nullShop;
     case REMOVE_SHOP:
       return _nullShop;
     case RECEIVE_ERRORS:
