@@ -38,7 +38,7 @@ class ShowProductModal extends React.Component {
    render() {
      return (
        <Modal isOpen={this.props.isOpen} style={largeModal()} id="product-modal">
-         <button className="close-form-btn" onClick={this.props.toggleModal('openShowModal')}>X</button>
+         <button className="close-form-btn" onClick={this.props.toggleModal}>X</button>
          { this.renderProductTable() }
        </Modal>
      );
@@ -46,7 +46,7 @@ class ShowProductModal extends React.Component {
  }
 
  const mapStateToProps = (state) => ({
-    shop_id: state.shopDetail.shop.id,
+    shop_id: state.shop.shop.id,
     product: state.product.product
   });
 

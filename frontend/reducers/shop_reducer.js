@@ -6,7 +6,7 @@ const _nullShop = {
   errors: []
 };
 
-const ShopDetailReducer = (state = _nullShop, action) => {
+const ShopReducer = (state = _nullShop, action) => {
   Object.freeze(state);
   let newState;
   switch(action.type) {
@@ -25,4 +25,4 @@ const ShopDetailReducer = (state = _nullShop, action) => {
   }
 };
 
-export default ShopDetailReducer;
+export default ShopReducer;

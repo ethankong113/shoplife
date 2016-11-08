@@ -455,33 +455,33 @@ input:focus {
       width: 236px;
       height: 236px;
       border-radius: 7px;
-      .product-picture {
+      .shop-picture, .product-picture {
         border-radius: 7px;
         width: 100%;
         height: 100%;
       }
     }
-    .product-detail {
+    .shop-detail, .product-detail {
       @include block-center();
       margin-top: 10px;
       width: 90%;
       font-size: 20px;
-      .product-name {
+      .shop-name, .product-name {
         float: left;
       }
       .product-price {
         float: right;
       }
     }
-    .product-detail:after {
+    .shop-detail:after, .product-detail:after {
       @include clear-fix();
     }
-    .product-btn-field {
+    .shop-btn-field, .product-btn-field {
       visibility: hidden;
       width: 100%;
       top: 200px;
       position: absolute;
-      .product-btn {
+      .shop-btn, .product-btn {
         @include remove-border-style();
         @include block-center();
         @include btn-preset(3px, 70px, 16px);
@@ -489,15 +489,15 @@ input:focus {
         border-radius: 5px;
       }
     }
-    .product-btn:hover {
+    .shop-btn:hover, .product-btn:hover {
       @include cyan-btn();
     }
-    .product-btn:active {
+    .shop-btn:active, .product-btn:active {
       @include cyan-btn-alt();
     }
   }
   .card-frame:hover {
-    .product-btn-field {
+    .shop-btn-field, .product-btn-field {
       visibility: visible;
     }
   }
@@ -570,6 +570,7 @@ input:focus {
           width: 80px;
           height: 80px;
           border-radius: 50%;
+          cursor: pointer;
         }
       }
     }

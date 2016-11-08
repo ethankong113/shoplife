@@ -1,20 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ShopBoard from './shop_board';
-import { getCurrentUser } from '../../utils/selectors';
+import { getCurrentUser, getShopList } from '../../utils/selectors';
 import { createShop, readShop, updateShop, deleteShop } from '../../actions/shop_actions';
+import { fetchShopListByUser } from '../../actions/shop_list_actions';
 
 const mapStateToProps = (state) => ({
-   shops: state.shops,
-   shopDetail: state.shopDetail,
-   currentUser: getCurrentUser(state.session)
+   shops: getShopList(state.shopList),
+   shop: state.shop,
+   currentUser: getCurrentUser(state.session),
  });
 
 const mapDispatchToProps = (dispatch) => ({
    createShop: (shop)=>{dispatch(createShop(shop));},
    readShop: (id)=>{dispatch(readShop(id));},
    updateShop: (shop)=>{dispatch(updateShop(shop));},
-   deleteShop: (id)=>{dispatch(deleteShop(id));}
+   deleteShop: (id)=>{dispatch(deleteShop(id));},
+   fetchShopListByUser: (id)=>{dispatch(fetchShopListByUser(id));}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopBoard);

@@ -57,7 +57,7 @@ class AddProductModal extends React.Component {
  }
 
  const mapStateToProps = (state) => ({
-    shop_id: state.shopDetail.shop.id
+    shop_id: state.shop.shop.id
   });
 
  const mapDispatchToProps = (dispatch) => ({

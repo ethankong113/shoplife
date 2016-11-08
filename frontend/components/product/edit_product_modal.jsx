@@ -75,7 +75,7 @@ class EditProductModal extends React.Component {
  }
 
  const mapStateToProps = (state) => ({
-    shop_id: state.shopDetail.shop.id,
+    shop_id: state.shop.shop.id,
     product: state.product.product
   });
 

@@ -1,4 +1,4 @@
-import ShopDetail from './shop_detail';
+import Shop from './shop';
 import { connect } from 'react-redux';
 import { readShop, updateShop, deleteShop, clearShop } from '../../actions/shop_actions';
 import { fetchProductListByShop } from '../../actions/product_list_actions';
@@ -6,7 +6,7 @@ import { getCurrentUser } from '../../utils/selectors';
 
 const mapStateToProps = (state) => ({
   currentUser: getCurrentUser(state.session),
-  shopDetail: state.shopDetail
+  shop: state.shop
  });
 
  const mapDispatchToProps = (dispatch) => ({
@@ -17,4 +17,4 @@ const mapStateToProps = (state) => ({
     fetchProductListByShop: (id)=>{dispatch(fetchProductListByShop(id));}
  });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(Shop);

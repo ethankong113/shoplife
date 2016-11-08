@@ -1,7 +1,7 @@
 import { CREATE_SHOP, READ_SHOP, UPDATE_SHOP, DELETE_SHOP, receiveShop, removeShop, receiveErrors } from '../actions/shop_actions';
 import { createShopAJAX, readShopAJAX, updateShopAJAX, deleteShopAJAX } from '../utils/shop_api_utils';
 
-const ShopDetailMiddleware = ({getState, dispatch}) => next => action => {
+const ShopMiddleware = ({getState, dispatch}) => next => action => {
 
   const createShopSuccessCB = (shop) => {dispatch(receiveShop(shop));};
   const readShopSuccessCB = (shop) => {dispatch(receiveShop(shop));};
@@ -28,4 +28,4 @@ const ShopDetailMiddleware = ({getState, dispatch}) => next => action => {
 };
 
 
-export default ShopDetailMiddleware;
+export default ShopMiddleware;

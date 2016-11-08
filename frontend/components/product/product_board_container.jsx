@@ -6,7 +6,7 @@ import { fetchProductListByShop } from '../../actions/product_list_actions';
 
 const mapStateToProps = (state) => ({
    currentUser: getCurrentUser(state.session),
-   shopDetail: state.shopDetail,
+   shop: state.shop,
    products: getProductList(state.productList)
  });
 

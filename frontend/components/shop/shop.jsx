@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { withRouter } from 'react-router';
 import ProductBoardContainer from '../product/product_board_container';
 
-class ShopDetail extends React.Component {
+class Shop extends React.Component {
 
   constructor(props) {
     super(props);
@@ -21,7 +21,7 @@ class ShopDetail extends React.Component {
 
   renderEditOptions() {
     const user = this.props.currentUser;
-    const owner_id= this.props.shopDetail.shop.owner_id;
+    const owner_id= this.props.shop.shop.owner_id;
     if (user && user.id == owner_id) {
       return (
         <ul className="detail-options">
@@ -43,11 +43,11 @@ class ShopDetail extends React.Component {
   backToUser(username) {
     return () => {
       this.props.router.push(`/${username}`);
-    }
+    };
   }
 
    render() {
-     const { shopname, username, user_img } = this.props.shopDetail.shop;
+     const { shopname, username, user_img } = this.props.shop.shop;
      return (
        <div className="shop-detail-wrapper">
          <div className="shop-detail">
@@ -71,4 +71,4 @@ class ShopDetail extends React.Component {
    }
  }
 
- export default withRouter(ShopDetail);
+ export default withRouter(Shop);

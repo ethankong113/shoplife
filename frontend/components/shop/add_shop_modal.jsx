@@ -7,14 +7,14 @@ import { mediumModal } from '../../utils/modal_style';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'react-router';
 
-class CreateShopModal extends React.Component {
+class AddShopModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {shopname: "", description: "", location: "", img_url: ""};
   }
 
   componentWillUpdate(nextProps) {
-    let shop = nextProps.shopDetail.shop;
+    let shop = nextProps.shop.shop;
     if (!isEmpty(shop)) {
       nextProps.router.push(`shop/${shop.id}`);
     }
@@ -63,7 +63,7 @@ class CreateShopModal extends React.Component {
      const { shopname, description, location, img_url } = this.state;
      return (
        <Modal isOpen={this.props.isOpen} style={mediumModal()} id="add-shop-modal">
-         <button className="close-form-btn" onClick={this.props.toggleModal}>X</button>
+         <button className="close-form-btn" onClick={this.props.toggleModal("AddShop")}>X</button>
          <form method="post" onSubmit={this.handleSubmit(this.props)} className="add-shop-form">
            <label className="add-shop-label hide-label" id="shopname-label">Shop Name</label><br />
            <input className="add-shop-field" placeholder="Shop Name" type="text" name="shopname" onChange={this.update("shopname")} value={shopname}/><br />
@@ -82,13 +82,13 @@ class CreateShopModal extends React.Component {
 
  const mapStateToProps = (state) => ({
     currentUser: getCurrentUser(state.session),
-    shopDetail: state.shopDetail
+    shop: state.shop
   });
 
   const mapDispatchToProps = (dispatch) => ({
      createShop: (shop)=>{dispatch(createShop(shop));}
   });
 
-CreateShopModal = withRouter(CreateShopModal);
+AddShopModal = withRouter(AddShopModal);
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateShopModal);
+export default connect(mapStateToProps, mapDispatchToProps)(AddShopModal);

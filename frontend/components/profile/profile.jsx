@@ -56,6 +56,9 @@ class Profile extends React.Component {
 
   renderNavbar() {
     let [tripCount, shopCount, pinCount, followerCount, followingCount] = [0,0,0,0,0];
+    if (this._getDetail()) {
+      shopCount = this._getDetail().shopCount;
+    }
     let username = this._safeParams();
     return (
       <ul className="navbar-list">

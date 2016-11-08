@@ -8,7 +8,7 @@ import RequireAuth from './hoc/require_auth';
 import App from './app';
 import UserProfileContainer from './profile/profile_container';
 import ShopBoardContainer from './shop/shop_board_container';
-import ShopDetailContainer from './shop/shop_detail_container';
+import ShopContainer from './shop/shop_container';
 
 const Root = ({store}) => {
   return (
@@ -18,7 +18,7 @@ const Root = ({store}) => {
           <Route path=":username" component={RequireAuth(UserProfileContainer)}>
             <Route path="shops" component={ShopBoardContainer}></Route>
           </Route>
-          <Route path="shop/:shopId" component={ShopDetailContainer}>
+          <Route path="shop/:shopId" component={ShopContainer}>
           </Route>
         </Route>
       </Router>

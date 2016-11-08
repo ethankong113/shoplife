@@ -20,7 +20,7 @@ class ProductBoard extends React.Component {
   renderAddProduct() {
     if (this._isOwner()) {
       return (
-        <li className={"board-card"} key="0">
+        <li className={"board-card"} key={0}>
           <button className={"add-product-btn"} onClick={this.toggleModal("AddModal")}>
             <div className={"add-product-content"}>
               <span className={"add-product-sign"}>+</span>
@@ -42,33 +42,33 @@ class ProductBoard extends React.Component {
 
   renderProductList() {
     let list = this.props.products;
+    let renderProductList = [this.renderAddProduct()];
     if (!isEmpty(list)) {
-      let renderProductList = [this.renderAddProduct()];
       let productItems = list.map((product) => {
-        const {id, productname, price, img_url} = product
-        return (
-          <li className="board-card" key={id} onClick={this.toggleModal("ShowModal", id)}>
-            <div className="card-frame">
-              <div className="picture-frame">
-                <img className="product-picture" src={img_url} />
+        const {id, productname, price, img_url} = product;
+          return (
+            <li className="board-card" key={id} onClick={this.toggleModal("ShowModal", id)}>
+              <div className="card-frame">
+                <div className="picture-frame">
+                  <img className="product-picture" src={img_url} />
+                </div>
+                <div className="product-detail">
+                  <span className="product-name">{productname}</span>
+                  <span className="product-price">{price}</span>
+                </div>
+                <div className="product-btn-field">{this.renderProductButton(id)}</div>
               </div>
-              <div className="product-detail">
-                <span className="product-name">{productname}</span>
-                <span className="product-price">{price}</span>
-              </div>
-              <div className="product-btn-field">{this.renderProductButton(id)}</div>
-            </div>
-          </li>
-        );
-      }
-    );
-    renderProductList = renderProductList.concat(productItems);
-      return (
-        <ul className="product-list">
-          {renderProductList}
-        </ul>
+            </li>
+          );
+        }
       );
+      renderProductList = renderProductList.concat(productItems);
     }
+    return (
+      <ul className="product-list">
+        {renderProductList}
+      </ul>
+    );
   }
 
   toggleModal(field, id) {
@@ -76,18 +76,16 @@ class ProductBoard extends React.Component {
       e.preventDefault();
       e.stopPropagation();
       if (this.state.openModal) {
-        this.setState({modalType: null, openModal: false});
-        this.setState({productId: null});
+        this.setState({modalType: null, openModal: false, productId: null});
       } else {
-        this.setState({productId: id});
-        this.setState({modalType: field, openModal: true});
+        this.setState({modalType: field, openModal: true, productId: id});
       }
     };
   }
 
   _isOwner() {
     if (this.props.currentUser) {
-      return this.props.shopDetail.shop.owner_id === this.props.currentUser.id;
+      return this.props.shop.shop.owner_id === this.props.currentUser.id;
     }
     return false;
   }

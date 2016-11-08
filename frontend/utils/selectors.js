@@ -7,8 +7,16 @@ export const getCurrentUser = (session) => {
   return null;
 };
 
+export const getShopList = (list) => {
+  if (list && !_.isEmpty(list.shops)) {
+    return _.values(list.shops);
+  }
+  return {};
+};
+
 export const getProductList = (list) => {
   if (list && !_.isEmpty(list.products)) {
     return _.values(list.products);
   }
+  return {};
 };
