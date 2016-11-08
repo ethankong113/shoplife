@@ -1,6 +1,7 @@
 import ShopDetail from './shop_detail';
 import { connect } from 'react-redux';
 import { readShop, updateShop, deleteShop, clearShop } from '../../actions/shop_actions';
+import { fetchProductListByShop } from '../../actions/product_list_actions';
 import { getCurrentUser } from '../../utils/selectors';
 
 const mapStateToProps = (state) => ({
@@ -12,7 +13,8 @@ const mapStateToProps = (state) => ({
     readShop: (id)=>{dispatch(readShop(id));},
     updateShop: (shop)=>{dispatch(updateShop(shop));},
     deleteShop: (id)=>{dispatch(deleteShop(id));},
-    clearShop: ()=>{dispatch(clearShop());}
+    clearShop: ()=>{dispatch(clearShop());},
+    fetchProductListByShop: (id)=>{dispatch(fetchProductListByShop(id));}
  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopDetail);

@@ -77,15 +77,15 @@ $headerHeight: 55px;
   @include btn-style($cyan500, white, $cyan500, 2px);
 }
 
-@mixin closn-btn() {
+@mixin close-btn() {
   @include btn-preset(5px, 10px, 18px);
   border: $mildred 2px solid;
   background-color: white;
   color: $mildred;
   border-radius: 50%;
   float: right;
-  margin-top: -30px;
-  margin-right: -20px;
+  margin-top: -40px;
+  margin-right: -38px;
   cursor: pointer;
 }
 
@@ -108,6 +108,12 @@ $headerHeight: 55px;
   @include form-inputs();
   width: 50%;
   border-bottom: 2px $indigo solid;
+}
+
+@mixin clear-fix {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 html, body {
@@ -229,7 +235,7 @@ input:focus {
 }
 
 .close-form-btn {
-  @include closn-btn();
+  @include close-btn();
 }
 
 .close-form-btn:hover {
@@ -392,12 +398,18 @@ input:focus {
   }
 }
 
+.shop-list, .product-list {
+  @include flex-jc(space-around);
+  flex-wrap: wrap;
+}
+
 .board-card {
   @include block-center();
   height: 324px;
   width: 236px;
   border: white 10px solid;
   border-radius: 20px;
+  margin: 15px 20px;
   .add-shop-btn, .add-product-btn {
     @include remove-border-style();
     border-radius: 8px;
@@ -428,6 +440,65 @@ input:focus {
         font-size: 18px;
         color: lightgrey;
       }
+    }
+  }
+  .card-frame {
+    @include block-center();
+    border-radius: 8px;
+    height: 100%;
+    width: 100%;
+    cursor: zoom-in;
+    position: relative;
+    .picture-frame {
+      @include block-center();
+      // margin-top: 10px;
+      width: 236px;
+      height: 236px;
+      border-radius: 7px;
+      .product-picture {
+        border-radius: 7px;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .product-detail {
+      @include block-center();
+      margin-top: 10px;
+      width: 90%;
+      font-size: 20px;
+      .product-name {
+        float: left;
+      }
+      .product-price {
+        float: right;
+      }
+    }
+    .product-detail:after {
+      @include clear-fix();
+    }
+    .product-btn-field {
+      visibility: hidden;
+      width: 100%;
+      top: 200px;
+      position: absolute;
+      .product-btn {
+        @include remove-border-style();
+        @include block-center();
+        @include btn-preset(3px, 70px, 16px);
+        @include indigo-btn();
+        border-radius: 5px;
+      }
+    }
+    .product-btn:hover {
+      @include cyan-btn();
+    }
+    .product-btn:active {
+      @include cyan-btn-alt();
+    }
+  }
+  .card-frame:hover {
+    .product-btn-field {
+      visibility: visible;
     }
   }
 }
@@ -494,6 +565,13 @@ input:focus {
     .detail-info {
       @include flex-jc(space-between);
       margin-top: 20px;
+      .detail-owner {
+        .detail-owner-img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+        }
+      }
     }
   }
 
@@ -509,44 +587,84 @@ input:focus {
   }
 }
 
-.add-product-form {
+.product-form {
   margin-top: 10px;
 
-  .add-product-field {
+  .product-field {
     @include input-full-field();
   }
 
-  .add-product-field:focus {
+  .product-field:focus {
     @include remove-border-style();
     color: $cyan500;
     border-bottom: 2px $cyan500 solid;
   }
 
-  .add-product-textarea {
+  .product-textarea {
     max-width: 100%;
     max-height: 80px;
   }
 
-  .add-product-btn {
+  .product-btn {
     @include large-submit-btn;
   }
 
-  .add-product-btn:hover {
+  .product-btn:hover {
     @include cyan-btn;
   }
 
-  .add-product-btn:active {
+  .product-btn:active {
     @include cyan-btn-alt;
   }
 
-  .add-product-price {
+  .product-btn-alt {
+    @include large-submit-btn;
+    @include indigo-btn-alt;
+  }
+
+  .product-btn-alt:hover {
+    @include cyan-btn-alt;
+  }
+
+  .product-btn-alt:active {
+    @include cyan-btn;
+  }
+
+  .product-price {
     display: flex;
     justify-content: space-between;
-    .add-product-sign {
+    .product-sign {
       font-size: 20px;
       margin-top: 15px;
       margin-bottom: 15px;
       margin-right: 8px;
     }
+  }
+}
+
+.product-table {
+  margin-top: 10px;
+  width: 100%;
+  .show-product-img {
+    width: 100%;
+    margin-top: -20px;
+    img {
+      border-radius: 15px;
+      width: 100%;
+    }
+  }
+  .show-product-info {
+    margin-top: 10px;
+    @include flex-jc(space-between);
+    .show-product-name {
+      margin-right: 10px;
+      font-size: 22px;
+    }
+    .show-product-price {
+      font-size: 30px;
+    }
+  }
+  .show-product-description {
+    margin-top: 10px;
   }
 }

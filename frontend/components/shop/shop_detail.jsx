@@ -7,14 +7,12 @@ class ShopDetail extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.backToUser = this.backToUser.bind(this);
   }
 
   componentWillMount() {
-    const { shop } = this.props.shopDetail;
-    if (isEmpty(shop)) {
-      this.props.readShop(this.props.params.shopId);
-    }
+    let shop_id = this.props.params.shopId;
+    this.props.readShop(shop_id);
   }
 
   componentWillUnmount() {
@@ -42,8 +40,14 @@ class ShopDetail extends React.Component {
     }
   }
 
+  backToUser(username) {
+    return () => {
+      this.props.router.push(`/${username}`);
+    }
+  }
+
    render() {
-     const { shopname, owner_id } = this.props.shopDetail.shop
+     const { shopname, username, user_img } = this.props.shopDetail.shop;
      return (
        <div className="shop-detail-wrapper">
          <div className="shop-detail">
@@ -54,8 +58,8 @@ class ShopDetail extends React.Component {
                <div>0 Products</div>
                <div>16 Followers</div>
              </div>
-             <div className="detail-owner">
-               { owner_id }
+             <div className="detail-owner" onClick={this.backToUser(username)}>
+               <img className="detail-owner-img" src={ user_img } />
              </div>
            </div>
          </div>
@@ -67,4 +71,4 @@ class ShopDetail extends React.Component {
    }
  }
 
- export default ShopDetail;
+ export default withRouter(ShopDetail);

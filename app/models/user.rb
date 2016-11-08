@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   has_many :shops,
-  foreign_key: :owner_id
+  foreign_key: :owner_id,
+  dependent: :destroy
 
   has_many :products,
   through: :shops,
