@@ -50,7 +50,7 @@ class Profile extends React.Component {
     if (status) {
       return (<button className="profile-btn">Edit Profile</button>);
     } else {
-      return (<button className="profile-btn">Follow</button>);
+      return (<button className="profile-btn" onClick={this.followUser}>Follow</button>);
     }
   }
 
@@ -89,6 +89,13 @@ class Profile extends React.Component {
         </li>
       </ul>
     );
+  }
+
+  followUser() {
+    if (this.props.currentUser) {
+      let id = this.props.profile.detail.id;
+      this.props.followUser(id);
+    }
   }
 
   _isOwner() {

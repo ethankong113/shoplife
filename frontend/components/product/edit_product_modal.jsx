@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { largeModal } from '../../utils/modal_style';
 import { connect } from 'react-redux';
-import { readProduct, updateProduct, deleteProduct, clearProduct } from '../../actions/product_actions';
+import { readProduct, updateProduct, deleteProduct, clearProduct, clearProductMessage } from '../../actions/product_actions';
 import { isEmpty } from 'lodash';
 
 class EditProductModal extends React.Component {
@@ -16,10 +16,12 @@ class EditProductModal extends React.Component {
     let productId = nextProps.productId;
     if (productId !== null && nextProps.modalType === "EditModal" && isEmpty(nextProps.product)) {
       nextProps.readProduct(productId);
-    }
-    if (!isEmpty(nextProps.product) && nextProps.modalType === "EditModal" && this.state.productname == "") {
+    } else if (!isEmpty(nextProps.product) && nextProps.modalType === "EditModal" && this.state.productname == "") {
       this.setState(nextProps.product);
-    } else if (!isEmpty(nextProps.product) && nextProps.modalType === null) {
+    } else if (nextProps.msg.includes("CLOSE_PRODUCT_MODAL")) {
+      this.props.toggleModal('EditModal')();
+      nextProps.clearProductMessage();
+    } else if (!isEmpty(nextProps.product) && this.props.modalType === "EditModal" && nextProps.modalType === null) {
       this.setState({productname: "", description: "", price: 0, img_url: "", id: 0});
       nextProps.clearProduct();
     }
@@ -54,7 +56,7 @@ class EditProductModal extends React.Component {
      const { productname, description, price, img_url } = this.state;
      return (
        <Modal isOpen={this.props.isOpen} style={largeModal()} id="product-modal">
-         <button className="close-form-btn" onClick={this.props.toggleModal('openEditModal')}>X</button>
+         <button className="close-form-btn" onClick={this.props.toggleModal('EditModal')}>X</button>
          <form method="post" className="product-form">
            <label className="product-label">Product Name</label><br />
            <input className="product-field" type="text" name="productname" onChange={this.update("productname")} value={productname}/><br />
@@ -76,14 +78,16 @@ class EditProductModal extends React.Component {
 
  const mapStateToProps = (state) => ({
     shop_id: state.shop.shop.id,
-    product: state.product.product
+    product: state.product.product,
+    msg: state.product.msg
   });
 
  const mapDispatchToProps = (dispatch) => ({
     updateProduct: (product)=>{dispatch(updateProduct(product));},
     readProduct: (id)=>{dispatch(readProduct(id));},
     deleteProduct: (id)=>{dispatch(deleteProduct(id));},
-    clearProduct: ()=>{dispatch(clearProduct());}
+    clearProduct: ()=>{dispatch(clearProduct());},
+    clearProductMessage: ()=>{dispatch(clearProductMessage());}
  });
 
  export default connect(mapStateToProps, mapDispatchToProps)(EditProductModal);

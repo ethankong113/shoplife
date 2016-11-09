@@ -39,4 +39,26 @@ class User < ActiveRecord::Base
   def is_password?(password)
     BCrypt::Password.new(self.password_digest).is_password?(password)
   end
+
+  has_many :in_follows,
+  foreign_key: :followee_id,
+  class_name: "Following",
+  dependent: :destroy,
+  inverse_of: :followee
+
+  has_many :followers,
+  through: :in_follows,
+  source: :follower
+
+  has_many :out_follows,
+  foreign_key: :follower_id,
+  class_name: "Following",
+  dependent: :destroy,
+  inverse_of: :follower
+
+  has_many :followees,
+  through: :out_follows,
+  source: :followee
+
+
 end

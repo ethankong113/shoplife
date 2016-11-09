@@ -7,7 +7,7 @@ const ShopListMiddleware = ({getState, dispatch}) => next => action => {
 
   switch(action.type) {
     case FETCH_SHOP_LIST_BY_USER:
-      fetchShopListByUserAJAX(action.id, successCB, errorCB);
+      fetchShopListByUserAJAX(action.username, successCB, errorCB);
       return next(action);
     default:
       return next(action);

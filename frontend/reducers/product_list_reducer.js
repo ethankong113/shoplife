@@ -1,4 +1,4 @@
-import { RECEIVE_PRODUCT_LIST, RECEIVE_ERRORS, APPEND_PRODUCT, RENEW_PRODUCT, REMOVE_PRODUCT } from '../actions/product_list_actions';
+import { RECEIVE_PRODUCT_LIST, CLEAR_PRODUCT_LIST, RECEIVE_ERRORS, APPEND_PRODUCT, RENEW_PRODUCT, REMOVE_PRODUCT } from '../actions/product_list_actions';
 import { merge } from 'lodash';
 
 const _nullProductList = {
@@ -14,6 +14,8 @@ const ProductListReducer = (state = _nullProductList, action ) => {
     case RECEIVE_PRODUCT_LIST:
       newState = merge({}, state, {products: action.products, errors: []});
       return newState;
+    case CLEAR_PRODUCT_LIST:
+      return _nullProductList;
     case APPEND_PRODUCT:
       newState = merge({}, state);
       productId = action.product.id;

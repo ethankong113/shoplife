@@ -2,7 +2,7 @@ import React from 'react';
 import ProductBoard from './product_board';
 import { connect } from 'react-redux';
 import { getCurrentUser, getProductList } from '../../utils/selectors';
-import { fetchProductListByShop } from '../../actions/product_list_actions';
+import { fetchProductListByShop, clearProductList } from '../../actions/product_list_actions';
 
 const mapStateToProps = (state) => ({
    currentUser: getCurrentUser(state.session),
@@ -11,7 +11,8 @@ const mapStateToProps = (state) => ({
  });
 
  const mapDispatchToProps = (dispatch) => ({
-    fetchProductListByShop: (id)=>{dispatch(fetchProductListByShop(id));}
+    fetchProductListByShop: (id)=>{dispatch(fetchProductListByShop(id));},
+    clearProductList: ()=>{dispatch(clearProductList());}
  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductBoard);

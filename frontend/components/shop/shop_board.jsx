@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import AddShopModal from './add_shop_modal';
+import EditShopModal from './edit_shop_modal';
 import { isEmpty } from 'lodash';
 
 class ShopBoard extends React.Component {
@@ -13,6 +14,10 @@ class ShopBoard extends React.Component {
 
   componentWillMount() {
     this._fetchShopList();
+  }
+
+  componentWillUnmount() {
+    this.props.clearShopList();
   }
 
   renderAddShop() {
@@ -44,9 +49,8 @@ class ShopBoard extends React.Component {
     if (!isEmpty(list)) {
       let shopItems = list.map((shop) => {
         const {id, shopname, img_url} = shop;
-        console.log(id)
           return (
-            <li className="board-card" key={id} onClick={this.toggleModal("ShowModal", id)}>
+            <li className="board-card" key={id} onClick={this.enterShopPage(id)}>
               <div className="card-frame">
                 <div className="picture-frame">
                   <img className="shop-picture" src={img_url} />
@@ -71,13 +75,21 @@ class ShopBoard extends React.Component {
 
   toggleModal(field, id) {
     return e => {
-      e.preventDefault();
-      e.stopPropagation();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       if (this.state.openModal) {
         this.setState({modalType: null, openModal: false, shopId: null});
       } else {
         this.setState({modalType: field, openModal: true, shopId: id});
       }
+    };
+  }
+
+  enterShopPage(shopId) {
+    return ()=> {
+      this.props.router.push(`/shop/${shopId}`);
     };
   }
 
@@ -89,8 +101,10 @@ class ShopBoard extends React.Component {
   }
 
   _fetchShopList() {
-    let user_id = this.props.currentUser.id;
-    this.props.fetchShopListByUser(user_id);
+    let username = this.props.params.username;
+    if (username) {
+      this.props.fetchShopListByUser(username);
+    }
   }
 
    render() {
@@ -100,6 +114,7 @@ class ShopBoard extends React.Component {
            {this.renderShopList()}
          </div>
          <AddShopModal isOpen={this.state.openModal && this.state.modalType == "AddModal"} modalType={this.state.modalType} toggleModal={this.toggleModal}/>
+         <EditShopModal isOpen={this.state.openModal && this.state.modalType == "EditModal"} modalType={this.state.modalType} toggleModal={this.toggleModal} shopId={this.state.shopId}/>
        </div>
      );
    }

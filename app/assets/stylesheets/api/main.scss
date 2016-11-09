@@ -154,17 +154,10 @@ ul {
   list-style: none;
 }
 
-.hide-label {
-  visibility: hidden;
-}
-
-.display-label {
-  visibility: visible;
-}
-
 header {
   background-color: white;
   height: $headerHeight;
+  border-top: 1px solid lightgrey;
   border-bottom: 1px solid lightgrey;
   display: flex;
   justify-content: space-between;
@@ -507,34 +500,47 @@ input:focus {
   border-color: lightgrey;
 }
 
-.add-shop-form {
+.shop-form {
   margin-top: 10px;
 
-  .add-shop-field {
+  .shop-field {
     @include input-full-field();
   }
 
-  .add-shop-field:focus {
+  .shop-field:focus {
     @include remove-border-style();
     color: $cyan500;
     border-bottom: 2px $cyan500 solid;
   }
 
-  .add-shop-textarea {
+  .shop-textarea {
     max-width: 100%;
     max-height: 80px;
   }
 
-  .add-shop-btn {
+  .shop-btn {
     @include large-submit-btn;
   }
 
-  .add-shop-btn:hover {
+  .shop-btn:hover {
     @include cyan-btn;
   }
 
-  .add-shop-btn:active {
+  .shop-btn:active {
     @include cyan-btn-alt;
+  }
+
+  .shop-btn-alt {
+    @include large-submit-btn();
+    @include indigo-btn-alt();
+  }
+
+  .shop-btn-alt:hover {
+    @include cyan-btn-alt();
+  }
+
+  .shop-btn-alt:active {
+    @include cyan-btn();
   }
 }
 

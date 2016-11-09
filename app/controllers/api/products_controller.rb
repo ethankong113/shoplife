@@ -20,8 +20,10 @@ class Api::ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    if @product.update(product_params)
+    if @product.update(product_params) && @product.nil? == false
       render "api/products/show"
+    elsif @product.nil?
+      render json: ["Could not find such product"], status: 400
     else
       render json: @product.errors.full_messages, status: 400
     end
@@ -29,8 +31,10 @@ class Api::ProductsController < ApplicationController
 
   def destroy
     @product = Product.find(params[:id])
-    if @product.destroy
+    if @product.destroy && @product.nil? == false
       render "api/products/show"
+    elsif @product.nil?
+      render json: ["Could not find such product"], status: 400
     else
       render json: @product.errors.full_messages, status: 400
     end

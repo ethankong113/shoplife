@@ -16,3 +16,12 @@ export const updateProfileAJAX = (profile, success, error) => {
      error
    });
 };
+
+export const followUserAJAX = (id, success, error) => {
+  $.ajax({
+     type: 'POST',
+     url: `api/follow_user/${id}`,
+     success,
+     error
+   });
+};

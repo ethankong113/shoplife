@@ -1,7 +1,7 @@
-export const fetchShopListByUserAJAX = (id, success, error) => {
+export const fetchShopListByUserAJAX = (username, success, error) => {
   $.ajax({
      type: 'GET',
-     url: `api/shoplist/user_id/${id}`,
+     url: `api/shoplist/username/${username}`,
      success,
      error
    });

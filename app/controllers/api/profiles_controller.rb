@@ -9,5 +9,9 @@ class Api::ProfilesController < ApplicationController
     end
   end
 
+  def follow_user
+    @following = User.find(params[:following_id])
+  end
+
 
 end

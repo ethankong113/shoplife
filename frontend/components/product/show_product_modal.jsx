@@ -11,7 +11,7 @@ class ShowProductModal extends React.Component {
     let productId = nextProps.productId;
     if (productId !== null && nextProps.modalType === "ShowModal" && isEmpty(nextProps.product)) {
       nextProps.readProduct(productId);
-    } else if (!isEmpty(nextProps.product) && nextProps.modalType === null) {
+    } else if (!isEmpty(nextProps.product) && this.props.modalType === "ShowModal" && nextProps.modalType === null) {
       nextProps.clearProduct();
     }
   }
@@ -38,7 +38,7 @@ class ShowProductModal extends React.Component {
    render() {
      return (
        <Modal isOpen={this.props.isOpen} style={largeModal()} id="product-modal">
-         <button className="close-form-btn" onClick={this.props.toggleModal}>X</button>
+         <button className="close-form-btn" onClick={this.props.toggleModal("ShowModal")}>X</button>
          { this.renderProductTable() }
        </Modal>
      );

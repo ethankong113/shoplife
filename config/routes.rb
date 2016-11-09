@@ -5,8 +5,9 @@ Rails.application.routes.draw do
     resources :shops, only: [:index, :create, :show, :update, :destroy]
     resources :products, only: [:index, :create, :show, :update, :destroy]
     get '/profiles/:username', to: 'profiles#show'
-    get 'shoplist/user_id/:user_id', to: 'shop_lists#find_by_user_id'
+    get 'shoplist/username/:username', to: 'shop_lists#find_by_username'
     get 'productlist/shop_id/:shop_id', to: 'product_lists#find_by_shop_id'
+    get 'follow_user/:following_id', to: 'profiles#follow_user'
   end
 
 

@@ -17,6 +17,10 @@ class ProductBoard extends React.Component {
     this._fetchProductList();
   }
 
+  componentWillUnmount() {
+    this.props.clearProductList();
+  }
+
   renderAddProduct() {
     if (this._isOwner()) {
       return (
@@ -54,7 +58,7 @@ class ProductBoard extends React.Component {
                 </div>
                 <div className="product-detail">
                   <span className="product-name">{productname}</span>
-                  <span className="product-price">{price}</span>
+                  <span className="product-price">${price}</span>
                 </div>
                 <div className="product-btn-field">{this.renderProductButton(id)}</div>
               </div>
@@ -73,8 +77,10 @@ class ProductBoard extends React.Component {
 
   toggleModal(field, id) {
     return e => {
-      e.preventDefault();
-      e.stopPropagation();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       if (this.state.openModal) {
         this.setState({modalType: null, openModal: false, productId: null});
       } else {
