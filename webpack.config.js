@@ -1,5 +1,5 @@
-let path = require("path");
-let WatchLiveReloadPlugin = require('webpack-watch-livereload-plugin');
+var path = require("path");
+var WatchLiveReloadPlugin = require('webpack-watch-livereload-plugin');
 
 module.exports = {
   context: __dirname,
