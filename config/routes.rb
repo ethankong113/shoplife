@@ -16,11 +16,15 @@ Rails.application.routes.draw do
 
     get 'shoplist/username/:username', to: 'shop_lists#find_by_username'
     get 'triplist/username/:username', to: 'trip_lists#find_by_username'
+
     get 'productlist/shop_id/:shop_id', to: 'product_lists#find_by_shop_id'
+    get 'productlist/trip_id/:trip_id', to: 'product_lists#find_by_trip_id'
+    get 'productlist/profile/:username', to: 'product_lists#find_by_profile'
 
     get 'pins/:id', to: 'pins#index'
     post 'pins/:trip_id/:product_id', to: 'pins#create'
     delete 'pins/:trip_id/:product_id', to: 'pins#destroy'
+    delete 'pins/from_board/:trip_id/:product_id', to: 'pins#unpin_from_board'
   end
 
 

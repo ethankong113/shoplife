@@ -19,27 +19,6 @@ class Trip extends React.Component {
     this.props.clearTrip();
   }
 
-  // renderEditOptions() {
-  //   const user = this.props.currentUser;
-  //   const user_id= this.props.trip.trip.user_id;
-  //   if (user && user.id == user_id) {
-  //     return (
-  //       <ul className="detail-options">
-  //         <li className="option-item"><button className="option-btn">Edit</button></li>
-  //         <li className="option-item"><button className="option-btn">Delete</button></li>
-  //         <li className="option-item"><button className="option-btn">Share</button></li>
-  //       </ul>
-  //     );
-  //   } else {
-  //     return (
-  //       <ul className="detail-options">
-  //         <li className="option-item"><button className="option-btn">Follow</button></li>
-  //         <li className="option-item"><button className="option-btn">Share</button></li>
-  //       </ul>
-  //     );
-  //   }
-  // }
-
   backToUser(username) {
     return () => {
       this.props.router.push(`/${username}`);
@@ -47,7 +26,7 @@ class Trip extends React.Component {
   }
 
    render() {
-     const { tripname, username, user_img, img_url } = this.props.trip.trip;
+     const { tripname, username, user_img, img_url, productCount } = this.props.trip.trip;
      return (
        <div className="trip-detail-wrapper">
          <div className="trip-detail">
@@ -58,7 +37,7 @@ class Trip extends React.Component {
            <div className="trip-header">
              <div className="trip-info">
                <h2 className="trip-name">{ tripname }</h2>
-               <div>0 Products</div>
+               <div>{ productCount } Products</div>
                <div>16 Followers</div>
              </div>
              <div className="trip-img-frame">

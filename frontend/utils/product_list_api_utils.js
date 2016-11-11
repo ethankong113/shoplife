@@ -6,3 +6,21 @@ export const fetchProductListByShopAJAX = (id, success, error) => {
      error
    });
 };
+
+export const fetchProductListByTripAJAX = (id, success, error) => {
+  $.ajax({
+     type: 'GET',
+     url: `api/productlist/trip_id/${id}`,
+     success,
+     error
+   });
+};
+
+export const fetchProductListByProfileAJAX = (username, success, error) => {
+  $.ajax({
+     type: 'GET',
+     url: `api/productlist/profile/${username}`,
+     success,
+     error
+   });
+};

@@ -63,6 +63,7 @@ class Profile extends React.Component {
     if (this._getDetail()) {
       tripCount = this._getDetail().tripCount || 0;
       shopCount = this._getDetail().shopCount || 0;
+      pinCount = this._getDetail().pinCount || 0;
       followerCount = this._getDetail().followerCount || 0;
       followingCount = this._getDetail().followingCount || 0;
     }
@@ -80,7 +81,7 @@ class Profile extends React.Component {
           </Link>
         </li>
         <li className="list-item">
-          <Link>
+          <Link to={`/${username}/pins`}>
             <span className={"list-number"}>{pinCount}</span><br /> Pins
           </Link>
         </li>

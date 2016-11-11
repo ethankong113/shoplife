@@ -31,4 +31,15 @@ class Api::PinsController < ApplicationController
     end
   end
 
+  def unpin_from_board
+    @trip = Trip.find(params[:trip_id])
+    @product = Product.find(params[:product_id])
+    pin = @trip.pins.find_by(product_id: params[:product_id])
+    if pin.destroy
+      render "api/products/show.json.jbuilder"
+    else
+      render json: ["Ooops. Something went wrong. Can't unpin the product"], status: 400
+    end
+  end
+
 end

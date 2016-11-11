@@ -11,6 +11,7 @@ import ShopBoardContainer from './shop/shop_board_container';
 import ShopContainer from './shop/shop_container';
 import TripBoardContainer from './trip/trip_board_container';
 import TripContainer from './trip/trip_container';
+import PinBoard from './pin/pin_board';
 import FollowerBoardContainer from './follower/follower_board_container';
 import FollowingBar from './following/following_bar';
 import FollowingUserContainer from './following/following_user_container';
@@ -23,6 +24,7 @@ const Root = ({store}) => {
           <Route path=":username" component={RequireAuth(UserProfileContainer)}>
             <Route path="trips" component={TripBoardContainer} />
             <Route path="shops" component={ShopBoardContainer} />
+            <Route path="pins" component={PinBoard} />
             <Route path="followers" component={FollowerBoardContainer} />
             <Route path="followings" component={FollowingBar}>
               <IndexRoute component={FollowingUserContainer} />

@@ -19,27 +19,6 @@ class Shop extends React.Component {
     this.props.clearShop();
   }
 
-  renderEditOptions() {
-    const user = this.props.currentUser;
-    const owner_id= this.props.shop.shop.owner_id;
-    if (user && user.id == owner_id) {
-      return (
-        <ul className="detail-options">
-          <li className="option-item"><button className="option-btn">Edit</button></li>
-          <li className="option-item"><button className="option-btn">Delete</button></li>
-          <li className="option-item"><button className="option-btn">Share</button></li>
-        </ul>
-      );
-    } else {
-      return (
-        <ul className="detail-options">
-          <li className="option-item"><button className="option-btn">Follow</button></li>
-          <li className="option-item"><button className="option-btn">Share</button></li>
-        </ul>
-      );
-    }
-  }
-
   backToUser(username) {
     return () => {
       this.props.router.push(`/${username}`);
@@ -47,7 +26,7 @@ class Shop extends React.Component {
   }
 
    render() {
-     const { shopname, username, user_img, img_url, description } = this.props.shop.shop;
+     const { shopname, username, user_img, img_url, description, productCount } = this.props.shop.shop;
      return (
        <div className="shop-detail-wrapper">
          <div className="shop-detail">
@@ -58,7 +37,7 @@ class Shop extends React.Component {
            <div className="shop-header">
              <div className="shop-info">
                <h2 className="shop-name">{ shopname }</h2>
-               <div>0 Products</div>
+               <div>{ productCount } Products</div>
                <div>16 Followers</div>
              </div>
              <div className="shop-img-frame">

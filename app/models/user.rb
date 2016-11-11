@@ -9,11 +9,16 @@ class User < ActiveRecord::Base
   foreign_key: :owner_id,
   dependent: :destroy
 
+  has_many :trips,
+  dependent: :destroy
+
   has_many :products,
-  through: :shops,
+  through: :trips,
   source: :products
 
-  has_many :trips
+  has_many :pins,
+  through: :trips,
+  source: :pins
 
   attr_reader :password;
 

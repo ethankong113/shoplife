@@ -14,9 +14,15 @@ class ProductBoard extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.requestType == "BY_SHOP") {
+    if (this.props.requestType === "BY_SHOP") {
       let shop_id = this.props.params.shopId;
       this.props.fetchProductListByShop(shop_id);
+    } else if (this.props.requestType === "BY_TRIP") {
+      let trip_id = this.props.params.tripId;
+      this.props.fetchProductListByTrip(trip_id);
+    } else if (this.props.requestType === "BY_PIN_BOARD") {
+      let username = this.props.params.username
+      this.props.fetchProductListByProfile(username);
     }
   }
 
@@ -26,7 +32,7 @@ class ProductBoard extends React.Component {
 
   _renderAddProduct() {
     const btnText = this.props.requestType === "BY_SHOP" ? "Create Product" : "Pin Product";
-    if (this._isOwner()) {
+    if (this._isOwner() && this.props.requestType === "BY_SHOP") {
       return (
         <li className={"board-card"} key={0}>
           <button className={"add-product-btn"} onClick={this.toggleModal("AddModal")}>
@@ -41,8 +47,11 @@ class ProductBoard extends React.Component {
   }
 
   _renderProductButton(id) {
-    if (this._isOwner()) {
+    const { requestType } = this.props;
+    if (this._isOwner() && requestType === "BY_SHOP") {
       return <button className="product-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
+    } else if (this._isOwner() && requestType === "BY_TRIP") {
+      return <button className="product-btn" onClick={this.handleUnpin(this.props.params.tripId, id)}>Unpin</button>;
     } else {
       return <button className="product-btn" onClick={this.toggleModal("ShowModal", id, true)}>Shop</button>;
     }
@@ -52,10 +61,10 @@ class ProductBoard extends React.Component {
     let list = this.props.products;
     let renderProductList = [this._renderAddProduct()];
     if (!isEmpty(list)) {
-      let productItems = list.map((product) => {
+      let productItems = list.map((product, idx) => {
         const {id, productname, price, img_url} = product;
           return (
-            <li className="board-card" key={id} onClick={this.toggleModal("ShowModal", id, false)}>
+            <li className="board-card" key={idx + 1} onClick={this.toggleModal("ShowModal", id, false)}>
               <div className="card-frame">
                 <div className="picture-frame">
                   <img className="product-picture" src={img_url} />
@@ -96,7 +105,15 @@ class ProductBoard extends React.Component {
   togglePin(showPin) {
     return e => {
       this.setState({showPin});
-    }
+    };
+  }
+
+  handleUnpin(tripId, productId) {
+    return e => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.props.unpinItemFromBoard(tripId, productId);
+    };
   }
 
   _isOwner() {

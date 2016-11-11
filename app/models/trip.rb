@@ -4,7 +4,9 @@ class Trip < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :pins
+  has_many :pins,
+  dependent: :destroy
+
   has_many :products,
   through: :pins
 

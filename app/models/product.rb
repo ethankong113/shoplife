@@ -8,7 +8,9 @@ class Product < ActiveRecord::Base
   through: :shop,
   source: :user
 
-  has_many :pins
+  has_many :pins,
+  dependent: :destroy
+  
   has_many :trips,
   through: :pins
 
