@@ -19,8 +19,17 @@ export const updateProfileAJAX = (profile, success, error) => {
 
 export const followUserAJAX = (id, success, error) => {
   $.ajax({
-     type: 'POST',
+     type: 'GET',
      url: `api/follow_user/${id}`,
+     success,
+     error
+   });
+};
+
+export const unfollowUserAJAX = (id, success, error) => {
+  $.ajax({
+     type: 'GET',
+     url: `api/unfollow_user/${id}`,
      success,
      error
    });

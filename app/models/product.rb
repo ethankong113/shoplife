@@ -8,6 +8,10 @@ class Product < ActiveRecord::Base
   through: :shop,
   source: :user
 
+  has_many :pins
+  has_many :trips,
+  through: :pins
+
   def description_length_limit
     return true if self.description.nil?
     self.description.length <= 140

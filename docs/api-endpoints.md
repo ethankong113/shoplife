@@ -55,11 +55,11 @@
 - `GET /api/shopshaveproducts/:id`
 - `DELETE /api/shopshaveproducts/:id`
 
-### TripsHaveProducts
-- `POST /api/tripshasproducts`
-- `GET /api/tripshasproducts`
-- `GET /api/tripshasproducts/:id`
-- `DELETE /api/tripshasproducts/:id`
+### Pins
+- `POST /api/pins`
+- `GET /api/pins`
+- `GET /api/pins/:id`
+- `DELETE /api/pins/:id`
 
 ### UsersFollowShops
 - `POST /api/tripshasproducts`

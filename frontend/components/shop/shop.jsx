@@ -47,24 +47,27 @@ class Shop extends React.Component {
   }
 
    render() {
-     const { shopname, username, user_img } = this.props.shop.shop;
+     const { shopname, username, user_img, img_url, description } = this.props.shop.shop;
      return (
        <div className="shop-detail-wrapper">
          <div className="shop-detail">
-           {this.renderEditOptions()}
-           <h2 className="detail-name">{ shopname }</h2>
-           <div className="detail-info">
-             <div className="detail-count">
+           <div className="shop-nav">
+             <img className="owner-img" src={ user_img } onClick={this.backToUser(username)} />
+             <img className="share-img" src="https://blog.addthiscdn.com/wp-content/uploads/2015/11/share.png"/>
+           </div>
+           <div className="shop-header">
+             <div className="shop-info">
+               <h2 className="shop-name">{ shopname }</h2>
                <div>0 Products</div>
                <div>16 Followers</div>
              </div>
-             <div className="detail-owner" onClick={this.backToUser(username)}>
-               <img className="detail-owner-img" src={ user_img } />
+             <div className="shop-img-frame">
+               <img className="shop-img" src= { img_url }/>
              </div>
            </div>
          </div>
          <div className="product-board">
-           <ProductBoardContainer />
+           <ProductBoardContainer requestType={"BY_SHOP"} />
          </div>
        </div>
      );

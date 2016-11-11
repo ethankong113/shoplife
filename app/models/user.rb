@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   through: :shops,
   source: :products
 
+  has_many :trips
+
   attr_reader :password;
 
   def self.find_by_credentials(username, password)
@@ -59,6 +61,10 @@ class User < ActiveRecord::Base
   has_many :followees,
   through: :out_follows,
   source: :followee
+
+  def follows?(followee)
+    out_follows.exists?(followee_id: followee.id)
+  end
 
 
 end

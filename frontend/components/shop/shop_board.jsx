@@ -20,7 +20,7 @@ class ShopBoard extends React.Component {
     this.props.clearShopList();
   }
 
-  renderAddShop() {
+  _renderAddShop() {
     if (this._isOwner()) {
       return (
         <li key={0} className={"board-card"}>
@@ -35,7 +35,7 @@ class ShopBoard extends React.Component {
     }
   }
 
-  renderShopButton(id) {
+  _renderShopButton(id) {
     if (this._isOwner()) {
       return <button className="shop-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
     } else {
@@ -45,7 +45,7 @@ class ShopBoard extends React.Component {
 
   renderShopList() {
     let list = this.props.shops;
-    let renderShopList = [this.renderAddShop()];
+    let renderShopList = [this._renderAddShop()];
     if (!isEmpty(list)) {
       let shopItems = list.map((shop) => {
         const {id, shopname, img_url} = shop;
@@ -58,7 +58,7 @@ class ShopBoard extends React.Component {
                 <div className="shop-detail">
                   <span className="shop-name">{shopname}</span>
                 </div>
-                <div className="shop-btn-field">{this.renderShopButton(id)}</div>
+                <div className="shop-btn-field">{this._renderShopButton(id)}</div>
               </div>
             </li>
           );

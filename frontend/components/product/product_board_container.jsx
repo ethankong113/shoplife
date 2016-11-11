@@ -7,6 +7,7 @@ import { fetchProductListByShop, clearProductList } from '../../actions/product_
 const mapStateToProps = (state) => ({
    currentUser: getCurrentUser(state.session),
    shop: state.shop,
+   trip: state.trip,
    products: getProductList(state.productList)
  });
 

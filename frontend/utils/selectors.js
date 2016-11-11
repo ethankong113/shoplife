@@ -27,3 +27,31 @@ export const getProfileId = (profile) => {
   }
   return null;
 };
+
+export const selectFollowers = (followers) => {
+  if (followers && !_.isEmpty(followers.list)) {
+    return _.values(followers.list);
+  }
+  return {};
+};
+
+export const getFollowees = (followings) => {
+  if (followings && !_.isEmpty(followings.followees)) {
+    return _.values(followings.followees);
+  }
+  return {};
+};
+
+export const getTripList = (list) => {
+  if (list && !_.isEmpty(list.trips)) {
+    return _.values(list.trips);
+  }
+  return {};
+};
+
+export const getPinList = (pins) => {
+  if (pins && !_.isEmpty(pins.list)) {
+    return _.values(pins.list);
+  }
+  return null;
+};
