@@ -34,14 +34,16 @@ class ShowProductModal extends React.Component {
         img_url = "http://www.bamfordwatchdepartment.com/wp-content/uploads/2015/06/APDualTime_Hero1.jpg";
       }
       const _productBtn = (showPin) => {
-        if (showPin) {
+        if (this.props.currentUser) {
+          if (showPin) {
+              return (
+                <button className="show-product-btn" onClick={this.props.closePin}>Close Pin Page</button>
+              );
+          } else {
             return (
-              <button className="show-product-btn" onClick={this.props.closePin}>Close Pin Page</button>
+              <button className="show-product-btn" onClick={this.props.openPin}>Shop This</button>
             );
-        } else {
-          return (
-            <button className="show-product-btn" onClick={this.props.openPin}>Shop This</button>
-          );
+          }
         }
       };
       return (

@@ -27,4 +27,22 @@ class Api::ProductListsController < ApplicationController
       render json: ["Could not find products."], status: 400
     end
   end
+
+  def find_by_query
+    @products = Product.where("LOWER(productname) LIKE LOWER(?)", "%#{params[:query]}%")
+    if @products.nil? == false
+      render 'api/product_lists/index'
+    else
+      render json: ["Could not find products."], status: 400
+    end
+  end
+
+  def find_all
+    @products = Product.all
+    if @products.nil? == false
+      render 'api/product_lists/index'
+    else
+      render json: ["Could not find products."], status: 400
+    end
+  end
 end

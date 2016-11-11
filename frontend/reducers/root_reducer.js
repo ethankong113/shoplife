@@ -10,6 +10,7 @@ import ProductListReducer from './product_list_reducer';
 import FollowerReducer from './follower_reducer';
 import FollowingReducer from './following_reducer';
 import PinReducer from './pin_reducer';
+import SearchReducer from './search_reducer';
 
 const RootReducer = combineReducers({
   session: SessionReducer,
@@ -22,7 +23,8 @@ const RootReducer = combineReducers({
   productList: ProductListReducer,
   followers: FollowerReducer,
   followings: FollowingReducer,
-  pins: PinReducer
+  pins: PinReducer,
+  search: SearchReducer
 });
 
 export default RootReducer;

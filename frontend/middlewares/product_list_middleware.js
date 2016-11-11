@@ -1,5 +1,5 @@
 import { FETCH_PRODUCT_LIST_BY_SHOP, FETCH_PRODUCT_LIST_BY_TRIP, FETCH_PRODUCT_LIST_BY_PROFILE, FETCH_PRODUCT_LIST_BY_SEARCH, receiveProductList, receiveErrors } from '../actions/product_list_actions';
-import { fetchProductListByShopAJAX, fetchProductListByTripAJAX, fetchProductListByProfileAJAX, fetchProductListBySearchAJAX } from '../utils/product_list_api_utils';
+import { fetchProductListByShopAJAX, fetchProductListByTripAJAX, fetchProductListByProfileAJAX, fetchProductListBySearchAJAX, fetchProductListByAllAJAX } from '../utils/product_list_api_utils';
 
 const ProductListMiddleware = ({getState, dispatch}) => next => action => {
   const successCB = products => {dispatch(receiveProductList(products));};
@@ -16,7 +16,11 @@ const ProductListMiddleware = ({getState, dispatch}) => next => action => {
       fetchProductListByProfileAJAX(action.username, successCB, errorCB);
       return next(action);
     case FETCH_PRODUCT_LIST_BY_SEARCH:
-      fetchProductListBySearchAJAX(action.username, successCB, errorCB);
+      if (action.query === "") {
+        fetchProductListByAllAJAX(successCB, errorCB);
+      } else {
+        fetchProductListBySearchAJAX(action.query, successCB, errorCB);
+      }
       return next(action);
     default:
       return next(action);

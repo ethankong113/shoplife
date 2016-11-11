@@ -41,12 +41,14 @@ class TripBoard extends React.Component {
   }
 
   _renderTripButton(id, user_id) {
-    if (this._isProfileOwner() && this._isTripOwner(user_id)) {
-      return <button className="trip-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
-    } else if (!this._isProfileOwner() && this._isTripOwner(user_id)) {
-      return <button className="trip-btn-static">Your Trip</button>;
-    } else {
-      return <button className="trip-btn">Follow</button>;
+    if (this.props.currentUser) {
+      if (this._isProfileOwner() && this._isTripOwner(user_id)) {
+        return <button className="trip-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
+      } else if (!this._isProfileOwner() && this._isTripOwner(user_id)) {
+        return <button className="trip-btn-static">Your Trip</button>;
+      } else {
+        return <button className="trip-btn">Follow</button>;
+      }
     }
   }
 

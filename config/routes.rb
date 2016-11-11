@@ -25,9 +25,11 @@ Rails.application.routes.draw do
     post 'trip_follows/:id', to: 'trips#follow'
     delete 'trip_follows/:id', to: 'trips#unfollow'
 
-    get 'productlist/shop_id/:shop_id', to: 'product_lists#find_by_shop_id'
-    get 'productlist/trip_id/:trip_id', to: 'product_lists#find_by_trip_id'
-    get 'productlist/profile/:username', to: 'product_lists#find_by_profile'
+    get 'productlists/shop_id/:shop_id', to: 'product_lists#find_by_shop_id'
+    get 'productlists/trip_id/:trip_id', to: 'product_lists#find_by_trip_id'
+    get 'productlists/profile/:username', to: 'product_lists#find_by_profile'
+    get 'productlists/query/:query', to: 'product_lists#find_by_query'
+    get 'productlists/all', to: 'product_lists#find_all'
 
     get 'pins/:id', to: 'pins#index'
     post 'pins/:trip_id/:product_id', to: 'pins#create'

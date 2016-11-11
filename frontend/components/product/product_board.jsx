@@ -52,12 +52,14 @@ class ProductBoard extends React.Component {
 
   _renderProductButton(id) {
     const { requestType } = this.props;
-    if (this._isOwner() && requestType === "BY_SHOP") {
-      return <button className="product-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
-    } else if (this._isOwner() && requestType === "BY_TRIP") {
-      return <button className="product-btn" onClick={this.handleUnpin(this.props.params.tripId, id)}>Unpin</button>;
-    } else {
-      return <button className="product-btn" onClick={this.toggleModal("ShowModal", id, true)}>Shop</button>;
+    if (this.props.currentUser) {
+      if (this._isOwner() && requestType === "BY_SHOP") {
+        return <button className="product-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
+      } else if (this._isOwner() && requestType === "BY_TRIP") {
+        return <button className="product-btn" onClick={this.handleUnpin(this.props.params.tripId, id)}>Unpin</button>;
+      } else {
+        return <button className="product-btn" onClick={this.toggleModal("ShowModal", id, true)}>Shop</button>;
+      }
     }
   }
 

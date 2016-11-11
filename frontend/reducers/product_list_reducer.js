@@ -12,8 +12,7 @@ const ProductListReducer = (state = _nullProductList, action ) => {
   let productId;
   switch(action.type) {
     case RECEIVE_PRODUCT_LIST:
-      newState = merge({}, state, {products: action.products, errors: []});
-      return newState;
+      return {products: action.products, errors: []};
     case CLEAR_PRODUCT_LIST:
       return _nullProductList;
     case APPEND_PRODUCT:

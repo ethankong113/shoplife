@@ -36,10 +36,12 @@ class ShopBoard extends React.Component {
   }
 
   _renderShopButton(id) {
-    if (this._isOwner()) {
-      return <button className="shop-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
-    } else {
-      return <button className="shop-btn">Follow</button>;
+    if (this.props.currentUser) {
+      if (this._isOwner()) {
+        return <button className="shop-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
+      } else {
+        return <button className="shop-btn">Follow</button>;
+      }
     }
   }
 
