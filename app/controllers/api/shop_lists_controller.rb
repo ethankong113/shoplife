@@ -1,7 +1,17 @@
 class Api::ShopListsController < ApplicationController
   def find_by_username
-    user_id = User.find_by_username(params[:username])
-    @shops = Shop.where("owner_id = ?", user_id)
+    user = User.find_by_username(params[:username])
+    @shops = user.shops
+    if @shops.nil? == false
+      render 'api/shop_lists/index'
+    else
+      render json: ["Could not find shops."], status: 400
+    end
+  end
+
+  def find_by_follower
+    user = User.find_by_username(params[:username])
+    @shops = user.followed_shops
     if @shops.nil? == false
       render 'api/shop_lists/index'
     else

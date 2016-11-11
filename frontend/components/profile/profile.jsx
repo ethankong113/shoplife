@@ -91,7 +91,7 @@ class Profile extends React.Component {
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/${username}/followings`}>
+          <Link to={`/${username}/followings/users`}>
             <span className={"list-number"}>{followingCount}</span><br /> Followings
           </Link>
         </li>

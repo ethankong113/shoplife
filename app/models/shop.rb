@@ -27,4 +27,13 @@ class Shop < ActiveRecord::Base
     self.description.length <= 140
   end
 
+  has_many :followings,
+  foreign_key: :shop_id,
+  class_name: "ShopFollow",
+  dependent: :destroy,
+  inverse_of: :shop
+
+  has_many :followers,
+  through: :followings
+
 end

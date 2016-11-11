@@ -35,3 +35,21 @@ export const deleteTripAJAX = (id, success, error) => {
      error
    });
 };
+
+export const followTripAJAX = (id, success, error) => {
+  $.ajax({
+     type: 'POST',
+     url: `api/trip_follows/${id}`,
+     success,
+     error
+   });
+};
+
+export const unfollowTripAJAX = (id, success, error) => {
+  $.ajax({
+     type: 'DELETE',
+     url: `api/trip_follows/${id}`,
+     success,
+     error
+   });
+};

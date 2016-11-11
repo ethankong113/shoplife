@@ -13,7 +13,12 @@ class TripBoard extends React.Component {
   }
 
   componentWillMount() {
-    this._fetchTripList();
+    let username = this.props.params.username;
+    if (this.props.requestType === "BY_FOLLOWER") {
+      this.props.fetchTripListByFollower(username);
+    } else {
+      this.props.fetchTripListByUser(username);
+    }
   }
 
   componentWillUnmount() {
@@ -21,7 +26,7 @@ class TripBoard extends React.Component {
   }
 
   _renderAddTrip() {
-    if (this._isOwner()) {
+    if (this._isProfileOwner() && this.props.requestType !== "BY_FOLLOWER") {
       return (
         <li key={0} className={"board-card"}>
           <button className={"add-trip-btn"} onClick={this.toggleModal("AddModal")}>
@@ -35,9 +40,11 @@ class TripBoard extends React.Component {
     }
   }
 
-  _renderTripButton(id) {
-    if (this._isOwner()) {
+  _renderTripButton(id, user_id) {
+    if (this._isProfileOwner() && this._isTripOwner(user_id)) {
       return <button className="trip-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
+    } else if (!this._isProfileOwner() && this._isTripOwner(user_id)) {
+      return <button className="trip-btn-static">Your Trip</button>;
     } else {
       return <button className="trip-btn">Follow</button>;
     }
@@ -48,7 +55,7 @@ class TripBoard extends React.Component {
     let renderTripList = [this._renderAddTrip()];
     if (!isEmpty(list)) {
       let tripItems = list.map((trip) => {
-        const {id, tripname, img_url} = trip;
+        const {id, tripname, img_url, user_id} = trip;
           return (
             <li className="board-card" key={id} onClick={this.enterTripPage(id)}>
               <div className="card-frame">
@@ -58,7 +65,7 @@ class TripBoard extends React.Component {
                 <div className="trip-detail">
                   <span className="trip-name">{tripname}</span>
                 </div>
-                <div className="trip-btn-field">{this._renderTripButton(id)}</div>
+                <div className="trip-btn-field">{this._renderTripButton(id, user_id)}</div>
               </div>
             </li>
           );
@@ -93,18 +100,18 @@ class TripBoard extends React.Component {
     };
   }
 
-  _isOwner() {
+  _isProfileOwner() {
     if (this.props.currentUser) {
       return this.props.params.username === this.props.currentUser.username;
     }
     return false;
   }
 
-  _fetchTripList() {
-    let username = this.props.params.username;
-    if (username) {
-      this.props.fetchTripListByUser(username);
+  _isTripOwner(id) {
+    if (this.props.currentUser) {
+      return id === this.props.currentUser.id;
     }
+    return false;
   }
 
    render() {

@@ -1,4 +1,5 @@
 export const FETCH_TRIP_LIST_BY_USER = "FETCH_TRIP_LIST_BY_USER";
+export const FETCH_TRIP_LIST_BY_FOLLOWER = "FETCH_TRIP_LIST_BY_FOLLOWER";
 export const FETCH_TRIP_LIST_BY_QUERY = "FETCH_TRIP_LIST_BY_QUERY";
 export const FETCH_TRIP_LIST_BY_LOCATION = "FETCH_TRIP_LIST_BY_LOCATION";
 export const RECEIVE_TRIP_LIST = "RECEIVE_TRIP_LIST";
@@ -10,6 +11,11 @@ export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 
 export const fetchTripListByUser = username => ({
   type: FETCH_TRIP_LIST_BY_USER,
+  username
+});
+
+export const fetchTripListByFollower = username => ({
+  type: FETCH_TRIP_LIST_BY_FOLLOWER,
   username
 });
 

@@ -1,7 +1,7 @@
 export const FETCH_PRODUCT_LIST_BY_SHOP = "FETCH_PRODUCT_LIST_BY_SHOP";
 export const FETCH_PRODUCT_LIST_BY_TRIP = "FETCH_PRODUCT_LIST_BY_TRIP";
 export const FETCH_PRODUCT_LIST_BY_PROFILE = "FETCH_PRODUCT_LIST_BY_PROFILE";
-export const FETCH_PRODUCT_LIST_BY_QUERY = "FETCH_PRODUCT_LIST_BY_QUERY";
+export const FETCH_PRODUCT_LIST_BY_SEARCH = "FETCH_PRODUCT_LIST_BY_SEARCH";
 export const FETCH_PRODUCT_LIST_BY_LOCATION = "FETCH_PRODUCT_LIST_BY_LOCATION";
 export const RECEIVE_PRODUCT_LIST = "RECEIVE_PRODUCT_LIST";
 export const CLEAR_PRODUCT_LIST = "CLEAR_PRODUCT_LIST";
@@ -23,6 +23,11 @@ export const fetchProductListByTrip = id => ({
 export const fetchProductListByProfile = username => ({
   type: FETCH_PRODUCT_LIST_BY_PROFILE,
   username
+});
+
+export const fetchProductListBySearch = query => ({
+  type: FETCH_PRODUCT_LIST_BY_SEARCH,
+  query
 });
 
 export const receiveProductList = products => ({

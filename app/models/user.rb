@@ -71,5 +71,32 @@ class User < ActiveRecord::Base
     out_follows.exists?(followee_id: followee.id)
   end
 
+  has_many :trip_follows,
+  foreign_key: :follower_id,
+  class_name: "TripFollow",
+  dependent: :destroy,
+  inverse_of: :follower
+
+  has_many :followed_trips,
+  through: :trip_follows,
+  source: :trip
+
+  def follows_trip?(trip)
+    trip_follows.exists?(trip_id: trip.id)
+  end
+
+  has_many :shop_follows,
+  foreign_key: :follower_id,
+  class_name: "ShopFollow",
+  dependent: :destroy,
+  inverse_of: :follower
+
+  has_many :followed_shops,
+  through: :shop_follows,
+  source: :shop
+
+  def follows_shop?(shop)
+    shop_follows.exists?(shop_id: shop.id)
+  end
 
 end

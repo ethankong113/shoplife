@@ -5,7 +5,7 @@ import LoginModalContainer from './session/login_modal_container';
 
 const Header = (props) => {
   return (<header>
-    <div className={"header-logo-wrapper"}><Link to={'/'} className={"header-logo"}>shopLife</Link></div>
+    <Link to={'/'} className={"header-logo-wrapper"}><div className={"header-logo"}>shopLife</div></Link>
     <SearchBar />
     <LoginModalContainer />
   </header>);

@@ -15,7 +15,15 @@ Rails.application.routes.draw do
     get 'following/users/:username', to: 'profiles#get_followees'
 
     get 'shoplist/username/:username', to: 'shop_lists#find_by_username'
+    get 'shoplist/follower/:username', to: 'shop_lists#find_by_follower'
     get 'triplist/username/:username', to: 'trip_lists#find_by_username'
+    get 'triplist/follower/:username', to: 'trip_lists#find_by_follower'
+
+    post 'shop_follows/:id', to: 'shops#follow'
+    delete 'shop_follows/:id', to: 'shops#unfollow'
+
+    post 'trip_follows/:id', to: 'trips#follow'
+    delete 'trip_follows/:id', to: 'trips#unfollow'
 
     get 'productlist/shop_id/:shop_id', to: 'product_lists#find_by_shop_id'
     get 'productlist/trip_id/:trip_id', to: 'product_lists#find_by_trip_id'

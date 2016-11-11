@@ -39,6 +39,34 @@ class Api::TripsController < ApplicationController
     end
   end
 
+  def follow
+    if current_user
+      @trip = Trip.find(params[:id])
+      follow = current_user.trip_follows.new(trip_id: @trip.id)
+      if follow.save
+        render "api/trips/show"
+      else
+        render json: ["Could not follow this trip"], status: 400
+      end
+    else
+      render json: ["Could not follow this trip"], status: 400
+    end
+  end
+
+  def unfollow
+    if current_user
+      @trip = Trip.find(params[:id])
+      follow = current_user.trip_follows.find_by(trip_id: @trip.id)
+      if follow.destroy
+        render "api/trips/show"
+      else
+        render json: ["Could not follow this trip"], status: 400
+      end
+    else
+      render json: ["Could not follow this trip"], status: 400
+    end
+  end
+
   private
   def trip_params
     params.require(:trip).permit(:tripname, :purpose, :date, :img_url, :user_id)

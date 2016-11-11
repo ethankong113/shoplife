@@ -24,3 +24,12 @@ export const fetchProductListByProfileAJAX = (username, success, error) => {
      error
    });
 };
+
+export const fetchProductListBySearchAJAX = (query, success, error) => {
+  $.ajax({
+     type: 'GET',
+     url: `api/productlist/query/${query}`,
+     success,
+     error
+   });
+};

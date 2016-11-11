@@ -488,12 +488,17 @@ input:focus {
       width: 100%;
       top: 200px;
       position: absolute;
-      .shop-btn, .trip-btn, .product-btn {
+      .shop-btn, .trip-btn, .product-btn, .trip-btn-static {
         @include remove-border-style();
         @include block-center();
         @include btn-preset(3px, 70px, 16px);
         @include indigo-btn();
         border-radius: 5px;
+      }
+      .trip-btn-static {
+        background-color: $googlegreen;
+        border-color: $googlegreen;
+        cursor: zoom-in;
       }
     }
     .shop-btn:hover, .trip-btn:hover, .product-btn:hover {
@@ -602,14 +607,41 @@ input:focus {
         font-size: 42px;
         margin-top: 20px;
       }
-      // .detail-owner {
-      //   .detail-owner-img {
-      //     width: 80px;
-      //     height: 80px;
-      //     border-radius: 50%;
-      //     cursor: pointer;
-      //   }
-      // }
+
+      .trip-follow-btn {
+        @include remove-border-style();
+        @include btn-preset(5px, 30px, 24px);
+        @include indigo-btn();
+        margin-top: 20px;
+        margin-left: 10px;
+        border-radius: 5px;
+      }
+
+      .trip-follow-btn:hover {
+        @include cyan-btn();
+      }
+
+      .trip-follow-btn:active {
+        @include cyan-btn-alt();
+      }
+
+      .trip-follow-btn-alt {
+        @include remove-border-style();
+        @include btn-preset(5px, 30px, 24px);
+        @include indigo-btn-alt();
+        margin-top: 20px;
+        margin-left: 10px;
+        border-radius: 5px;
+      }
+
+      .trip-follow-btn-alt:hover {
+        @include cyan-btn-alt();
+      }
+
+      .trip-follow-btn-alt:active {
+        @include cyan-btn();
+      }
+
       .shop-img-frame, .trip-img-frame {
         .shop-img, .trip-img {
           width: 220px;

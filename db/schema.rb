@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110191305) do
+ActiveRecord::Schema.define(version: 20161111084629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(version: 20161110191305) do
     t.decimal  "price"
   end
 
+  create_table "shop_follows", force: :cascade do |t|
+    t.integer  "follower_id"
+    t.integer  "shop_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string   "shopname",    null: false
     t.string   "description"
@@ -55,6 +62,13 @@ ActiveRecord::Schema.define(version: 20161110191305) do
   add_index "shops", ["lat"], name: "index_shops_on_lat", using: :btree
   add_index "shops", ["lng"], name: "index_shops_on_lng", using: :btree
   add_index "shops", ["location"], name: "index_shops_on_location", using: :btree
+
+  create_table "trip_follows", force: :cascade do |t|
+    t.integer  "follower_id"
+    t.integer  "trip_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "trips", force: :cascade do |t|
     t.string   "tripname",   null: false

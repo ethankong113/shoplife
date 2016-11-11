@@ -6,3 +6,12 @@ export const fetchTripListByUserAJAX = (username, success, error) => {
      error
    });
 };
+
+export const fetchTripListByFollowerAJAX = (username, success, error) => {
+  $.ajax({
+     type: 'GET',
+     url: `api/triplist/follower/${username}`,
+     success,
+     error
+   });
+};

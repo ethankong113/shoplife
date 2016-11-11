@@ -20,4 +20,13 @@ class Trip < ActiveRecord::Base
     pins.exists?(product_id: product.id)
   end
 
+  has_many :followings,
+  foreign_key: :trip_id,
+  class_name: "TripFollow",
+  dependent: :destroy,
+  inverse_of: :trip
+
+  has_many :followers,
+  through: :followings
+
 end

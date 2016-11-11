@@ -9,6 +9,8 @@ export const RECEIVE_TRIP_TO_UPDATE = "RECEIVE_TRIP_TO_UPDATE";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const CLEAR_TRIP = "CLEAR_TRIP";
 export const CLEAR_TRIP_MESSAGE = "CLEAR_TRIP_MESSAGE";
+export const FOLLOW_TRIP = "FOLLOW_TRIP";
+export const UNFOLLOW_TRIP = "UNFOLLOW_TRIP";
 
 export const createTrip = (trip) => ({
   type: CREATE_TRIP,
@@ -61,4 +63,14 @@ export const clearTrip = () => ({
 
 export const clearTripMessage = () => ({
   type: CLEAR_TRIP_MESSAGE
+});
+
+export const followTrip = (id) => ({
+  type: FOLLOW_TRIP,
+  id
+});
+
+export const unfollowTrip = (id) => ({
+  type: UNFOLLOW_TRIP,
+  id
 });
