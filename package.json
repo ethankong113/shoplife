@@ -35,10 +35,6 @@
     "webpack": "^1.13.3"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-livereload": "^3.8.1",
-    "webpack-livereload-plugin": "^0.9.0",
-    "webpack-watch-livereload-plugin": "0.0.1"
   },
   "engines": {
     "node": "4.1.1",
