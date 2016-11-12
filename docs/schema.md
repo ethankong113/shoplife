@@ -57,7 +57,7 @@ id          | integer   | not null, primary key
 shop_id     | integer   | not null, foreign key (references shops), indexed
 product_id  | integer   | not null, foreign key (references products), indexed
 
-## trips_have_products
+## pins
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key

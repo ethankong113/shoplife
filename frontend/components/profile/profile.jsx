@@ -10,6 +10,8 @@ class Profile extends React.Component {
     } else {
       this.state = {owner: false};
     }
+    this.followUser = this.followUser.bind(this);
+    this.unfollowUser = this.unfollowUser.bind(this);
   }
 
   componentWillMount() {
@@ -49,18 +51,27 @@ class Profile extends React.Component {
     let status = this.state.owner;
     if (status) {
       return (<button className="profile-btn">Edit Profile</button>);
+    } else if (this.props.profile && this.props.profile.detail.followed) {
+      return (<button className="profile-btn-alt" onClick={this.unfollowUser}>Unfollow</button>);
     } else {
-      return (<button className="profile-btn">Follow</button>);
+      return (<button className="profile-btn" onClick={this.followUser}>Follow</button>);
     }
   }
 
   renderNavbar() {
     let [tripCount, shopCount, pinCount, followerCount, followingCount] = [0,0,0,0,0];
+    if (this._getDetail()) {
+      tripCount = this._getDetail().tripCount || 0;
+      shopCount = this._getDetail().shopCount || 0;
+      pinCount = this._getDetail().pinCount || 0;
+      followerCount = this._getDetail().followerCount || 0;
+      followingCount = this._getDetail().followingCount || 0;
+    }
     let username = this._safeParams();
     return (
       <ul className="navbar-list">
         <li className="list-item">
-          <Link>
+          <Link to={`/${username}/trips`}>
             <span className={"list-number"}>{tripCount}</span><br /> Trips
           </Link>
         </li>
@@ -70,22 +81,36 @@ class Profile extends React.Component {
           </Link>
         </li>
         <li className="list-item">
-          <Link>
+          <Link to={`/${username}/pins`}>
             <span className={"list-number"}>{pinCount}</span><br /> Pins
           </Link>
         </li>
         <li className="list-item">
-          <Link>
+          <Link to={`/${username}/followers`}>
             <span className={"list-number"}>{followerCount}</span><br /> Followers
           </Link>
         </li>
         <li className="list-item">
-          <Link>
+          <Link to={`/${username}/followings/users`}>
             <span className={"list-number"}>{followingCount}</span><br /> Followings
           </Link>
         </li>
       </ul>
     );
+  }
+
+  followUser() {
+    if (this.props.currentUser) {
+      let id = this.props.profile.detail.id;
+      this.props.followUser(id);
+    }
+  }
+
+  unfollowUser() {
+    if (this.props.currentUser) {
+      let id = this.props.profile.detail.id;
+      this.props.unfollowUser(id);
+    }
   }
 
   _isOwner() {

@@ -8,9 +8,12 @@ $deepred: #B71C1C;
 $cyan500: #00BCD4;
 $lightindigo: #536DFE;
 $indigo: #304FFE;
-$googlegreen: #00C853;
+$googlegreen: #00E676;
 $lightgreen: #76FF03;
 $darkgreen: #00695C;
+$plaingrey: #E7E7E8;
+$lightgrey: #C9C9CA;
+$black: #404040;
 
 $headerHeight: 55px;
 
@@ -77,15 +80,15 @@ $headerHeight: 55px;
   @include btn-style($cyan500, white, $cyan500, 2px);
 }
 
-@mixin closn-btn() {
+@mixin close-btn() {
   @include btn-preset(5px, 10px, 18px);
   border: $mildred 2px solid;
   background-color: white;
   color: $mildred;
   border-radius: 50%;
   float: right;
-  margin-top: -30px;
-  margin-right: -20px;
+  margin-top: -40px;
+  margin-right: -38px;
   cursor: pointer;
 }
 
@@ -108,6 +111,12 @@ $headerHeight: 55px;
   @include form-inputs();
   width: 50%;
   border-bottom: 2px $indigo solid;
+}
+
+@mixin clear-fix {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 html, body {
@@ -146,19 +155,13 @@ h1, h2, h3 {
 
 ul {
   list-style: none;
-}
-
-.hide-label {
-  visibility: hidden;
-}
-
-.display-label {
-  visibility: visible;
+  padding: 0px;
 }
 
 header {
   background-color: white;
   height: $headerHeight;
+  border-top: 1px solid lightgrey;
   border-bottom: 1px solid lightgrey;
   display: flex;
   justify-content: space-between;
@@ -204,6 +207,24 @@ header {
       box-sizing: border-box;
       border-bottom: 2px solid $shoplifered;
     }
+    .search-bar-btn {
+      @include remove-border-style();
+      @include btn-preset(10px, 10px, 18px);
+      margin-left: 20px;
+      border: 2px $shoplifered solid;
+      border-radius: 5px;
+      color: white;
+      background-color: $shoplifered;
+    }
+    .search-bar-btn:hover {
+      color: $shoplifered;
+      background-color: white;
+    }
+    .search-bar-btn:active {
+      color: white;
+      background-color: red;
+      border-color: red;
+    }
   }
 
   .header-btn-panel {
@@ -229,7 +250,7 @@ input:focus {
 }
 
 .close-form-btn {
-  @include closn-btn();
+  @include close-btn();
 }
 
 .close-form-btn:hover {
@@ -350,27 +371,38 @@ input:focus {
         .profile-btn {
           @include btn-preset(5px, 10px, 18px);
           @include remove-border-style();
-          @include indigo-btn;
+          @include indigo-btn();
           margin-top: 20px;
           border-radius: 5px;
         }
         .profile-btn:hover {
-          @include cyan-btn;
+          @include cyan-btn();
         }
         .profile-btn:active {
-          @include cyan-btn-alt;
+          @include cyan-btn-alt();
+        }
+        .profile-btn-alt {
+          @include btn-preset(5px, 10px, 18px);
+          @include remove-border-style();
+          @include indigo-btn-alt();
+          margin-top: 20px;
+          border-radius: 5px;
+        }
+        .profile-btn-alt:hover {
+          @include cyan-btn-alt();
+        }
+        .profile-btn-alt:active {
+          @include cyan-btn();
         }
       }
     }
   }
   .profile-nav {
+    @include flex-jc(center);
     margin-top: 40px;
-    display: flex;
-    justify-content: center;
     .navbar-list {
+      @include flex-jc(space-around);
       width: 60%;
-      display: flex;
-      justify-content: space-around;
       flex-wrap: wrap;
       .list-item {
         font-size: 18px;
@@ -380,16 +412,21 @@ input:focus {
       }
     }
   }
-  .shop-board-wrapper {
+  .shop-board-wrapper, .trip-board-wrapper {
     @include flex-jc(center);
     margin-top: 80px;
     margin-bottom: 80px;
-    .shop-board {
+    .shop-board, .trip-board {
       @include flex-jc(space-around);
       flex-wrap: wrap;
       width: 80%;
     }
   }
+}
+
+.shop-list, .trip-list, .product-list {
+  @include flex-jc(space-around);
+  flex-wrap: wrap;
 }
 
 .board-card {
@@ -398,7 +435,8 @@ input:focus {
   width: 236px;
   border: white 10px solid;
   border-radius: 20px;
-  .add-shop-btn, .add-product-btn {
+  margin: 15px 20px;
+  .add-shop-btn, .add-trip-btn, .add-product-btn {
     @include remove-border-style();
     border-radius: 8px;
     border: 1px solid lightgrey;
@@ -407,7 +445,7 @@ input:focus {
     width: 100%;
     background-color: white;
     cursor: pointer;
-    .add-shop-content, .add-product-content {
+    .add-shop-content, .add-trip-content, .add-product-content {
       @include block-center();
       height: 150px;
       width: 150px;
@@ -415,7 +453,7 @@ input:focus {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      .add-shop-sign, .add-product-sign {
+      .add-shop-sign, .add-trip-sign, .add-product-sign {
         @include btn-preset(6px, 14px, 36px);
         padding-top: 0px;
         display: block;
@@ -423,11 +461,74 @@ input:focus {
         border-radius: 50%;
         color: white;
       }
-      .add-shop-text, .add-product-text {
+      .add-shop-text, .add-trip-text, .add-product-text {
         margin-top: 20px;
         font-size: 18px;
         color: lightgrey;
       }
+    }
+  }
+  .card-frame {
+    @include block-center();
+    border-radius: 8px;
+    height: 100%;
+    width: 100%;
+    cursor: zoom-in;
+    position: relative;
+    .picture-frame {
+      @include block-center();
+      width: 236px;
+      height: 236px;
+      border-radius: 7px;
+      .shop-picture, .trip-picture, .product-picture {
+        border-radius: 7px;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .shop-detail, .trip-detail, .product-detail {
+      @include block-center();
+      margin-top: 10px;
+      width: 90%;
+      font-size: 20px;
+      .shop-name, .trip-name, .product-name {
+        float: left;
+      }
+      .product-price {
+        float: right;
+      }
+    }
+    .shop-detail:after, .trip-detail:after, .product-detail:after {
+      @include clear-fix();
+    }
+    .shop-btn-field, .trip-btn-field, .product-btn-field {
+      visibility: hidden;
+      width: 100%;
+      top: 200px;
+      position: absolute;
+      .shop-btn, .trip-btn, .product-btn, .trip-btn-static {
+        @include remove-border-style();
+        @include block-center();
+        @include btn-preset(3px, 70px, 16px);
+        @include indigo-btn();
+        border-radius: 5px;
+      }
+      .trip-btn-static {
+        background-color: $googlegreen;
+        border-color: $googlegreen;
+        cursor: zoom-in;
+      }
+    }
+    .shop-btn:hover, .trip-btn:hover, .product-btn:hover {
+      @include cyan-btn();
+    }
+    .shop-btn:active, .trip-btn:active, .product-btn:active {
+      @include cyan-btn-alt();
+    }
+  }
+  .card-frame:hover {
+    .shop-btn-field, .trip-btn-field, .product-btn-field {
+      visibility: visible;
     }
   }
 }
@@ -436,64 +537,137 @@ input:focus {
   border-color: lightgrey;
 }
 
-.add-shop-form {
+.shop-form, .trip-form {
   margin-top: 10px;
 
-  .add-shop-field {
+  .shop-field, .trip-field {
     @include input-full-field();
   }
 
-  .add-shop-field:focus {
+  .shop-field:focus, .trip-field:focus {
     @include remove-border-style();
     color: $cyan500;
     border-bottom: 2px $cyan500 solid;
   }
 
-  .add-shop-textarea {
+  .shop-textarea, .trip-textarea {
     max-width: 100%;
     max-height: 80px;
   }
 
-  .add-shop-btn {
+  .shop-btn, .trip-btn {
     @include large-submit-btn;
   }
 
-  .add-shop-btn:hover {
+  .shop-btn:hover, .trip-btn:hover {
     @include cyan-btn;
   }
 
-  .add-shop-btn:active {
+  .shop-btn:active, .trip-btn:active {
     @include cyan-btn-alt;
+  }
+
+  .shop-btn-alt, .trip-btn-alt {
+    @include large-submit-btn();
+    @include indigo-btn-alt();
+  }
+
+  .shop-btn-alt:hover, .trip-btn-alt:hover {
+    @include cyan-btn-alt();
+  }
+
+  .shop-btn-alt:active, .trip-btn-alt:active {
+    @include cyan-btn();
   }
 }
 
-.shop-detail-wrapper {
-  .shop-detail {
+.shop-detail-wrapper, .trip-detail-wrapper {
+  .shop-detail, .trip-detail {
     @include block-center();
     margin-top: 20px;
     width: 60%;
-    .detail-options {
-      display: inline-block;
-      width: 100%;
-      .option-item {
+    // .shop-options {
+    //   display: inline-block;
+    //   width: 100%;
+    //   .option-item {
+    //     float: left;
+    //     .option-btn {
+    //       @include remove-border-style();
+    //       @include indigo-btn-alt();
+    //       @include btn-preset(5px, 10px, 16px);
+    //       border-radius: 3px;
+    //       width: 80px;
+    //       margin-left: 10px;
+    //       margin-right: 10px;
+    //     }
+    //   }
+    // }
+    .shop-nav, .trip-nav {
+      .owner-img, .user-img, .share-img {
         float: left;
-        .option-btn {
-          @include remove-border-style();
-          @include indigo-btn-alt();
-          @include btn-preset(5px, 10px, 16px);
-          border-radius: 3px;
-          width: 80px;
-          margin-left: 10px;
-          margin-right: 10px;
-        }
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-right: 20px;
+      }
+      .owner-img:hover, .user-img:hover {
+        content: url(http://www.abitofgreen.com/wp-content/themes/abitofgreen/images/blank-user.gif);
       }
     }
-    .detail-name {
-      font-size: 42px;
+    .shop-nav:after, .trip-nav:after {
+      @include clear-fix();
     }
-    .detail-info {
+    .shop-header, .trip-header {
       @include flex-jc(space-between);
       margin-top: 20px;
+      .shop-name, .trip-name {
+        font-size: 42px;
+        margin-top: 20px;
+      }
+
+      .trip-follow-btn {
+        @include remove-border-style();
+        @include btn-preset(5px, 30px, 24px);
+        @include indigo-btn();
+        margin-top: 20px;
+        margin-left: 10px;
+        border-radius: 5px;
+      }
+
+      .trip-follow-btn:hover {
+        @include cyan-btn();
+      }
+
+      .trip-follow-btn:active {
+        @include cyan-btn-alt();
+      }
+
+      .trip-follow-btn-alt {
+        @include remove-border-style();
+        @include btn-preset(5px, 30px, 24px);
+        @include indigo-btn-alt();
+        margin-top: 20px;
+        margin-left: 10px;
+        border-radius: 5px;
+      }
+
+      .trip-follow-btn-alt:hover {
+        @include cyan-btn-alt();
+      }
+
+      .trip-follow-btn-alt:active {
+        @include cyan-btn();
+      }
+
+      .shop-img-frame, .trip-img-frame {
+        .shop-img, .trip-img {
+          width: 220px;
+          height: 220px;
+          border-radius: 50%;
+          border: $lightgrey 2px solid;
+        }
+      }
     }
   }
 
@@ -509,44 +683,229 @@ input:focus {
   }
 }
 
-.add-product-form {
+.product-form {
   margin-top: 10px;
 
-  .add-product-field {
+  .product-field {
     @include input-full-field();
   }
 
-  .add-product-field:focus {
+  .product-field:focus {
     @include remove-border-style();
     color: $cyan500;
     border-bottom: 2px $cyan500 solid;
   }
 
-  .add-product-textarea {
+  .product-textarea {
     max-width: 100%;
     max-height: 80px;
   }
 
-  .add-product-btn {
+  .product-btn {
     @include large-submit-btn;
   }
 
-  .add-product-btn:hover {
+  .product-btn:hover {
     @include cyan-btn;
   }
 
-  .add-product-btn:active {
+  .product-btn:active {
     @include cyan-btn-alt;
   }
 
-  .add-product-price {
+  .product-btn-alt {
+    @include large-submit-btn;
+    @include indigo-btn-alt;
+  }
+
+  .product-btn-alt:hover {
+    @include cyan-btn-alt;
+  }
+
+  .product-btn-alt:active {
+    @include cyan-btn;
+  }
+
+  .product-price {
     display: flex;
     justify-content: space-between;
-    .add-product-sign {
+    .product-sign {
       font-size: 20px;
       margin-top: 15px;
       margin-bottom: 15px;
       margin-right: 8px;
     }
   }
+}
+
+.show-product {
+  @include flex-jc(space-between);
+
+  .show-product-table {
+    margin-top: 10px;
+    width: 100%;
+    .show-product-img {
+      width: 100%;
+      margin-top: -20px;
+      img {
+        border-radius: 15px;
+        width: 100%;
+      }
+    }
+    .show-product-info {
+      margin-top: 10px;
+      @include flex-jc(space-between);
+      .show-product-name {
+        margin-right: 10px;
+        font-size: 22px;
+      }
+      .show-product-price {
+        font-size: 30px;
+      }
+    }
+    .show-product-description {
+      margin-top: 10px;
+    }
+    .show-product-btn {
+      @include remove-border-style();
+      @include indigo-btn();
+      @include btn-preset(10px, 30px, 24px);
+      @include block-center();
+      margin-top: 40px;
+      border-radius: 5px;
+    }
+    .show-product-btn:hover {
+      @include cyan-btn();
+    }
+    .show-product-btn:active {
+      @include cyan-btn-alt();
+    }
+  }
+  .pin-table {
+    width: 80%;
+    margin-left: 20px;
+    border-left: 1px solid $plaingrey;
+    .pin-header {
+      font-size: 20px;
+      padding-left: 10px;
+      padding-bottom: 5px;
+      margin-left: 5px;
+      border-bottom: 1px solid $plaingrey;
+    }
+    .pin-list-wrapper {
+      .pin-list {
+        .pin-item {
+          @include flex-jc(space-between);
+          align-items: center;
+          margin-top: 5px;
+          margin-bottom: 5px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          cursor: pointer;
+          .item-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-left: 8px;
+          }
+          .item-name {
+            font-size: 16px;
+          }
+          .item-btn {
+            @include remove-border-style();
+            @include btn-preset(2px, 6px, 16px);
+            @include indigo-btn();
+            border-radius: 5px;
+            margin-right: 8px;
+          }
+          .item-btn-alt {
+            @include remove-border-style();
+            @include btn-preset(2px, 6px, 16px);
+            @include indigo-btn-alt();
+            border-radius: 5px;
+            margin-right: 8px;
+          }
+        }
+        .pin-item:hover {
+          background-color: $plaingrey;
+        }
+      }
+    }
+  }
+}
+
+.follower-board-wrapper, .followee-board-wrapper {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  .follower-board, .followee-board {
+    @include block-center();
+    width: 80%;
+    .follower-list, .followee-list {
+      @include flex-jc(space-around);
+      .follower-item, .followee-item {
+        text-align: center;
+        border-radius: 5px;
+        border: 3px white solid;
+        padding: 10px 20px;
+        cursor: pointer;
+        .follower-img, .followee-img {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
+        }
+        .follower-name, .followee-name {
+          margin-top: 10px;
+          font-size: 20px;
+        }
+      }
+      .follower-item:hover, .followee-item:hover {
+        border: 3px lightgrey solid;
+      }
+    }
+  }
+}
+
+.following-panel {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  .following-bar-wrapper {
+    user-select: none;
+    .following-navbar {
+      @include flex-jc(center);
+      .navbar-list {
+        @include flex-jc(space-between);
+        padding: 0;
+        background-color: $plaingrey;
+        padding: 3px 5px;
+        border-radius: 5px;
+        .navbar-item {
+          padding: 5px 30px;
+          margin: 2px;
+          border-radius: 5px;
+          font-size: 22px;
+          color: grey;
+          cursor: pointer;
+        }
+        .navbar-item:hover {
+          background-color: $lightgrey;
+        }
+        .navbar-item-active {
+          background-color: white;
+          color: $black;
+        }
+      }
+    }
+  }
+}
+
+.product-board {
+  @include block-center();
+  margin-top: 80px;
+  margin-bottom: 80px;
+  width: 80%;
 }
