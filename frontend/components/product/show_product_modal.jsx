@@ -11,7 +11,10 @@ class ShowProductModal extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {createPin: false, tripname: "", date: ""};
     this.handlePin = this.handlePin.bind(this);
+    this.toggleCreatePin = this.toggleCreatePin.bind(this);
+    this.update = this.update.bind(this);
   }
 
   componentWillUpdate(nextProps) {
@@ -61,8 +64,47 @@ class ShowProductModal extends React.Component {
   }
 
   renderPinTable() {
+    const { showPin } = this.props;
+    if (showPin) {
+      return (
+        <div className="pin-table">
+          <div>
+            <h2 className="pin-header">Choose Trip</h2>
+            <div className="pin-list-wrapper">
+              <ul className="pin-list">
+                {  this._renderPinList() }
+              </ul>
+            </div>
+          </div>
+          <div className="pin-create-trip" onClick={this.toggleCreatePin}>
+            { this._renderBtnSymbol() }
+            { this._renderBtnText() }
+          </div>
+        </div>
+      );
+    }
+  }
+
+  _renderBtnSymbol() {
+    const {createPin} = this.state;
+    if (!createPin) {
+      return <div className="create-btn-symbol">+</div>
+    }
+  }
+
+  _renderBtnText() {
+    const {createPin} = this.state;
+    if (!createPin) {
+      return <div className="create-btn-text">Create a Trip</div>
+    } else {
+      return <div className="create-btn-text">Back to Trips</div>
+    }
+  }
+
+  _renderPinList() {
     const { showPin, pins } = this.props;
-    if (showPin && pins) {
+    const { createPin, tripname, date } = this.state;
+    if (showPin && pins && !createPin) {
       let pinList = pins.map((pin) => {
         const { id, tripname, img_url, has_pin } = pin;
         const _itemBtn = (has_pin) => {
@@ -80,18 +122,15 @@ class ShowProductModal extends React.Component {
           </li>
         );
       });
-
+      return pinList;
+    } else if (showPin && createPin) {
       return (
-        <div className="pin-table">
-          <h2 className="pin-header">Choose Trip</h2>
-          <div className="pin-list-wrapper">
-            <ul className="pin-list">
-              {  pinList }
-            </ul>
-          </div>
-          <div className="pin-create-trip">
-          </div>
-        </div>
+        <form>
+          <label>Trip Name</label>
+          <input type="text" name="tripname" value={tripname} onChange={this.update("tripname")}/>
+          <label>Date</label>
+          <input type="date" name="date" value={date} onChange={this.update("date")}/>
+        </form>
       );
     }
   }
@@ -105,6 +144,19 @@ class ShowProductModal extends React.Component {
         this.props.pinItem(tripId, this.props.productId);
       }
     };
+  }
+
+  toggleCreatePin(e) {
+    const {createPin} = this.state;
+    e.preventDefault();
+    createPin ? this.setState({createPin: false}) : this.setState({createPin: true});
+  }
+
+  update(field) {
+    return e => {
+      e.preventDefault();
+      this.setState({[field]: e.target.value});
+    }
   }
 
   _modalSize() {

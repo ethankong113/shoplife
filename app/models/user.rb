@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   validates :username, :session_token, uniqueness: true
   # validates :email, uniqueness: true
   validates :password, length: {minimum: 6, allow_nil: true}
-  after_initialize :ensure_session_token
+  after_initialize :ensure_session_token, :ensure_profile_img
 
   has_many :shops,
   foreign_key: :owner_id,
@@ -45,6 +45,12 @@ class User < ActiveRecord::Base
 
   def is_password?(password)
     BCrypt::Password.new(self.password_digest).is_password?(password)
+  end
+
+  def ensure_profile_img
+    if (self.img_url.nil? || self.img_url == "")
+      self.img_url = "http://millionpictures.co/media/111/photos/55c0266812111.jpg"
+    end
   end
 
   has_many :in_follows,

@@ -15,9 +15,25 @@ class SearchBoard extends React.Component {
     }
   }
 
+  renderBannerText() {
+    const { currentUser, search } = this.props;
+    if (search.query != "") {
+      return `Search Results for \"${search.query}\"`;
+    } else if (search.query == "" && currentUser) {
+      return `Welcome back, ${currentUser.username}!`;
+    } else {
+      return "Welcome to shopLife! Sign up to get the full experience!";
+    }
+  }
+
    render() {
      return (
-       <ProductBoardContainer requestType="BY_SEARCH" />
+       <div className="search-board">
+         <div className="search-board-banner">
+           { this.renderBannerText() }
+         </div>
+         <ProductBoardContainer requestType="BY_SEARCH" />
+       </div>
      );
    }
  }

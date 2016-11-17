@@ -21,6 +21,13 @@ export const getProductList = (list) => {
   return {};
 };
 
+export const getProfileDetail = (profile) => {
+  if (profile && !_.isEmpty(profile.detail)) {
+    return profile.detail;
+  }
+  return null;
+};
+
 export const getProfileId = (profile) => {
   if (profile && !_.isEmpty(profile.detail)) {
     return profile.detail.id;

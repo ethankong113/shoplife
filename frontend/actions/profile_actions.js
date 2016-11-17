@@ -1,6 +1,7 @@
 export const READ_PROFILE = "READ_PROFILE";
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
 export const RECEIVE_PROFILE = "RECEIVE_PROFILE";
+export const CLEAR_PROFILE = "CLEAR_PROFILE";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
 
@@ -17,6 +18,10 @@ export const updateProfile = profile => ({
 export const receiveProfile = profile => ({
   type: RECEIVE_PROFILE,
   profile
+});
+
+export const clearProfile = () => ({
+  type: CLEAR_PROFILE
 });
 
 export const followUser = id => ({

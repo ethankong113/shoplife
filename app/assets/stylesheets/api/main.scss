@@ -158,10 +158,14 @@ ul {
   padding: 0px;
 }
 
+input:focus {
+  outline: none;
+}
+
 header {
   background-color: white;
   height: $headerHeight;
-  border-top: 1px solid lightgrey;
+  border-top: 3px solid $shoplifered;
   border-bottom: 1px solid lightgrey;
   display: flex;
   justify-content: space-between;
@@ -203,10 +207,6 @@ header {
       font-family: 'Open Sans', sans-serif;
       border-bottom: 2px solid white;
     }
-    .search-bar-input:hover {
-      box-sizing: border-box;
-      border-bottom: 2px solid $shoplifered;
-    }
     .search-bar-btn {
       @include remove-border-style();
       @include btn-preset(10px, 10px, 18px);
@@ -215,15 +215,15 @@ header {
       border-radius: 5px;
       color: white;
       background-color: $shoplifered;
-    }
-    .search-bar-btn:hover {
-      color: $shoplifered;
-      background-color: white;
-    }
-    .search-bar-btn:active {
-      color: white;
-      background-color: red;
-      border-color: red;
+      &:hover {
+        color: $shoplifered;
+        background-color: white;
+      }
+      &:active {
+        color: white;
+        background-color: red;
+        border-color: red;
+      }
     }
   }
 
@@ -236,35 +236,35 @@ header {
       height: $headerHeight;
       background-color: white;
       border-left: lightgrey 1px solid;
-    }
-
-    .header-btn:hover {
-      background-color: $shoplifered;
-      color: white;
+      &:hover {
+        background-color: $shoplifered;
+        color: white;
+      }
     }
   }
 }
 
-input:focus {
-  outline: none;
+.search-board {
+  .search-board-banner {
+    background-color: $shoplifered;
+    color: white;
+    font-size: 36px;
+    padding-left: 80px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
 }
 
 .close-form-btn {
   @include close-btn();
-}
-
-.close-form-btn:hover {
-  background-color: $mildred;
-  color: white;
-}
-
-.close-form-btn:active {
-  border-color: $deepred;
-  background-color: $deepred;
-}
-
-.close-form-btn:focus {
-  outline: none;
+  &:hover {
+    background-color: $mildred;
+    color: white;
+  }
+  &:active {
+    border-color: $deepred;
+    background-color: $deepred;
+  }
 }
 
 .session-form {
@@ -291,14 +291,12 @@ input:focus {
 
   .submit-btn {
     @include large-submit-btn;
-  }
-
-  .submit-btn:hover {
-    @include cyan-btn;
-  }
-
-  .submit-btn:active {
-    @include cyan-btn-alt;
+    &:hover {
+      @include cyan-btn;
+    }
+    &:active {
+      @include cyan-btn-alt;
+    }
   }
 
   .form-divider {
@@ -313,6 +311,21 @@ input:focus {
     display: flex;
     justify-content: space-around;
 
+    .indigo-btn {
+      @include block-center();
+      @include remove-border-style();
+      @include indigo-btn;
+      border-radius: 5px;
+      background-color: white;
+      color: $indigo;
+      &:hover {
+        @include cyan-btn;
+      }
+      &:active {
+        @include cyan-btn-alt;
+      }
+    }
+
     .session-toggle-btn {
       @include block-center();
       @include remove-border-style();
@@ -321,14 +334,12 @@ input:focus {
       border-radius: 5px;
       background-color: white;
       color: $indigo;
-    }
-
-    .session-toggle-btn:hover {
-      @include cyan-btn;
-    }
-
-    .session-toggle-btn:active {
-      @include cyan-btn-alt;
+      &:hover {
+        @include cyan-btn;
+      }
+      &:active {
+        @include cyan-btn-alt;
+      }
     }
   }
 
@@ -336,14 +347,12 @@ input:focus {
     @include indigo-btn-alt;
     margin-top: 5px;
     width: 100%;
-  }
-
-  .guess-login-btn:hover {
-    @include cyan-btn-alt;
-  }
-
-  .guess-login-btn:active {
-    @include cyan-btn;
+    &:hover {
+      @include cyan-btn-alt;
+    }
+    &:active {
+      @include cyan-btn;
+    }
   }
 }
 
@@ -374,12 +383,12 @@ input:focus {
           @include indigo-btn();
           margin-top: 20px;
           border-radius: 5px;
-        }
-        .profile-btn:hover {
-          @include cyan-btn();
-        }
-        .profile-btn:active {
-          @include cyan-btn-alt();
+          &:hover {
+            @include cyan-btn;
+          }
+          &:active {
+            @include cyan-btn-alt;
+          }
         }
         .profile-btn-alt {
           @include btn-preset(5px, 10px, 18px);
@@ -387,12 +396,12 @@ input:focus {
           @include indigo-btn-alt();
           margin-top: 20px;
           border-radius: 5px;
-        }
-        .profile-btn-alt:hover {
-          @include cyan-btn-alt();
-        }
-        .profile-btn-alt:active {
-          @include cyan-btn();
+          &:hover {
+            @include cyan-btn-alt;
+          }
+          &:active {
+            @include cyan-btn;
+          }
         }
       }
     }
@@ -537,47 +546,46 @@ input:focus {
   border-color: lightgrey;
 }
 
-.shop-form, .trip-form {
-  margin-top: 10px;
+$forms: shop, trip;
+@each $form in $forms {
+  .#{$form}-form {
+    margin-top: 10px;
 
-  .shop-field, .trip-field {
-    @include input-full-field();
-  }
+    .#{$form}-field {
+      @include input-full-field();
+    }
 
-  .shop-field:focus, .trip-field:focus {
-    @include remove-border-style();
-    color: $cyan500;
-    border-bottom: 2px $cyan500 solid;
-  }
+    .#{$form}-field:focus {
+      @include remove-border-style();
+      color: $cyan500;
+      border-bottom: 2px $cyan500 solid;
+    }
 
-  .shop-textarea, .trip-textarea {
-    max-width: 100%;
-    max-height: 80px;
-  }
+    .#{$form}-textarea {
+      max-width: 100%;
+      max-height: 80px;
+    }
 
-  .shop-btn, .trip-btn {
-    @include large-submit-btn;
-  }
+    .#{$form}-btn {
+      @include large-submit-btn;
+      &:hover {
+        @include cyan-btn;
+      }
+      &:active {
+        @include cyan-btn-alt;
+      }
+    }
 
-  .shop-btn:hover, .trip-btn:hover {
-    @include cyan-btn;
-  }
-
-  .shop-btn:active, .trip-btn:active {
-    @include cyan-btn-alt;
-  }
-
-  .shop-btn-alt, .trip-btn-alt {
-    @include large-submit-btn();
-    @include indigo-btn-alt();
-  }
-
-  .shop-btn-alt:hover, .trip-btn-alt:hover {
-    @include cyan-btn-alt();
-  }
-
-  .shop-btn-alt:active, .trip-btn-alt:active {
-    @include cyan-btn();
+    .#{$form}-btn-alt {
+      @include large-submit-btn();
+      @include indigo-btn-alt();
+      &:hover {
+        @include cyan-btn-alt();
+      }
+      &:active {
+        @include cyan-btn();
+      }
+    }
   }
 }
 
@@ -586,22 +594,6 @@ input:focus {
     @include block-center();
     margin-top: 20px;
     width: 60%;
-    // .shop-options {
-    //   display: inline-block;
-    //   width: 100%;
-    //   .option-item {
-    //     float: left;
-    //     .option-btn {
-    //       @include remove-border-style();
-    //       @include indigo-btn-alt();
-    //       @include btn-preset(5px, 10px, 16px);
-    //       border-radius: 3px;
-    //       width: 80px;
-    //       margin-left: 10px;
-    //       margin-right: 10px;
-    //     }
-    //   }
-    // }
     .shop-nav, .trip-nav {
       .owner-img, .user-img, .share-img {
         float: left;
@@ -610,13 +602,13 @@ input:focus {
         border-radius: 50%;
         cursor: pointer;
         margin-right: 20px;
+        &:hover {
+          content: url(http://www.abitofgreen.com/wp-content/themes/abitofgreen/images/blank-user.gif);
+        }
       }
-      .owner-img:hover, .user-img:hover {
-        content: url(http://www.abitofgreen.com/wp-content/themes/abitofgreen/images/blank-user.gif);
+      &:after {
+        @include clear-fix();
       }
-    }
-    .shop-nav:after, .trip-nav:after {
-      @include clear-fix();
     }
     .shop-header, .trip-header {
       @include flex-jc(space-between);
@@ -633,14 +625,12 @@ input:focus {
         margin-top: 20px;
         margin-left: 10px;
         border-radius: 5px;
-      }
-
-      .trip-follow-btn:hover {
-        @include cyan-btn();
-      }
-
-      .trip-follow-btn:active {
-        @include cyan-btn-alt();
+        &:hover {
+          @include cyan-btn();
+        }
+        &:active {
+          @include cyan-btn-alt();
+        }
       }
 
       .trip-follow-btn-alt {
@@ -650,14 +640,12 @@ input:focus {
         margin-top: 20px;
         margin-left: 10px;
         border-radius: 5px;
-      }
-
-      .trip-follow-btn-alt:hover {
-        @include cyan-btn-alt();
-      }
-
-      .trip-follow-btn-alt:active {
-        @include cyan-btn();
+        &:hover {
+          @include cyan-btn-alt();
+        }
+        &:active {
+          @include cyan-btn();
+        }
       }
 
       .shop-img-frame, .trip-img-frame {
@@ -703,27 +691,23 @@ input:focus {
 
   .product-btn {
     @include large-submit-btn;
-  }
-
-  .product-btn:hover {
-    @include cyan-btn;
-  }
-
-  .product-btn:active {
-    @include cyan-btn-alt;
+    &:hover {
+      @include cyan-btn;
+    }
+    &:active {
+      @include cyan-btn-alt;
+    }
   }
 
   .product-btn-alt {
     @include large-submit-btn;
     @include indigo-btn-alt;
-  }
-
-  .product-btn-alt:hover {
-    @include cyan-btn-alt;
-  }
-
-  .product-btn-alt:active {
-    @include cyan-btn;
+    &:hover {
+      @include cyan-btn-alt;
+    }
+    &:active {
+      @include cyan-btn;
+    }
   }
 
   .product-price {
@@ -740,7 +724,6 @@ input:focus {
 
 .show-product {
   @include flex-jc(space-between);
-
   .show-product-table {
     margin-top: 10px;
     width: 100%;
@@ -765,6 +748,7 @@ input:focus {
     }
     .show-product-description {
       margin-top: 10px;
+      width: 360px;
     }
     .show-product-btn {
       @include remove-border-style();
@@ -795,6 +779,9 @@ input:focus {
     .pin-list-wrapper {
       .pin-list {
         .pin-item {
+          &:hover {
+            background-color: $plaingrey;
+          }
           @include flex-jc(space-between);
           align-items: center;
           margin-top: 5px;
@@ -826,9 +813,26 @@ input:focus {
             margin-right: 8px;
           }
         }
-        .pin-item:hover {
-          background-color: $plaingrey;
-        }
+      }
+    }
+    .pin-create-trip {
+      @include flex-jc(center);
+      padding: 8px 0px;
+      cursor: pointer;
+      &:hover {
+        background-color: $plaingrey
+      }
+      align-items: center;
+      .create-btn-symbol {
+        border-radius: 50%;
+        font-size: 24px;
+        padding: 0px 9.1px;
+        color: white;
+        background-color: red;
+        margin-right: 30px;
+      }
+      .create-btn-text {
+        font-size: 16px;
       }
     }
   }

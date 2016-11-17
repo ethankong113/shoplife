@@ -62,7 +62,7 @@ class EditTripModal extends React.Component {
          <button className="close-form-btn" onClick={this.props.toggleModal("EditTrip")}>X</button>
          <form method="post" className="trip-form">
            <label className="trip-label" id="tripname-label">Trip Name</label><br />
-           <input className="trip-field" placeholder="Trip Name" type="text" name="tripname" onChange={this.update("tripname")} value={tripname}/><br />
+           <input className="trip-field" type="text" name="tripname" onChange={this.update("tripname")} value={tripname}/><br />
            <label className="trip-label">Purpose{this.charLeft()}</label><br />
            <textarea className="trip-field trip-textarea" name="purpose" onChange={this.update("purpose")} value={purpose}></textarea><br />
            <label className="trip-label">Date</label><br />
