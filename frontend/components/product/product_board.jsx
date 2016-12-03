@@ -18,15 +18,19 @@ class ProductBoard extends React.Component {
   }
 
   fetchProductList() {
-    if (this.props.requestType === "BY_SHOP") {
-      let shop_id = this.props.params.shopId;
-      this.props.fetchProductListByShop(shop_id);
-    } else if (this.props.requestType === "BY_TRIP") {
-      let trip_id = this.props.params.tripId;
-      this.props.fetchProductListByTrip(trip_id);
-    } else if (this.props.requestType === "BY_PIN_BOARD") {
-      let username = this.props.params.username;
-      this.props.fetchProductListByProfile(username);
+    const { shopId, tripId, username } = this.props.params;
+    switch (this.props.requestType) {
+      case "BY_SHOP":
+        this.props.fetchProductListByShop(shopId);
+        break;
+      case "BY_TRIP":
+        this.props.fetchProductListByTrip(tripId);
+        break;
+      case "BY_PIN_BOARD":
+        this.props.fetchProductListByProfile(username);
+        break;
+      default:
+        break;
     }
   }
 

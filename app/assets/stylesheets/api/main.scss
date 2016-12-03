@@ -14,6 +14,7 @@ $darkgreen: #00695C;
 $plaingrey: #E7E7E8;
 $lightgrey: #C9C9CA;
 $black: #404040;
+$silvergrey: #F4F4F4;
 
 $headerHeight: 55px;
 
@@ -86,10 +87,9 @@ $headerHeight: 55px;
   background-color: white;
   color: $mildred;
   border-radius: 50%;
-  float: right;
-  margin-top: -40px;
-  margin-right: -38px;
   cursor: pointer;
+  text-align: right;
+  float: right;
 }
 
 @mixin large-submit-btn() {
@@ -265,59 +265,45 @@ header {
     border-color: $deepred;
     background-color: $deepred;
   }
+  &:after {
+    @include clear-fix();
+  }
 }
 
-.session-form {
+.session-modal {
+  background-color: white;
+  width: 420px;
+  margin: auto;
+  border-radius: 20px;
+  margin-top: 80px;
+  padding: 15px 15px;
 
-  .full-field {
-    @include input-full-field();
-  }
-
-  .half-field {
-    @include input-half-field();
-  }
-
-  .full-field:focus {
-    @include remove-border-style();
-    color: $cyan500;
-    border-bottom: 2px $cyan500 solid;
-  }
-
-  .half-field:focus {
-    @include remove-border-style();
-    color: $cyan500;
-    border-bottom: 2px $cyan500 solid;
-  }
-
-  .submit-btn {
-    @include large-submit-btn;
-    &:hover {
-      @include cyan-btn;
+  .session-form {
+    padding: 50px 0px;
+    width: 80%;
+    margin: auto;
+    .full-field {
+      @include input-full-field();
     }
-    &:active {
-      @include cyan-btn-alt;
+
+    .half-field {
+      @include input-half-field();
     }
-  }
 
-  .form-divider {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background: silver;
-    height: 2px;
-    border: none;
-  }
-
-  .session-toggle-panel {
-    display: flex;
-    justify-content: space-around;
-
-    .indigo-btn {
-      @include block-center();
+    .full-field:focus {
       @include remove-border-style();
-      @include indigo-btn;
-      border-radius: 5px;
-      background-color: white;
-      color: $indigo;
+      color: $cyan500;
+      border-bottom: 2px $cyan500 solid;
+    }
+
+    .half-field:focus {
+      @include remove-border-style();
+      color: $cyan500;
+      border-bottom: 2px $cyan500 solid;
+    }
+
+    .submit-btn {
+      @include large-submit-btn;
       &:hover {
         @include cyan-btn;
       }
@@ -326,32 +312,50 @@ header {
       }
     }
 
-    .session-toggle-btn {
-      @include block-center();
-      @include remove-border-style();
-      @include btn-preset(8px, 10px, 16px);
-      @include indigo-btn;
-      border-radius: 5px;
-      background-color: white;
-      color: $indigo;
-      &:hover {
-        @include cyan-btn;
+    .form-divider {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      background: silver;
+      height: 2px;
+      border: none;
+    }
+
+    .session-toggle-panel {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      p {
+        color: black;
       }
-      &:active {
+
+      .session-toggle-btn {
+        @include block-center();
+        @include remove-border-style();
+        @include btn-preset(8px, 10px, 16px);
+        @include indigo-btn;
+        border-radius: 5px;
+        background-color: white;
+        color: $indigo;
+        &:hover {
+          @include cyan-btn-alt;
+        }
+        &:active {
+          @include cyan-btn;
+        }
+      }
+    }
+
+    .guess-login-btn {
+      @include indigo-btn-alt;
+      margin-top: 5px;
+      width: 100%;
+      &:hover {
         @include cyan-btn-alt;
       }
-    }
-  }
-
-  .guess-login-btn {
-    @include indigo-btn-alt;
-    margin-top: 5px;
-    width: 100%;
-    &:hover {
-      @include cyan-btn-alt;
-    }
-    &:active {
-      @include cyan-btn;
+      &:active {
+        @include cyan-btn;
+      }
     }
   }
 }
@@ -445,6 +449,7 @@ header {
   border: white 10px solid;
   border-radius: 20px;
   margin: 15px 20px;
+  background-color: white;
   .add-shop-btn, .add-trip-btn, .add-product-btn {
     @include remove-border-style();
     border-radius: 8px;
@@ -661,13 +666,8 @@ $forms: shop, trip;
 
   .product-board-wrapper {
     @include flex-jc(center);
-    margin-top: 80px;
-    margin-bottom: 80px;
-    .product-board {
-      @include flex-jc(space-around);
-      flex-wrap: wrap;
-      width: 80%;
-    }
+    margin-top: 40px;
+    margin-bottom: 40px;
   }
 }
 
@@ -909,7 +909,22 @@ $forms: shop, trip;
 
 .product-board {
   @include block-center();
-  margin-top: 80px;
-  margin-bottom: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   width: 80%;
+}
+
+.test-frame {
+}
+
+.modal-overlay {
+  z-index: 5;
+  color: blue;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  .modal {
+    width: auto;
+  }
 }

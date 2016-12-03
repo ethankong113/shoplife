@@ -21,7 +21,7 @@ class FollowingUser extends React.Component {
           followeeName = `${firstname} ${lastname}`;
         }
 
-        return (<li className="followee-item" key={id} onClick={this.enterProfile(`/${username}`)}>
+        return (<li className="followee-item" key={id} onClick={this.enterProfile(`/profile/${username}`)}>
         <div className="followee-img"><img src={img_url} /></div>
         <div className="followee-name">{followeeName}</div>
       </li>);

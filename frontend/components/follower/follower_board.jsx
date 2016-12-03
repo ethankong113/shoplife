@@ -25,7 +25,7 @@ class FollowerBoard extends React.Component {
           followerName = `${firstname} ${lastname}`;
         }
 
-        return (<li className="follower-item" key={id} onClick={this.enterProfile(`/${username}`)}>
+        return (<li className="follower-item" key={id} onClick={this.enterProfile(`/profile/${username}`)}>
         <div className="follower-img"><img src={img_url} /></div>
         <div className="follower-name">{followerName}</div>
       </li>);
