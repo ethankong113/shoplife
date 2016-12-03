@@ -14,7 +14,8 @@ class Api::ProfilesController < ApplicationController
       @profile = User.find(params[:followee_id])
       follow = current_user.out_follows.new(followee_id: params[:followee_id])
       if follow.save
-        render 'api/profiles/show'
+        # render 'api/profiles/show'
+        render 'api/profiles/profile_with_follower'
       else
         render json: ["Ooops. Something went wrong. Can't follow the user"], status: 400
       end
@@ -28,7 +29,8 @@ class Api::ProfilesController < ApplicationController
       @profile = User.find(params[:followee_id])
       follow = current_user.out_follows.find_by(followee_id: params[:followee_id])
       if follow.destroy
-        render 'api/profiles/show'
+        # render 'api/profiles/show'
+        render 'api/profiles/profile_with_follower'
       else
         render json: ["Ooops. Something went wrong. Can't unfollow the user"], status: 400
       end

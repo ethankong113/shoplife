@@ -62,7 +62,7 @@ class EditShopModal extends React.Component {
          <button className="close-form-btn" onClick={this.props.toggleModal("EditShop")}>X</button>
          <form method="post" className="shop-form">
            <label className="shop-label" id="shopname-label">Shop Name</label><br />
-           <input className="shop-field" placeholder="Shop Name" type="text" name="shopname" onChange={this.update("shopname")} value={shopname}/><br />
+           <input className="shop-field" type="text" name="shopname" onChange={this.update("shopname")} value={shopname}/><br />
            <label className="shop-label">Description{this.charLeft()}</label><br />
            <textarea className="shop-field shop-textarea" name="description" onChange={this.update("description")} value={description}></textarea><br />
            <label className="shop-label">Location</label><br />

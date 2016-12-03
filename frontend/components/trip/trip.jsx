@@ -21,7 +21,7 @@ class Trip extends React.Component {
 
   backToUser(username) {
     return () => {
-      this.props.router.push(`/${username}`);
+      this.props.router.push(`/profile/${username}`);
     };
   }
 

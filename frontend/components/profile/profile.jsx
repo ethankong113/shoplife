@@ -5,7 +5,7 @@ class Profile extends React.Component {
 
   constructor(props) {
     super(props);
-    if (this._isOwner()) {
+    if (this._isProfileOwner()) {
       this.state = {owner: true};
     } else {
       this.state = {owner: false};
@@ -15,83 +15,85 @@ class Profile extends React.Component {
   }
 
   componentWillMount() {
-    this.props.readProfile(this._safeParams());
+    const {readProfile, params} = this.props;
+    readProfile(params.username);
   }
 
-  componentWillUpdate() {
-    if (this._getDetail() && this._safeParams() != this._getDetail().username) {
-      this.props.readProfile(this._safeParams());
-    }
-
-    if (this._isOwner() && !this.state.owner) {
+  componentWillUpdate(nextProps) {
+    const {params, location, profile, readProfile, clearFollowers} = this.props;
+    if (this._isProfileOwner() && !this.state.owner) {
       this.setState({owner: true});
-    } else if (!this._isOwner() && this.state.owner) {
+    } else if (!this._isProfileOwner() && this.state.owner) {
       this.setState({owner: false});
     }
+    if (profile && params.username !== profile.username) {
+      readProfile(params.username);
+    }
+    if (location.pathname !== `/${params.username}/followers`) {
+      clearFollowers();
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.clearProfile();
   }
 
   renderName() {
-    if (!this._getDetail()) return "";
-    let firstname = this._getDetail().firstname || "";
-    let lastname = this._getDetail().lastname || "";
-    return firstname + lastname !== "" ? `${firstname} ${lastname}` : this._getDetail().username;
+    if (this.props.profile) {
+      const { firstname, lastname, username } = this.props.profile;
+      return firstname + lastname !== "" ? `${firstname} ${lastname}` : username;
+    }
   }
 
   renderImage() {
-    if (!this._getDetail()) return (<img src="" />);
-
-    let img_url = this._getDetail().img_url;
-    if (!img_url) {
-      img_url =  "http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/dogelog.jpg";
+    if (this.props.profile) {
+      let img_url = this.props.profile.img_url;
+      return (<img src={img_url} className="profile-picture"/>);
     }
-    return (<img src={img_url} className="profile-picture"/>);
   }
 
   renderProfileButton() {
-    let status = this.state.owner;
-    if (status) {
-      return (<button className="profile-btn">Edit Profile</button>);
-    } else if (this.props.profile && this.props.profile.detail.followed) {
-      return (<button className="profile-btn-alt" onClick={this.unfollowUser}>Unfollow</button>);
-    } else {
-      return (<button className="profile-btn" onClick={this.followUser}>Follow</button>);
+    if (this.props.currentUser) {
+      let status = this.state.owner;
+      if (status) {
+        return (<button className="profile-btn">Edit Profile</button>);
+      } else if (this.props.profile && this.props.profile.followed) {
+        return (<button className="profile-btn-alt" onClick={this.unfollowUser}>Unfollow</button>);
+      } else {
+        return (<button className="profile-btn" onClick={this.followUser}>Follow</button>);
+      }
     }
   }
 
   renderNavbar() {
-    let [tripCount, shopCount, pinCount, followerCount, followingCount] = [0,0,0,0,0];
-    if (this._getDetail()) {
-      tripCount = this._getDetail().tripCount || 0;
-      shopCount = this._getDetail().shopCount || 0;
-      pinCount = this._getDetail().pinCount || 0;
-      followerCount = this._getDetail().followerCount || 0;
-      followingCount = this._getDetail().followingCount || 0;
-    }
-    let username = this._safeParams();
+    const username = this.props.params.username;
+    const profile = this.props.profile;
+    const preloadedCounts = {tripCount: 0, shopCount: 0, pinCount: 0, followerCount: 0, followingCount: 0};
+    let {tripCount, shopCount, pinCount, followerCount, followingCount} = profile ? profile : preloadedCounts;
     return (
       <ul className="navbar-list">
         <li className="list-item">
-          <Link to={`/${username}/trips`}>
+          <Link to={`/profile/${username}/trips`}>
             <span className={"list-number"}>{tripCount}</span><br /> Trips
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/${username}/shops`}>
+          <Link to={`/profile/${username}/shops`}>
             <span className={"list-number"}>{shopCount}</span><br /> Shops
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/${username}/pins`}>
+          <Link to={`/profile/${username}/pins`}>
             <span className={"list-number"}>{pinCount}</span><br /> Pins
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/${username}/followers`}>
+          <Link to={`/profile/${username}/followers`}>
             <span className={"list-number"}>{followerCount}</span><br /> Followers
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/${username}/followings/users`}>
+          <Link to={`/profile/${username}/followings/users`}>
             <span className={"list-number"}>{followingCount}</span><br /> Followings
           </Link>
         </li>
@@ -100,41 +102,27 @@ class Profile extends React.Component {
   }
 
   followUser() {
-    if (this.props.currentUser) {
-      let id = this.props.profile.detail.id;
-      this.props.followUser(id);
+    const {currentUser, profile, followUser} = this.props;
+    if (currentUser) {
+      let id = profile.id;
+      followUser(id);
     }
   }
 
   unfollowUser() {
-    if (this.props.currentUser) {
-      let id = this.props.profile.detail.id;
-      this.props.unfollowUser(id);
+    const {currentUser, profile, unfollowUser} = this.props;
+    if (currentUser) {
+      let id = profile.id;
+      unfollowUser(id);
     }
   }
 
-  _isOwner() {
-    if (this.props.currentUser) {
-      return this._safeParams() === this.props.currentUser.username;
+  _isProfileOwner() {
+    const {currentUser, params} = this.props;
+    if (currentUser) {
+      return params.username === currentUser.username;
     }
     return false;
-  }
-
-  _getDetail() {
-    if (this.props.profile) {
-      return this.props.profile.detail;
-    }
-    return false;
-  }
-
-  _safeParams() {
-    let username = this.props.params.username;
-    let checker = window.location.hash.split('/')[1];
-    if (username == checker) {
-      return username;
-    } else {
-      return checker;
-    }
   }
 
    render() {

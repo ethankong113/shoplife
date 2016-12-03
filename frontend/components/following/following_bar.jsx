@@ -10,15 +10,16 @@ class FollowingBar extends React.Component {
   }
 
    render() {
+     const {params, children} = this.props;
      return (
        <div className="following-panel">
          <div className="following-bar-wrapper">
            <nav className="following-navbar">
              <ul className="navbar-list">
-                 <Link className="navbar-item" activeClassName="navbar-item-active" to={`/${this.props.params.username}/followings/users`}>
+                 <Link className="navbar-item" activeClassName="navbar-item-active" to={`/profile/${params.username}/followings/users`}>
                    <li>Users</li>
                  </Link>
-                 <Link className="navbar-item" activeClassName="navbar-item-active" to={`/${this.props.params.username}/followings/trips`}>
+                 <Link className="navbar-item" activeClassName="navbar-item-active" to={`/profile/${params.username}/followings/trips`}>
                    <li>Trips</li>
                  </Link>
                  <Link className="navbar-item" activeClassName="navbar-item-active" >
@@ -28,7 +29,7 @@ class FollowingBar extends React.Component {
            </nav>
          </div>
          <div className="following-board">
-           { this.props.children }
+           { children }
          </div>
        </div>
      );
