@@ -8,11 +8,12 @@ class Modal extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
+    let modal = $(`.modal-${nextProps.modalName}`);
     if (nextProps.isOpen) {
-      $(`.modal-${nextProps.modalName}`).css('display', 'block');
+      modal.css('display', 'block');
       $('body').css('overflow', 'hidden');
     } else {
-      $(`.modal-${nextProps.modalName}`).css('display', 'none');
+      modal.css('display', 'none');
       $('body').css('overflow', 'auto');
     }
   }
@@ -22,6 +23,11 @@ class Modal extends React.Component {
     $('body').prepend(modal);
     $('.modal-wrapper').empty();
     modal.css('display', 'none');
+  }
+
+  componentWillUnmount() {
+    let modal = $(`.modal-${this.props.modalName}`);
+    modal.remove();
   }
 
   handleClick(e) {
