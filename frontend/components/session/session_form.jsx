@@ -43,10 +43,11 @@ class SessionForm extends React.Component {
 
   signupWithName() {
     if (this._isSignup()) {
+      const {firstname, lastname} = this.state;
       return (
         <div>
-          <input type="text" name="firstname" onChange={this.update("firstname")} placeholder="First Name" value={this.state.firstname} className={"half-field"}/>
-          <input type="text" name="lastname" onChange={this.update("lastname")} placeholder="Last Name" value={this.state.lastname} className={"half-field"}/>
+          <input type="text" name="firstname" onChange={this.update("firstname")} placeholder="First Name" value={firstname} className={"half-field"}/>
+          <input type="text" name="lastname" onChange={this.update("lastname")} placeholder="Last Name" value={lastname} className={"half-field"}/>
         </div>
       );
     }

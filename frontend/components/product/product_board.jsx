@@ -3,13 +3,16 @@ import { withRouter } from 'react-router';
 import { isEmpty } from 'lodash';
 import AddProductModal from './add_product_modal';
 import EditProductModal from './edit_product_modal';
-import ShowProductModal from './show_product_modal';
+// import ShowProductModal from './show_product_modal';
+import ShowProductContainer from './show_product_container';
+import Modal from '../modal/modal';
 
 class ProductBoard extends React.Component {
 
   constructor(props) {
     super(props);
     this.toggleModal = this.toggleModal.bind(this);
+    this.togglePin = this.togglePin.bind(this);
     this.state = {openModal: false, modalType: null, showPin: false, productId: null};
   }
 
@@ -137,14 +140,17 @@ class ProductBoard extends React.Component {
   }
 
    render() {
+     const {openModal, modalType, showPin, productId} = this.state;
      return (
        <div className="product-board-wrapper">
          <div className="product-board">
            { this.renderProductList() }
          </div>
-         <AddProductModal isOpen={this.state.openModal && this.state.modalType=="AddModal"} modalType={this.state.modalType} toggleModal={this.toggleModal}/>
-         <EditProductModal isOpen={this.state.openModal && this.state.modalType=="EditModal"} modalType={this.state.modalType} toggleModal={this.toggleModal} productId={this.state.productId}/>
-         <ShowProductModal isOpen={this.state.openModal && this.state.modalType=="ShowModal"} modalType={this.state.modalType} showPin={this.state.showPin} openPin={this.togglePin(true)} closePin={this.togglePin(false)} toggleModal={this.toggleModal} productId={this.state.productId}/>
+         <AddProductModal isOpen={openModal && modalType=="AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
+         <EditProductModal isOpen={openModal && modalType=="EditModal"} modalType={modalType} toggleModal={this.toggleModal} productId={productId}/>
+         <Modal isOpen={openModal && modalType=="ShowModal"} modalName="show-product" closeModal={this.toggleModal(null)}>
+           <ShowProductContainer modalType={modalType} showPin={showPin} togglePin={this.togglePin} toggleModal={this.toggleModal} productId={productId}/>
+         </Modal>
        </div>
      );
    }
