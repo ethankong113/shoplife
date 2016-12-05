@@ -1,4 +1,5 @@
 export const CREATE_TRIP = "CREATE_TRIP";
+export const CREATE_TRIP_TO_PIN = "CREATE_TRIP_TO_PIN";
 export const READ_TRIP = "READ_TRIP";
 export const UPDATE_TRIP = "UPDATE_TRIP";
 export const DELETE_TRIP = "DELETE_TRIP";
@@ -14,6 +15,11 @@ export const UNFOLLOW_TRIP = "UNFOLLOW_TRIP";
 
 export const createTrip = (trip) => ({
   type: CREATE_TRIP,
+  trip
+});
+
+export const createTripToPin = (trip) => ({
+  type: CREATE_TRIP_TO_PIN,
   trip
 });
 

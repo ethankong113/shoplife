@@ -1,5 +1,3 @@
-//NB: to be refactored
-
 import React from 'react';
 
 class PinTable extends React.Component {
@@ -10,12 +8,19 @@ class PinTable extends React.Component {
     this.handlePin = this.handlePin.bind(this);
     this.update = this.update.bind(this);
     this.toggleCreatePin = this.toggleCreatePin.bind(this);
-    this.createTrip = this.createTrip.bind(this);
+    this.addTrip = this.addTrip.bind(this);
+  }
+
+  componentWillUpdate(nextProps) {
+    let oldPins = this.props.pins;
+    let newPins = nextProps.pins;
+    if (oldPins && newPins && oldPins.length !== newPins.length) {
+      this.setState({createPin: false});
+    }
   }
 
   _renderPinList() {
     const { showPin, pins } = this.props;
-    const { createPin, newTripname, date } = this.state;
     if (pins) {
       let pinList = pins.map((pin) => {
         const { id, tripname, img_url, has_pin } = pin;
@@ -72,11 +77,12 @@ class PinTable extends React.Component {
     };
   }
 
-  createTrip(e) {
-    const {createTrip, currentUser} = this.props;
+  addTrip(e) {
+    const {createTripToPin, currentUser} = this.props;
     const {tripname, date} = this.state;
     e.stopPropagation();
-    this.props.createTrip({tripname, date, purpose: "", img_url: "", user_id: currentUser.id});
+    let response_type = "APPEND_PIN";
+    createTripToPin({tripname, date, user_id: currentUser.id, response_type});
   }
 
   _renderToggleBtn() {
@@ -92,7 +98,7 @@ class PinTable extends React.Component {
       return (
         <div className="pin-create-trip-alt">
           <button className="add-trip-cancel" onClick={this.toggleCreatePin}>Cancel</button>
-          <button className="add-trip-create" onClick={this.createTrip}>Create</button>
+          <button className="add-trip-create" onClick={this.addTrip}>Create</button>
         </div>
       );
     }

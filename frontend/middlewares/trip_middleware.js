@@ -1,5 +1,6 @@
-import { CREATE_TRIP, READ_TRIP, UPDATE_TRIP, DELETE_TRIP, READ_TRIP_TO_UPDATE, FOLLOW_TRIP, UNFOLLOW_TRIP, receiveTrip, receiveNewTrip, receiveErrors, receiveTripToUpdate } from '../actions/trip_actions';
+import { CREATE_TRIP, READ_TRIP, UPDATE_TRIP, DELETE_TRIP, READ_TRIP_TO_UPDATE, CREATE_TRIP_TO_PIN, FOLLOW_TRIP, UNFOLLOW_TRIP, receiveTrip, receiveNewTrip, receiveErrors, receiveTripToUpdate } from '../actions/trip_actions';
 import { renewTrip, removeTrip } from '../actions/trip_list_actions';
+import { appendPin } from '../actions/pin_actions';
 import { createTripAJAX, readTripAJAX, updateTripAJAX, deleteTripAJAX, followTripAJAX, unfollowTripAJAX } from '../utils/trip_api_utils';
 
 const TripMiddleware = ({getState, dispatch}) => next => action => {
@@ -13,6 +14,10 @@ const TripMiddleware = ({getState, dispatch}) => next => action => {
   const deleteTripCB = (trip) => {
     dispatch(removeTrip(trip));
     dispatch(receiveNewTrip(trip));
+  };
+  const createTripToPinCB = (trip) => {
+    dispatch(receiveNewTrip(trip));
+    dispatch(appendPin(trip));
   };
   const readTripToUpdateCB = (trip) => {dispatch(receiveTripToUpdate(trip));};
   const errorCB = (err) => {dispatch(receiveErrors(err.responseJSON));};
@@ -34,6 +39,9 @@ const TripMiddleware = ({getState, dispatch}) => next => action => {
       return next(action);
     case READ_TRIP_TO_UPDATE:
       readTripAJAX(action.id, readTripToUpdateCB, errorCB);
+      return next(action);
+    case CREATE_TRIP_TO_PIN:
+      createTripAJAX(action.trip, createTripToPinCB, errorCB);
       return next(action);
     case FOLLOW_TRIP:
       followTripAJAX(action.id, followTripCB, errorCB);

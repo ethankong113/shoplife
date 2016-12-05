@@ -65,7 +65,7 @@ class ProductBoard extends React.Component {
       } else if (this._isOwner() && requestType === "BY_TRIP") {
         return <button className="product-btn" onClick={this.handleUnpin(this.props.params.tripId, id)}>Unpin</button>;
       } else {
-        return <button className="product-btn" onClick={this.toggleModal("ShowModal", id, true)}>Shop</button>;
+        return <button className="product-btn" onClick={this.toggleModal("ShowModal", id, true)}>Pin</button>;
       }
     }
   }

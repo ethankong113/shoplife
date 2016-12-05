@@ -29,9 +29,6 @@ class Profile extends React.Component {
     if (profile && params.username !== profile.username) {
       readProfile(params.username);
     }
-    if (location.pathname !== `/${params.username}/followers`) {
-      clearFollowers();
-    }
   }
 
   componentWillUnmount() {

@@ -54,7 +54,7 @@ class ShowProductModal extends React.Component {
       } else {
         return (
           <button className="show-product-btn" onClick={togglePin(true)}>
-            Shop This
+            Pin This
           </button>
         );
       }

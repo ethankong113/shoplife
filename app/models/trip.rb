@@ -1,6 +1,6 @@
 class Trip < ActiveRecord::Base
   validates :tripname, :user_id, presence: true
-  after_initialize :ensure_trip_picture
+  after_initialize :ensure_trip_picture, :ensure_trip_purpose
 
   belongs_to :user
 
@@ -11,8 +11,14 @@ class Trip < ActiveRecord::Base
   through: :pins
 
   def ensure_trip_picture
-    if self.img_url == ""
+    if self.img_url.nil? || self.img_url == ""
       self.img_url = "http://betanews.com/wp-content/uploads/2014/02/Mobile-shopping-525x600.jpg"
+    end
+  end
+
+  def ensure_trip_purpose
+    if self.purpose.nil?
+      self.purpose = ""
     end
   end
 

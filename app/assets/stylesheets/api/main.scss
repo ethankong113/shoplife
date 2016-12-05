@@ -760,6 +760,7 @@ $forms: shop, trip;
       }
       .show-product-description {
         margin-top: 10px;
+        margin-bottom: 40px;
         width: 360px;
       }
       .show-product-btn {
@@ -767,7 +768,6 @@ $forms: shop, trip;
         @include indigo-btn();
         @include btn-preset(10px, 30px, 24px);
         @include block-center();
-        margin-top: 40px;
         margin-bottom: 20px;
         border-radius: 5px;
       }
@@ -790,6 +790,8 @@ $forms: shop, trip;
         border-bottom: 1px solid $plaingrey;
       }
       .pin-list-wrapper {
+        overflow-y: auto;
+        max-height: 400px;
         .pin-list {
           .pin-item {
             &:hover {
