@@ -21,7 +21,7 @@ class ShopBoard extends React.Component {
   }
 
   _renderAddShop() {
-    if (this._isOwner()) {
+    if (this._isProfileOwner()) {
       return (
         <li key={0} className={"board-card"}>
           <button className={"add-shop-btn"} onClick={this.toggleModal("AddModal")}>
@@ -37,7 +37,7 @@ class ShopBoard extends React.Component {
 
   _renderShopButton(id) {
     if (this.props.currentUser) {
-      if (this._isOwner()) {
+      if (this._isProfileOwner()) {
         return <button className="shop-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
       } else {
         return <button className="shop-btn">Follow</button>;
@@ -95,28 +95,38 @@ class ShopBoard extends React.Component {
     };
   }
 
-  _isOwner() {
+  _isProfileOwner() {
+    const { params, currentUser } = this.props;
+    if (currentUser) {
+      return params.username === currentUser.username;
+    }
+    return false;
+  }
+
+  _isShopOwner(id) {
     if (this.props.currentUser) {
-      return this.props.params.username === this.props.currentUser.username;
+      return id === this.props.currentUser.id;
     }
     return false;
   }
 
   _fetchShopList() {
-    let username = this.props.params.username;
+    const {params, fetchShopListByUser} = this.props;
+    let username = params.username;
     if (username) {
-      this.props.fetchShopListByUser(username);
+      fetchShopListByUser(username);
     }
   }
 
    render() {
+     const {openModal, modalType, shopId} = this.state;
      return (
        <div className={"shop-board-wrapper"}>
          <div className={"shop-board"}>
            {this.renderShopList()}
          </div>
-         <AddShopModal isOpen={this.state.openModal && this.state.modalType == "AddModal"} modalType={this.state.modalType} toggleModal={this.toggleModal}/>
-         <EditShopModal isOpen={this.state.openModal && this.state.modalType == "EditModal"} modalType={this.state.modalType} toggleModal={this.toggleModal} shopId={this.state.shopId}/>
+         <AddShopModal isOpen={openModal && modalType == "AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
+         <EditShopModal isOpen={openModal && modalType == "EditModal"} modalType={modalType} toggleModal={this.toggleModal} shopId={shopId}/>
        </div>
      );
    }

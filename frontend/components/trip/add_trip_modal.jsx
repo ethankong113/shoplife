@@ -24,10 +24,11 @@ class AddTripModal extends React.Component {
 
   handleSubmit(props) {
     return e => {
-      const {currentUser, createTrip} = this.props;
+      const { currentUser } = this.props;
       e.preventDefault();
       this.state.user_id = currentUser.id;
-      let result = createTrip(this.state);
+      this.state.response_type = "APPEND_TRIP";
+      let result = this.props.createTrip(this.state);
     };
   }
 
