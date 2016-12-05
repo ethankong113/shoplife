@@ -117,13 +117,14 @@ class TripBoard extends React.Component {
   }
 
    render() {
+     const {openModal, modalType, tripId} = this.state;
      return (
        <div className={"trip-board-wrapper"}>
          <div className={"trip-board"}>
            <div>{this.renderTripList()}</div>
          </div>
-         <AddTripModal isOpen={this.state.openModal && this.state.modalType == "AddModal"} modalType={this.state.modalType} toggleModal={this.toggleModal}/>
-         <EditTripModal isOpen={this.state.openModal && this.state.modalType == "EditModal"} modalType={this.state.modalType} toggleModal={this.toggleModal} tripId={this.state.tripId}/>
+         <AddTripModal isOpen={openModal && modalType == "AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
+         <EditTripModal isOpen={openModal && modalType == "EditModal"} modalType={modalType} toggleModal={this.toggleModal} tripId={tripId}/>
        </div>
      );
    }

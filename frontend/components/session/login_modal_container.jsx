@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router';
-import { mediumModal } from '../../utils/modal_style';
 import { getCurrentUser } from '../../utils/selectors';
 import Modal from '../modal/modal';
 
