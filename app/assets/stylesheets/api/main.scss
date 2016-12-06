@@ -624,7 +624,7 @@ $forms: shop, trip;
         margin-top: 20px;
       }
 
-      .trip-follow-btn {
+      .shop-follow-btn, .trip-follow-btn {
         @include remove-border-style();
         @include btn-preset(5px, 30px, 24px);
         @include indigo-btn();
@@ -639,7 +639,7 @@ $forms: shop, trip;
         }
       }
 
-      .trip-follow-btn-alt {
+      .shop-follow-btn-alt, .trip-follow-btn-alt {
         @include remove-border-style();
         @include btn-preset(5px, 30px, 24px);
         @include indigo-btn-alt();

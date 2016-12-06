@@ -1,6 +1,7 @@
 export const FETCH_SHOP_LIST_BY_USER = "FETCH_SHOP_LIST_BY_USER";
 export const FETCH_SHOP_LIST_BY_QUERY = "FETCH_SHOP_LIST_BY_QUERY";
 export const FETCH_SHOP_LIST_BY_LOCATION = "FETCH_SHOP_LIST_BY_LOCATION";
+export const FETCH_SHOP_LIST_BY_FOLLOWER = "FETCH_SHOP_LIST_BY_FOLLOWER";
 export const RECEIVE_SHOP_LIST = "RECEIVE_SHOP_LIST";
 export const CLEAR_SHOP_LIST = "CLEAR_SHOP_LIST";
 export const APPEND_SHOP = "APPEND_SHOP";
@@ -11,6 +12,11 @@ export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const fetchShopListByUser = username => ({
   type: FETCH_SHOP_LIST_BY_USER,
   username
+});
+
+export const fetchShopListByFollower = profilename => ({
+  type: FETCH_SHOP_LIST_BY_FOLLOWER,
+  profilename
 });
 
 export const receiveShopList = shops => ({

@@ -16,8 +16,8 @@ import FollowerBoardContainer from './follower/follower_board_container';
 import FollowingBar from './following/following_bar';
 import FollowingUserContainer from './following/following_user_container';
 import FollowingTrip from './following/following_trip';
+import FollowingShop from './following/following_shop';
 import SeachBoardContainer from './search/search_board_container';
-import Test from './modal/test';
 
 const Root = ({store}) => {
   return (
@@ -33,11 +33,11 @@ const Root = ({store}) => {
             <Route path="followings" component={FollowingBar}>
               <Route path="users" component={FollowingUserContainer} />
               <Route path="trips" component={FollowingTrip} />
+              <Route path="shops" component={FollowingShop} />
             </Route>
           </Route>
           <Route path="shop/:shopId" component={ShopContainer} />
           <Route path="trip/:tripId" component={TripContainer} />
-          <Route path="test" component={Test} />
         </Route>
       </Router>
     </Provider>

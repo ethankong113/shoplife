@@ -13,7 +13,13 @@ class ShopBoard extends React.Component {
   }
 
   componentWillMount() {
-    this._fetchShopList();
+    const {params, requestType, fetchShopListByUser, fetchShopListByFollower} = this.props;
+    let username = params.username;
+    if (requestType === "BY_FOLLOWER") {
+      fetchShopListByFollower(username);
+    } else {
+      fetchShopListByUser(username);
+    }
   }
 
   componentWillUnmount() {
@@ -21,7 +27,8 @@ class ShopBoard extends React.Component {
   }
 
   _renderAddShop() {
-    if (this._isProfileOwner()) {
+    const {requestType} = this.props;
+    if (this._isProfileOwner() && requestType !== "BY_FOLLOWER") {
       return (
         <li key={0} className={"board-card"}>
           <button className={"add-shop-btn"} onClick={this.toggleModal("AddModal")}>
@@ -35,13 +42,17 @@ class ShopBoard extends React.Component {
     }
   }
 
-  _renderShopButton(id) {
+  _renderShopButton(id, user_id) {
     if (this.props.currentUser) {
-      if (this._isProfileOwner()) {
+      if (this._isProfileOwner() && this._isShopOwner(user_id)) {
         return <button className="shop-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
-      } else {
-        return <button className="shop-btn">Follow</button>;
       }
+      // block following/unfollowing shops in shopboard until next update.
+      // else if (!this._isProfileOwner() && this._isShopOwner(user_id)) {
+      //   return <button className="shop-btn-static">Your Shop</button>;
+      // } else {
+      //   return <button className="shop-btn">Follow</button>;
+      // }
     }
   }
 
@@ -50,7 +61,7 @@ class ShopBoard extends React.Component {
     let renderShopList = [this._renderAddShop()];
     if (!isEmpty(list)) {
       let shopItems = list.map((shop) => {
-        const {id, shopname, img_url} = shop;
+        const {id, shopname, img_url, user_id} = shop;
           return (
             <li className="board-card" key={id} onClick={this.enterShopPage(id)}>
               <div className="card-frame">
@@ -60,7 +71,7 @@ class ShopBoard extends React.Component {
                 <div className="shop-detail">
                   <span className="shop-name">{shopname}</span>
                 </div>
-                <div className="shop-btn-field">{this._renderShopButton(id)}</div>
+                <div className="shop-btn-field">{this._renderShopButton(id, user_id)}</div>
               </div>
             </li>
           );
@@ -104,18 +115,11 @@ class ShopBoard extends React.Component {
   }
 
   _isShopOwner(id) {
-    if (this.props.currentUser) {
-      return id === this.props.currentUser.id;
+    const {currentUser} = this.props;
+    if (currentUser) {
+      return id === currentUser.id;
     }
     return false;
-  }
-
-  _fetchShopList() {
-    const {params, fetchShopListByUser} = this.props;
-    let username = params.username;
-    if (username) {
-      fetchShopListByUser(username);
-    }
   }
 
    render() {

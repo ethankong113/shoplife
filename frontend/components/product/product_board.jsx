@@ -42,14 +42,13 @@ class ProductBoard extends React.Component {
   }
 
   _renderAddProduct() {
-    const btnText = this.props.requestType === "BY_SHOP" ? "Create Product" : "Pin Product";
     if (this._isOwner() && this.props.requestType === "BY_SHOP") {
       return (
         <li className={"board-card"} key={0}>
           <button className={"add-product-btn"} onClick={this.toggleModal("AddModal")}>
             <div className={"add-product-content"}>
               <span className={"add-product-sign"}>+</span>
-              <span className={"add-product-text"}>{ btnText }</span>
+              <span className={"add-product-text"}>"Create Product"</span>
             </div>
           </button>
         </li>
@@ -58,13 +57,14 @@ class ProductBoard extends React.Component {
   }
 
   _renderProductButton(id) {
-    const { requestType } = this.props;
-    if (this.props.currentUser) {
+    const { requestType, currentUser, params, router } = this.props;
+    const section = router.location.pathname.split("/")[1];
+    if (currentUser) {
       if (this._isOwner() && requestType === "BY_SHOP") {
         return <button className="product-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
       } else if (this._isOwner() && requestType === "BY_TRIP") {
-        return <button className="product-btn" onClick={this.handleUnpin(this.props.params.tripId, id)}>Unpin</button>;
-      } else {
+        return <button className="product-btn" onClick={this.handleUnpin(params.tripId, id)}>Unpin</button>;
+      } else if (section !== "profile" || (!this._isProfileOwner() && requestType === "BY_PIN_BOARD")){
         return <button className="product-btn" onClick={this.toggleModal("ShowModal", id, true)}>Pin</button>;
       }
     }
@@ -76,6 +76,8 @@ class ProductBoard extends React.Component {
     if (!isEmpty(list)) {
       let productItems = list.map((product, idx) => {
         const {id, productname, price, img_url} = product;
+        //block click action and change className if we own the shop, trip or pinboard.
+        //so we don't have to pin our own products or deal with the messy logic of pinning products in non-browing mode.
           return (
             <li className="board-card" key={idx + 1} onClick={this.toggleModal("ShowModal", id, false)}>
               <div className="card-frame">
@@ -139,6 +141,11 @@ class ProductBoard extends React.Component {
     return false;
   }
 
+  _isProfileOwner() {
+    const {currentUser, params} = this.props;
+    return currentUser.username === params.username;
+  }
+
    render() {
      const {openModal, modalType, showPin, productId} = this.state;
      return (
@@ -146,9 +153,9 @@ class ProductBoard extends React.Component {
          <div className="product-board">
            { this.renderProductList() }
          </div>
-         <AddProductModal isOpen={openModal && modalType=="AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
+         <AddProductModal isOpen={openModal && modalType==="AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
          <EditProductModal isOpen={openModal && modalType=="EditModal"} modalType={modalType} toggleModal={this.toggleModal} productId={productId}/>
-         <Modal isOpen={openModal && modalType=="ShowModal"} modalName="show-product" closeModal={this.toggleModal(null)}>
+         <Modal isOpen={openModal && modalType==="ShowModal"} modalName="show-product" closeModal={this.toggleModal(null)}>
            <ShowProductContainer modalType={modalType} showPin={showPin} togglePin={this.togglePin} toggleModal={this.toggleModal} productId={productId}/>
          </Modal>
        </div>

@@ -1,10 +1,14 @@
 import { PIN_ITEM, UNPIN_ITEM, UNPIN_ITEM_FROM_BOARD, FETCH_PIN_LIST, receivePinList } from '../actions/pin_actions';
 import { pinItemAJAX, unpinItemAJAX, unpinItemFromBoardAJAX, fetchPinListAJAX } from '../utils/pin_api_utils';
 import { removeProduct } from '../actions/product_list_actions';
+import { updateTripProductCount } from '../actions/trip_actions';
 
 const PinMiddleware = ({getState, dispatch}) => next => action => {
   const successCB = pins => {dispatch(receivePinList(pins));};
-  const removeProductCB = product => {dispatch(removeProduct(product));};
+  const removeProductCB = product => {
+    dispatch(removeProduct(product));
+    dispatch(updateTripProductCount(-1));
+  };
   const errorCB = err => {console.log(err);};
   switch(action.type) {
     case PIN_ITEM:

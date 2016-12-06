@@ -1,4 +1,4 @@
-import { RECEIVE_TRIP, RECEIVE_NEW_TRIP, RECEIVE_TRIP_TO_UPDATE, CLEAR_TRIP, CLEAR_TRIP_MESSAGE, RECEIVE_ERRORS } from '../actions/trip_actions';
+import { RECEIVE_TRIP, RECEIVE_NEW_TRIP, RECEIVE_TRIP_TO_UPDATE, CLEAR_TRIP, CLEAR_TRIP_MESSAGE, RECEIVE_ERRORS, UPDATE_TRIP_PRODUCT_COUNT } from '../actions/trip_actions';
 import { isEmpty, merge } from 'lodash';
 
 const _nullTrip = {
@@ -28,6 +28,10 @@ const TripReducer = (state = _nullTrip, action) => {
       return newState;
     case RECEIVE_ERRORS:
       newState = merge({}, state, {errors: action.errors});
+      return newState;
+    case UPDATE_TRIP_PRODUCT_COUNT:
+      newState = merge({}, state);
+      newState.trip.productCount += action.change;
       return newState;
     default:
       return state;

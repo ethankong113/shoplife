@@ -27,26 +27,28 @@ class Trip extends React.Component {
 
   renderFollowTripBtn() {
     const { trip, currentUser, followTrip, unfollowTrip } = this.props;
-    if (currentUser && trip.trip.followed && !this._isTripOwner(trip.trip.user_id)) {
+    const { followed, user_id, id } = trip.trip;
+    if (currentUser && followed && !this._isTripOwner(user_id)) {
       return (
-        <button className="trip-follow-btn-alt" onClick={()=>{unfollowTrip(trip.trip.id)}}>Unfollow</button>
+        <button className="trip-follow-btn-alt" onClick={()=>{unfollowTrip(id)}}>Unfollow</button>
       );
-    } else if (currentUser && !trip.trip.followed && !this._isTripOwner(trip.trip.user_id)) {
+    } else if (currentUser && !followed && !this._isTripOwner(user_id)) {
       return (
-        <button className="trip-follow-btn" onClick={()=>{followTrip(trip.trip.id)}}>Follow</button>
+        <button className="trip-follow-btn" onClick={()=>{followTrip(id)}}>Follow</button>
       );
     }
   }
 
   _isTripOwner(id) {
-    if (this.props.currentUser) {
-      return this.props.currentUser.id === id;
+    const {currentUser} = this.props;
+    if (currentUser) {
+      return currentUser.id === id;
     }
     return false;
   }
 
    render() {
-     const { tripname, username, user_img, img_url, productCount } = this.props.trip.trip;
+     const { tripname, username, user_img, img_url, productCount, followerCount } = this.props.trip.trip;
      return (
        <div className="trip-detail-wrapper">
          <div className="trip-detail">
@@ -58,7 +60,7 @@ class Trip extends React.Component {
              <div className="trip-info">
                <h2 className="trip-name">{ tripname }</h2>
                <div>{ productCount } Products</div>
-               <div>16 Followers</div>
+               <div>{ followerCount } Followers</div>
                { this.renderFollowTripBtn() }
              </div>
              <div className="trip-img-frame">
