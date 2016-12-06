@@ -21,8 +21,6 @@ const TripMiddleware = ({getState, dispatch}) => next => action => {
   };
   const readTripToUpdateCB = (trip) => {dispatch(receiveTripToUpdate(trip));};
   const errorCB = (err) => {dispatch(receiveErrors(err.responseJSON));};
-  const followTripCB = (trip) => {dispatch(receiveTrip(trip));};
-  const unfollowTripCB = (trip) => {dispatch(receiveTrip(trip));};
 
   switch(action.type) {
     case CREATE_TRIP:
@@ -44,10 +42,10 @@ const TripMiddleware = ({getState, dispatch}) => next => action => {
       createTripAJAX(action.trip, createTripToPinCB, errorCB);
       return next(action);
     case FOLLOW_TRIP:
-      followTripAJAX(action.id, followTripCB, errorCB);
+      followTripAJAX(action.id, readTripCB, errorCB);
       return next(action);
     case UNFOLLOW_TRIP:
-      unfollowTripAJAX(action.id, followTripCB, errorCB);
+      unfollowTripAJAX(action.id, readTripCB, errorCB);
       return next(action);
     default:
       return next(action);

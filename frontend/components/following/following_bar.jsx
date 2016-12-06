@@ -11,18 +11,19 @@ class FollowingBar extends React.Component {
 
    render() {
      const {params, children} = this.props;
+     const {username} = params;
      return (
        <div className="following-panel">
          <div className="following-bar-wrapper">
            <nav className="following-navbar">
              <ul className="navbar-list">
-                 <Link className="navbar-item" activeClassName="navbar-item-active" to={`/profile/${params.username}/followings/users`}>
+                 <Link className="navbar-item" activeClassName="navbar-item-active" to={`/profile/${username}/followings/users`}>
                    <li>Users</li>
                  </Link>
-                 <Link className="navbar-item" activeClassName="navbar-item-active" to={`/profile/${params.username}/followings/trips`}>
+                 <Link className="navbar-item" activeClassName="navbar-item-active" to={`/profile/${username}/followings/trips`}>
                    <li>Trips</li>
                  </Link>
-                 <Link className="navbar-item" activeClassName="navbar-item-active" >
+                 <Link className="navbar-item" activeClassName="navbar-item-active" to={`/profile/${username}/followings/shops`}>
                    <li>Shops</li>
                  </Link>
              </ul>

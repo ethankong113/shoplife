@@ -25,8 +25,30 @@ class Shop extends React.Component {
     };
   }
 
+  renderFollowShopBtn() {
+    const { shop, currentUser, followShop, unfollowShop } = this.props;
+    const { followed, owner_id, id } = shop.shop;
+    if (currentUser && followed && !this._isShopOwner(owner_id)) {
+      return (
+        <button className="shop-follow-btn-alt" onClick={()=>{unfollowShop(id)}}>Unfollow</button>
+      );
+    } else if (currentUser && !followed && !this._isShopOwner(owner_id)) {
+      return (
+        <button className="shop-follow-btn" onClick={()=>{followShop(id)}}>Follow</button>
+      );
+    }
+  }
+
+  _isShopOwner(id) {
+    const {currentUser} = this.props;
+    if (currentUser) {
+      return currentUser.id === id;
+    }
+    return false;
+  }
+
    render() {
-     const { shopname, username, user_img, img_url, description, productCount } = this.props.shop.shop;
+     const { shopname, username, user_img, img_url, description, productCount, followerCount } = this.props.shop.shop;
      return (
        <div className="shop-detail-wrapper">
          <div className="shop-detail">
@@ -38,7 +60,8 @@ class Shop extends React.Component {
              <div className="shop-info">
                <h2 className="shop-name">{ shopname }</h2>
                <div>{ productCount } Products</div>
-               <div>16 Followers</div>
+               <div>{ followerCount} Followers</div>
+               { this.renderFollowShopBtn() }
              </div>
              <div className="shop-img-frame">
                <img className="shop-img" src= { img_url }/>

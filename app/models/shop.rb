@@ -17,7 +17,7 @@ class Shop < ActiveRecord::Base
   end
 
   def ensure_shop_picture
-    if self.img_url == ""
+    if self.img_url.nil? || self.img_url == ""
       self.img_url = "http://freedesignfile.com/upload/2012/07/000b_134162855718134.jpg"
     end
   end

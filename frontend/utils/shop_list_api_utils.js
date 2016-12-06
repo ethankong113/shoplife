@@ -6,3 +6,12 @@ export const fetchShopListByUserAJAX = (username, success, error) => {
      error
    });
 };
+
+export const fetchShopListByFollowerAJAX = (profilename, success, error) => {
+  $.ajax({
+     type: 'GET',
+     url: `api/shoplist/follower/${profilename}`,
+     success,
+     error
+   });
+};
