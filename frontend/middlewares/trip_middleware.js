@@ -2,6 +2,7 @@ import { CREATE_TRIP, READ_TRIP, UPDATE_TRIP, DELETE_TRIP, READ_TRIP_TO_UPDATE, 
 import { renewTrip, removeTrip } from '../actions/trip_list_actions';
 import { appendPin } from '../actions/pin_actions';
 import { createTripAJAX, readTripAJAX, updateTripAJAX, deleteTripAJAX, followTripAJAX, unfollowTripAJAX } from '../utils/trip_api_utils';
+import { updateTripCount } from '../actions/profile_actions';
 
 const TripMiddleware = ({getState, dispatch}) => next => action => {
 
@@ -14,6 +15,7 @@ const TripMiddleware = ({getState, dispatch}) => next => action => {
   const deleteTripCB = (trip) => {
     dispatch(removeTrip(trip));
     dispatch(receiveNewTrip(trip));
+    dispatch(updateTripCount(-1));
   };
   const createTripToPinCB = (trip) => {
     dispatch(receiveNewTrip(trip));

@@ -1,13 +1,18 @@
-import { PIN_ITEM, UNPIN_ITEM, UNPIN_ITEM_FROM_BOARD, FETCH_PIN_LIST, receivePinList } from '../actions/pin_actions';
-import { pinItemAJAX, unpinItemAJAX, unpinItemFromBoardAJAX, fetchPinListAJAX } from '../utils/pin_api_utils';
-import { removeProduct } from '../actions/product_list_actions';
+import { PIN_ITEM, UNPIN_ITEM, UNPIN_ITEM_FROM_BOARD, UNPIN_ITEM_FROM_PINS, FETCH_PIN_LIST, receivePinList } from '../actions/pin_actions';
+import { pinItemAJAX, unpinItemAJAX, unpinItemFromBoardAJAX, unpinItemFromPinsAJAX, fetchPinListAJAX } from '../utils/pin_api_utils';
+import { removeProduct, removeProductFromPins } from '../actions/product_list_actions';
 import { updateTripProductCount } from '../actions/trip_actions';
+import { updatePinCount } from '../actions/profile_actions';
 
 const PinMiddleware = ({getState, dispatch}) => next => action => {
   const successCB = pins => {dispatch(receivePinList(pins));};
   const removeProductCB = product => {
     dispatch(removeProduct(product));
     dispatch(updateTripProductCount(-1));
+  };
+  const removePinCB = pin => {
+    dispatch(removeProductFromPins(pin));
+    dispatch(updatePinCount(-1));
   };
   const errorCB = err => {console.log(err);};
   switch(action.type) {
@@ -19,6 +24,9 @@ const PinMiddleware = ({getState, dispatch}) => next => action => {
       return next(action);
     case UNPIN_ITEM_FROM_BOARD:
       unpinItemFromBoardAJAX(action.tripId, action.productId, removeProductCB, errorCB);
+      return next(action);
+    case UNPIN_ITEM_FROM_PINS:
+      unpinItemFromPinsAJAX(action.tripId, action.productId, removePinCB, errorCB);
       return next(action);
     case FETCH_PIN_LIST:
       fetchPinListAJAX(action.id, successCB, errorCB);

@@ -1,6 +1,7 @@
 import { CREATE_SHOP, READ_SHOP, UPDATE_SHOP, DELETE_SHOP, READ_SHOP_TO_UPDATE, FOLLOW_SHOP, UNFOLLOW_SHOP, receiveShop, receiveNewShop, receiveErrors, receiveShopToUpdate } from '../actions/shop_actions';
 import { renewShop, removeShop } from '../actions/shop_list_actions';
 import { createShopAJAX, readShopAJAX, updateShopAJAX, deleteShopAJAX, followShopAJAX, unfollowShopAJAX } from '../utils/shop_api_utils';
+import { updateShopCount } from '../actions/profile_actions';
 
 const ShopMiddleware = ({getState, dispatch}) => next => action => {
 
@@ -13,6 +14,7 @@ const ShopMiddleware = ({getState, dispatch}) => next => action => {
   const deleteShopCB = (shop) => {
     dispatch(removeShop(shop));
     dispatch(receiveNewShop(shop));
+    dispatch(updateShopCount(-1));
   };
   const readShopToUpdateCB = (shop) => {dispatch(receiveShopToUpdate(shop));};
   const errorCB = (err) => {dispatch(receiveErrors(err.responseJSON));};

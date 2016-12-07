@@ -3,7 +3,7 @@ import ProductBoard from './product_board';
 import { connect } from 'react-redux';
 import { getCurrentUser, getProductList } from '../../utils/selectors';
 import { fetchProductListByShop, fetchProductListByTrip, fetchProductListByProfile, clearProductList } from '../../actions/product_list_actions';
-import { unpinItem, unpinItemFromBoard } from '../../actions/pin_actions';
+import { unpinItem, unpinItemFromBoard, unpinItemFromPins } from '../../actions/pin_actions';
 
 const mapStateToProps = (state) => ({
    currentUser: getCurrentUser(state.session),
@@ -18,7 +18,8 @@ const mapStateToProps = (state) => ({
     fetchProductListByProfile: (id)=>{dispatch(fetchProductListByProfile(id));},
     clearProductList: ()=>{dispatch(clearProductList());},
     unpinItem: (tripId, productId) => {dispatch(unpinItem(tripId, productId));},
-    unpinItemFromBoard: (tripId, productId) => {dispatch(unpinItemFromBoard(tripId, productId));}
+    unpinItemFromBoard: (tripId, productId) => {dispatch(unpinItemFromBoard(tripId, productId));},
+    unpinItemFromPins: (tripId, productId) => {dispatch(unpinItemFromPins(tripId, productId));}
  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductBoard);

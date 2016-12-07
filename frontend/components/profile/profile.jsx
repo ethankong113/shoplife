@@ -70,27 +70,27 @@ class Profile extends React.Component {
     return (
       <ul className="navbar-list">
         <li className="list-item">
-          <Link to={`/profile/${username}/trips`}>
+          <Link to={`/profile/${username}/trips`} className="navbar-item" activeClassName="navbar-item-active">
             <span className={"list-number"}>{tripCount}</span><br /> Trips
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/profile/${username}/shops`}>
+          <Link to={`/profile/${username}/shops`} className="navbar-item" activeClassName="navbar-item-active">
             <span className={"list-number"}>{shopCount}</span><br /> Shops
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/profile/${username}/pins`}>
+          <Link to={`/profile/${username}/pins`} className="navbar-item" activeClassName="navbar-item-active">
             <span className={"list-number"}>{pinCount}</span><br /> Pins
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/profile/${username}/followers`}>
+          <Link to={`/profile/${username}/followers`} className="navbar-item" activeClassName="navbar-item-active">
             <span className={"list-number"}>{followerCount}</span><br /> Followers
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/profile/${username}/followings/users`}>
+          <Link to={`/profile/${username}/followings/users`} className="navbar-item" activeClassName="navbar-item-active">
             <span className={"list-number"}>{followingCount}</span><br /> Followings
           </Link>
         </li>

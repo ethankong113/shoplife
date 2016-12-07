@@ -1,4 +1,5 @@
 var path = require("path");
+var WatchLiveReloadPlugin = require('webpack-watch-livereload-plugin');
 
 module.exports = {
   context: __dirname,
@@ -22,5 +23,13 @@ module.exports = {
   devtool: 'source-maps',
   resolve: {
     extensions: ["", ".js", ".jsx" ]
-  }
+  },
+  plugins: [
+        new WatchLiveReloadPlugin({
+            files: [
+                './**/bundle.js',
+                './app/assets/stylesheets/*.scss'
+            ]
+        })
+    ]
 };
