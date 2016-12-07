@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     post 'pins/:trip_id/:product_id', to: 'pins#create'
     delete 'pins/:trip_id/:product_id', to: 'pins#destroy'
     delete 'pins/from_board/:trip_id/:product_id', to: 'pins#unpin_from_board'
+    delete 'pins/from_pins/:trip_id/:product_id', to: 'pins#unpin_from_pins'
   end
 
 

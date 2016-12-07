@@ -66,7 +66,7 @@ class ShowProductModal extends React.Component {
 
   _togglePinTable(showPin) {
     const {currentUser, togglePin} = this.props;
-    if (currentUser) {
+    if (currentUser && !this.isOwner()) {
       if (showPin) {
         return (
           <button className="show-product-btn" onClick={togglePin(false)}>
@@ -85,6 +85,17 @@ class ShowProductModal extends React.Component {
 
   stopPropagation(e) {
     e.stopPropagation();
+  }
+
+  isOwner() {
+    const {location, params, currentUser, tripOwner} = this.props;
+    const pathArray = location.pathname.split("/");
+    if (pathArray[1] === "trip") {
+      return tripOwner;
+    } else if (pathArray[3] === "pins") {
+      return params.username === currentUser.username;
+    }
+    return false;
   }
 
    render() {

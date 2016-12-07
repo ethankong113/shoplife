@@ -11,11 +11,13 @@ class PinTable extends React.Component {
     this.addTrip = this.addTrip.bind(this);
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps, nextState) {
     let oldPins = this.props.pins;
     let newPins = nextProps.pins;
     if (oldPins && newPins && oldPins.length !== newPins.length) {
-      this.setState({createPin: false});
+      this.setState({createPin: false, tripname: "", date: ""});
+    } else if (this.state.createPin && !nextState.createPin) {
+      this.setState({tripname: "", date: ""});
     }
   }
 

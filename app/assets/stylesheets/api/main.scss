@@ -126,19 +126,6 @@ html, body {
   font-family: 'Open Sans', sans-serif;
 }
 
-a {
-  text-decoration: none;
-  color: $googlegreen;
-}
-
-a:hover {
-  color: $lightgreen;
-}
-
-a:active {
-  color: $darkgreen;
-}
-
 button {
   margin: 0;
   padding: 0;
@@ -157,6 +144,14 @@ h1, h2, h3 {
 ul {
   list-style: none;
   padding: 0px;
+}
+
+a {
+  color: $lightgrey;
+  text-decoration: none;
+  &:hover {
+    color: darken($lightgrey, 40%);
+  }
 }
 
 input:focus {
@@ -420,6 +415,9 @@ header {
       flex-wrap: wrap;
       .list-item {
         font-size: 18px;
+        .navbar-item-active {
+          color: $shoplifered;
+        }
         .list-number {
           font-size: 30px;
         }
@@ -449,6 +447,7 @@ header {
   width: 236px;
   border: white 10px solid;
   border-radius: 20px;
+  transition: border-color 0.2s ease-out;
   margin: 15px 20px;
   background-color: white;
   .add-shop-btn, .add-trip-btn, .add-product-btn {
@@ -524,7 +523,7 @@ header {
       .shop-btn, .trip-btn, .product-btn, .trip-btn-static {
         @include remove-border-style();
         @include block-center();
-        @include btn-preset(3px, 70px, 16px);
+        @include btn-preset(3px, 60px, 16px);
         @include indigo-btn();
         border-radius: 5px;
       }
@@ -540,10 +539,10 @@ header {
     .shop-btn:active, .trip-btn:active, .product-btn:active {
       @include cyan-btn-alt();
     }
-  }
-  .card-frame:hover {
-    .shop-btn-field, .trip-btn-field, .product-btn-field {
-      visibility: visible;
+    &:hover {
+      .shop-btn-field, .trip-btn-field, .product-btn-field {
+        visibility: visible;
+      }
     }
   }
 }
@@ -834,6 +833,7 @@ $forms: shop, trip;
         max-height: 400px;
         .pin-list {
           .pin-item {
+            transition: 0.3s ease;
             &:hover {
               background-color: $plaingrey;
             }

@@ -9,6 +9,7 @@ export const APPEND_PRODUCT = "APPEND_PRODUCT";
 export const RENEW_PRODUCT = "RENEW_PRODUCT";
 export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
+export const REMOVE_PRODUCT_FROM_PINS = "REMOVE_PRODUCT_FROM_PINS";
 
 export const fetchProductListByShop = id => ({
   type: FETCH_PRODUCT_LIST_BY_SHOP,
@@ -52,6 +53,11 @@ export const renewProduct = product => ({
 export const removeProduct = product => ({
   type: REMOVE_PRODUCT,
   product
+});
+
+export const removeProductFromPins = pin => ({
+  type: REMOVE_PRODUCT_FROM_PINS,
+  pin
 });
 
 export const receiveErrors = errors => ({

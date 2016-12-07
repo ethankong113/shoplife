@@ -61,7 +61,7 @@ class ShopBoard extends React.Component {
     let renderShopList = [this._renderAddShop()];
     if (!isEmpty(list)) {
       let shopItems = list.map((shop) => {
-        const {id, shopname, img_url, user_id} = shop;
+        const {id, shopname, img_url, owner_id} = shop;
           return (
             <li className="board-card" key={id} onClick={this.enterShopPage(id)}>
               <div className="card-frame">
@@ -71,7 +71,7 @@ class ShopBoard extends React.Component {
                 <div className="shop-detail">
                   <span className="shop-name">{shopname}</span>
                 </div>
-                <div className="shop-btn-field">{this._renderShopButton(id, user_id)}</div>
+                <div className="shop-btn-field">{this._renderShopButton(id, owner_id)}</div>
               </div>
             </li>
           );
