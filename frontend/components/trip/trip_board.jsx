@@ -13,11 +13,12 @@ class TripBoard extends React.Component {
   }
 
   componentWillMount() {
-    let username = this.props.params.username;
-    if (this.props.requestType === "BY_FOLLOWER") {
-      this.props.fetchTripListByFollower(username);
+    const {params, requestType, fetchTripListByUser, fetchTripListByFollower} = this.props;
+    let username = params.username;
+    if (requestType === "BY_FOLLOWER") {
+      fetchTripListByFollower(username);
     } else {
-      this.props.fetchTripListByUser(username);
+      fetchTripListByUser(username);
     }
   }
 
@@ -26,7 +27,8 @@ class TripBoard extends React.Component {
   }
 
   _renderAddTrip() {
-    if (this._isProfileOwner() && this.props.requestType !== "BY_FOLLOWER") {
+    const {requestType} = this.props;
+    if (this._isProfileOwner() && requestType !== "BY_FOLLOWER") {
       return (
         <li key={0} className={"board-card"}>
           <button className={"add-trip-btn"} onClick={this.toggleModal("AddModal")}>
@@ -44,11 +46,13 @@ class TripBoard extends React.Component {
     if (this.props.currentUser) {
       if (this._isProfileOwner() && this._isTripOwner(user_id)) {
         return <button className="trip-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
-      } else if (!this._isProfileOwner() && this._isTripOwner(user_id)) {
-        return <button className="trip-btn-static">Your Trip</button>;
-      } else {
-        return <button className="trip-btn">Follow</button>;
       }
+      // block following/unfollowing trips in tripboard until next update.
+      // else if (!this._isProfileOwner() && this._isTripOwner(user_id)) {
+      //   return <button className="trip-btn-static">Your Trip</button>;
+      // } else {
+      //   return <button className="trip-btn">Follow</button>;
+      // }
     }
   }
 
@@ -103,32 +107,33 @@ class TripBoard extends React.Component {
   }
 
   _isProfileOwner() {
-    if (this.props.currentUser) {
-      return this.props.params.username === this.props.currentUser.username;
+    const {currentUser, params} = this.props;
+    if (currentUser) {
+      return params.username === currentUser.username;
     }
     return false;
   }
 
   _isTripOwner(id) {
-    if (this.props.currentUser) {
-      return id === this.props.currentUser.id;
+    const {currentUser} = this.props;
+    if (currentUser) {
+      return id === currentUser.id;
     }
     return false;
   }
 
    render() {
+     const {openModal, modalType, tripId} = this.state;
      return (
        <div className={"trip-board-wrapper"}>
          <div className={"trip-board"}>
            <div>{this.renderTripList()}</div>
          </div>
-         <AddTripModal isOpen={this.state.openModal && this.state.modalType == "AddModal"} modalType={this.state.modalType} toggleModal={this.toggleModal}/>
-         <EditTripModal isOpen={this.state.openModal && this.state.modalType == "EditModal"} modalType={this.state.modalType} toggleModal={this.toggleModal} tripId={this.state.tripId}/>
+         <AddTripModal isOpen={openModal && modalType == "AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
+         <EditTripModal isOpen={openModal && modalType == "EditModal"} modalType={modalType} toggleModal={this.toggleModal} tripId={tripId}/>
        </div>
      );
    }
  }
-
-
 
 export default withRouter(TripBoard);

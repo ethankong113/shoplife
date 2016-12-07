@@ -1,6 +1,6 @@
-import { CREATE_SHOP, READ_SHOP, UPDATE_SHOP, DELETE_SHOP, READ_SHOP_TO_UPDATE, receiveShop, receiveNewShop, receiveErrors, receiveShopToUpdate } from '../actions/shop_actions';
+import { CREATE_SHOP, READ_SHOP, UPDATE_SHOP, DELETE_SHOP, READ_SHOP_TO_UPDATE, FOLLOW_SHOP, UNFOLLOW_SHOP, receiveShop, receiveNewShop, receiveErrors, receiveShopToUpdate } from '../actions/shop_actions';
 import { renewShop, removeShop } from '../actions/shop_list_actions';
-import { createShopAJAX, readShopAJAX, updateShopAJAX, deleteShopAJAX } from '../utils/shop_api_utils';
+import { createShopAJAX, readShopAJAX, updateShopAJAX, deleteShopAJAX, followShopAJAX, unfollowShopAJAX } from '../utils/shop_api_utils';
 
 const ShopMiddleware = ({getState, dispatch}) => next => action => {
 
@@ -32,6 +32,12 @@ const ShopMiddleware = ({getState, dispatch}) => next => action => {
       return next(action);
     case READ_SHOP_TO_UPDATE:
       readShopAJAX(action.id, readShopToUpdateCB, errorCB);
+      return next(action);
+    case FOLLOW_SHOP:
+      followShopAJAX(action.id, readShopCB, errorCB);
+      return next(action);
+    case UNFOLLOW_SHOP:
+      unfollowShopAJAX(action.id, readShopCB, errorCB);
       return next(action);
     default:
       return next(action);

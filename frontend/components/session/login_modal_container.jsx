@@ -1,13 +1,11 @@
 import React from 'react';
-import LoginModal from 'react-modal';
 import SessionFormContainer from './session_form_container';
-// guide: https://github.com/reactjs/react-modal
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router';
-import { mediumModal } from '../../utils/modal_style';
 import { getCurrentUser } from '../../utils/selectors';
+import Modal from '../modal/modal';
 
 class LoginModalContainer extends React.Component {
 
@@ -15,22 +13,27 @@ class LoginModalContainer extends React.Component {
     super(props);
     this.state = {openModal: false, formType: "signup"};
     this.toggleModal = this.toggleModal.bind(this);
-    this.renderSessionButton = this.renderSessionButton.bind(this);
     this.showProfile = this.showProfile.bind(this);
   }
 
   toggleModal(formType = null) {
     return e => {
-      if (e) {e.preventDefault();}
-      if (formType == "signup") {
-        this.setState({openModal: true});
-        this.setState({formType: "signup"});
-      } else if (formType == "login") {
-        this.setState({openModal: true});
-        this.setState({formType: "login"});
-      } else {
-        this.setState({openModal: false});
-        this.setState({formType: "signup"});
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      switch (formType) {
+        case "signup":
+          this.setState({openModal: true, formType: "signup"});
+          break;
+        case "login":
+          this.setState({openModal: true, formType: "login"});
+          break;
+        case null:
+          this.setState({openModal: false, formType: "signup"});
+          break;
+        default:
+          break;
       }
     };
   }
@@ -69,11 +72,11 @@ class LoginModalContainer extends React.Component {
 
   showProfile() {
     let username = this.props.currentUser.username;
-    this.props.router.push(`/${username}`);
+    this.props.router.push(`/profile/${username}`);
   }
 
    _loggedIn() {
-     let currentUser = this.props.session.currentUser;
+     let currentUser = this.props.currentUser;
      return currentUser;
    }
 
@@ -81,10 +84,9 @@ class LoginModalContainer extends React.Component {
      return (
        <div>
          <div className="header-btn-panel">{this.renderProfileButton()}{this.renderSessionButton()}</div>
-         <LoginModal isOpen={this.state.openModal} style={mediumModal()}>
-           <button onClick={this.toggleModal(null)} className={"close-form-btn"}>X</button>
-           <SessionFormContainer formType={this.state.formType} toggleModal={this.toggleModal}/>
-         </LoginModal>
+         <Modal isOpen={this.state.openModal} modalName="session" closeModal={this.toggleModal(null)}>
+           <SessionFormContainer toggleModal={this.toggleModal} formType={this.state.formType}/>
+         </Modal>
        </div>
      );
    }

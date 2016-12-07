@@ -8,17 +8,14 @@ class SessionForm extends React.Component {
     this.state = {username: "", password: "", firstname: "", lastname: ""};
     this.update = this.update.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.signupWithName = this.signupWithName.bind(this);
-    this.renderButton = this.renderButton.bind(this);
-    this.renderToggleOption = this.renderToggleOption.bind(this);
-    this.renderGuestLogin = this.renderGuestLogin.bind(this);
-    this._signinAsGuest = this._signinAsGuest.bind(this);
+    this.guestLogin = this.guestLogin.bind(this);
+    this.stopPropagation = this.stopPropagation.bind(this);
   }
 
   componentWillUpdate(nextProps) {
     let currentUser = nextProps.session.currentUser;
     if (currentUser && !isEmpty(currentUser)) {
-      nextProps.toggleModal()();
+      nextProps.toggleModal(null)();
     }
   }
 
@@ -40,12 +37,17 @@ class SessionForm extends React.Component {
     };
   }
 
+  stopPropagation(e) {
+    e.stopPropagation();
+  }
+
   signupWithName() {
     if (this._isSignup()) {
+      const {firstname, lastname} = this.state;
       return (
         <div>
-          <input type="text" name="firstname" onChange={this.update("firstname")} placeholder="First Name" value={this.state.firstname} className={"half-field"}/>
-          <input type="text" name="lastname" onChange={this.update("lastname")} placeholder="Last Name" value={this.state.lastname} className={"half-field"}/>
+          <input type="text" name="firstname" onChange={this.update("firstname")} placeholder="First Name" value={firstname} className={"half-field"}/>
+          <input type="text" name="lastname" onChange={this.update("lastname")} placeholder="Last Name" value={lastname} className={"half-field"}/>
         </div>
       );
     }
@@ -87,7 +89,7 @@ class SessionForm extends React.Component {
   renderGuestLogin(login) {
     return(
       <div>
-        <button className="submit-btn guess-login-btn" onClick={this._signinAsGuest(login)}>Guest Log In</button>
+        <button className="submit-btn guess-login-btn" onClick={this.guestLogin(login)}>Guest Log In</button>
       </div>
     );
   }
@@ -96,7 +98,7 @@ class SessionForm extends React.Component {
     return this.props.formType === "signup" ? true : false;
   }
 
-  _signinAsGuest(login) {
+  guestLogin(login) {
     return e => {
       e.preventDefault();
       this.setState({username: "john123", password: "john123"});
@@ -107,16 +109,19 @@ class SessionForm extends React.Component {
 
   render() {
     return (
-      <form method="POST" onSubmit={this.handleSubmit(this.props)} className={"session-form"}>
-        <input type="text" name="username" onChange={this.update("username")} placeholder="Username" value={this.state.username} className={"full-field"} />
-        <input type="password" name="pasword" onChange={this.update("password")} placeholder="Password" value={this.state.password} className={"full-field"}/>
-        {this.signupWithName()}
-        {this.renderButton()}
-        <hr className="form-divider"/>
-        {this.renderToggleOption(this.props)}
-        <hr className="form-divider"/>
-        {this.renderGuestLogin(this.props.login)}
-      </form>
+      <div className="session-modal" onClick={this.stopPropagation}>
+        <button onClick={this.props.toggleModal(null)} className={"close-form-btn"}>X</button>
+        <form method="POST" onSubmit={this.handleSubmit(this.props)} className={"session-form"}>
+          <input type="text" name="username" onChange={this.update("username")} placeholder="Username" value={this.state.username} className={"full-field"} />
+          <input type="password" name="pasword" onChange={this.update("password")} placeholder="Password" value={this.state.password} className={"full-field"}/>
+          {this.signupWithName()}
+          {this.renderButton()}
+          <hr className="form-divider"/>
+          {this.renderToggleOption(this.props)}
+          <hr className="form-divider"/>
+          {this.renderGuestLogin(this.props.login)}
+        </form>
+      </div>
     );
    }
  }

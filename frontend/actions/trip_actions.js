@@ -1,4 +1,5 @@
 export const CREATE_TRIP = "CREATE_TRIP";
+export const CREATE_TRIP_TO_PIN = "CREATE_TRIP_TO_PIN";
 export const READ_TRIP = "READ_TRIP";
 export const UPDATE_TRIP = "UPDATE_TRIP";
 export const DELETE_TRIP = "DELETE_TRIP";
@@ -11,9 +12,16 @@ export const CLEAR_TRIP = "CLEAR_TRIP";
 export const CLEAR_TRIP_MESSAGE = "CLEAR_TRIP_MESSAGE";
 export const FOLLOW_TRIP = "FOLLOW_TRIP";
 export const UNFOLLOW_TRIP = "UNFOLLOW_TRIP";
+export const UPDATE_TRIP_PRODUCT_COUNT = "UPDATE_TRIP_PRODUCT_COUNT";
+export const UPDATE_TRIP_FOLLOWER_COUNT = "UPDATE_TRIP_FOLLOWER_COUNT";
 
 export const createTrip = (trip) => ({
   type: CREATE_TRIP,
+  trip
+});
+
+export const createTripToPin = (trip) => ({
+  type: CREATE_TRIP_TO_PIN,
   trip
 });
 
@@ -73,4 +81,14 @@ export const followTrip = (id) => ({
 export const unfollowTrip = (id) => ({
   type: UNFOLLOW_TRIP,
   id
+});
+
+export const updateTripProductCount = (change) => ({
+  type: UPDATE_TRIP_PRODUCT_COUNT,
+  change
+});
+
+export const updateTripFollowerCount = (change) => ({
+  type: UPDATE_TRIP_FOLLOWER_COUNT,
+  change
 });

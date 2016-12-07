@@ -29,9 +29,6 @@ class Profile extends React.Component {
     if (profile && params.username !== profile.username) {
       readProfile(params.username);
     }
-    if (location.pathname !== `/${params.username}/followers`) {
-      clearFollowers();
-    }
   }
 
   componentWillUnmount() {
@@ -73,27 +70,27 @@ class Profile extends React.Component {
     return (
       <ul className="navbar-list">
         <li className="list-item">
-          <Link to={`/${username}/trips`}>
+          <Link to={`/profile/${username}/trips`}>
             <span className={"list-number"}>{tripCount}</span><br /> Trips
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/${username}/shops`}>
+          <Link to={`/profile/${username}/shops`}>
             <span className={"list-number"}>{shopCount}</span><br /> Shops
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/${username}/pins`}>
+          <Link to={`/profile/${username}/pins`}>
             <span className={"list-number"}>{pinCount}</span><br /> Pins
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/${username}/followers`}>
+          <Link to={`/profile/${username}/followers`}>
             <span className={"list-number"}>{followerCount}</span><br /> Followers
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/${username}/followings/users`}>
+          <Link to={`/profile/${username}/followings/users`}>
             <span className={"list-number"}>{followingCount}</span><br /> Followings
           </Link>
         </li>

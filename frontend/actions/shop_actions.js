@@ -9,6 +9,10 @@ export const RECEIVE_SHOP_TO_UPDATE = "RECEIVE_SHOP_TO_UPDATE";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const CLEAR_SHOP = "CLEAR_SHOP";
 export const CLEAR_SHOP_MESSAGE = "CLEAR_SHOP_MESSAGE";
+export const FOLLOW_SHOP = "FOLLOW_SHOP";
+export const UNFOLLOW_SHOP = "UNFOLLOW_SHOP";
+export const UPDATE_SHOP_PRODUCT_COUNT = "UPDATE_SHOP_PRODUCT_COUNT";
+export const UPDATE_SHOP_FOLLOWER_COUNT = "UPDATE_SHOP_FOLLOWER_COUNT";
 
 export const createShop = (shop) => ({
   type: CREATE_SHOP,
@@ -61,4 +65,24 @@ export const clearShop = () => ({
 
 export const clearShopMessage = () => ({
   type: CLEAR_SHOP_MESSAGE
+});
+
+export const followShop = (id) => ({
+  type: FOLLOW_SHOP,
+  id
+});
+
+export const unfollowShop = (id) => ({
+  type: UNFOLLOW_SHOP,
+  id
+});
+
+export const updateShopProductCount = (change) => ({
+  type: UPDATE_SHOP_PRODUCT_COUNT,
+  change
+});
+
+export const updateShopFollowerCount = (change) => ({
+  type: UPDATE_SHOP_FOLLOWER_COUNT,
+  change
 });

@@ -16,6 +16,7 @@ import FollowerBoardContainer from './follower/follower_board_container';
 import FollowingBar from './following/following_bar';
 import FollowingUserContainer from './following/following_user_container';
 import FollowingTrip from './following/following_trip';
+import FollowingShop from './following/following_shop';
 import SeachBoardContainer from './search/search_board_container';
 
 const Root = ({store}) => {
@@ -24,7 +25,8 @@ const Root = ({store}) => {
       <Router history={hashHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={SeachBoardContainer} />
-          <Route path=":username" component={RequireAuth(UserProfileContainer)}>
+          <Route path="profile/:username" component={RequireAuth(UserProfileContainer)}>
+            <IndexRoute component={TripBoardContainer} />
             <Route path="trips" component={TripBoardContainer} />
             <Route path="shops" component={ShopBoardContainer} />
             <Route path="pins" component={PinBoard} />
@@ -32,6 +34,7 @@ const Root = ({store}) => {
             <Route path="followings" component={FollowingBar}>
               <Route path="users" component={FollowingUserContainer} />
               <Route path="trips" component={FollowingTrip} />
+              <Route path="shops" component={FollowingShop} />
             </Route>
           </Route>
           <Route path="shop/:shopId" component={ShopContainer} />

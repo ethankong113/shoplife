@@ -13,7 +13,13 @@ class ShopBoard extends React.Component {
   }
 
   componentWillMount() {
-    this._fetchShopList();
+    const {params, requestType, fetchShopListByUser, fetchShopListByFollower} = this.props;
+    let username = params.username;
+    if (requestType === "BY_FOLLOWER") {
+      fetchShopListByFollower(username);
+    } else {
+      fetchShopListByUser(username);
+    }
   }
 
   componentWillUnmount() {
@@ -21,7 +27,8 @@ class ShopBoard extends React.Component {
   }
 
   _renderAddShop() {
-    if (this._isOwner()) {
+    const {requestType} = this.props;
+    if (this._isProfileOwner() && requestType !== "BY_FOLLOWER") {
       return (
         <li key={0} className={"board-card"}>
           <button className={"add-shop-btn"} onClick={this.toggleModal("AddModal")}>
@@ -35,13 +42,17 @@ class ShopBoard extends React.Component {
     }
   }
 
-  _renderShopButton(id) {
+  _renderShopButton(id, user_id) {
     if (this.props.currentUser) {
-      if (this._isOwner()) {
+      if (this._isProfileOwner() && this._isShopOwner(user_id)) {
         return <button className="shop-btn" onClick={this.toggleModal("EditModal", id)}>Edit</button>;
-      } else {
-        return <button className="shop-btn">Follow</button>;
       }
+      // block following/unfollowing shops in shopboard until next update.
+      // else if (!this._isProfileOwner() && this._isShopOwner(user_id)) {
+      //   return <button className="shop-btn-static">Your Shop</button>;
+      // } else {
+      //   return <button className="shop-btn">Follow</button>;
+      // }
     }
   }
 
@@ -50,7 +61,7 @@ class ShopBoard extends React.Component {
     let renderShopList = [this._renderAddShop()];
     if (!isEmpty(list)) {
       let shopItems = list.map((shop) => {
-        const {id, shopname, img_url} = shop;
+        const {id, shopname, img_url, user_id} = shop;
           return (
             <li className="board-card" key={id} onClick={this.enterShopPage(id)}>
               <div className="card-frame">
@@ -60,7 +71,7 @@ class ShopBoard extends React.Component {
                 <div className="shop-detail">
                   <span className="shop-name">{shopname}</span>
                 </div>
-                <div className="shop-btn-field">{this._renderShopButton(id)}</div>
+                <div className="shop-btn-field">{this._renderShopButton(id, user_id)}</div>
               </div>
             </li>
           );
@@ -95,28 +106,31 @@ class ShopBoard extends React.Component {
     };
   }
 
-  _isOwner() {
-    if (this.props.currentUser) {
-      return this.props.params.username === this.props.currentUser.username;
+  _isProfileOwner() {
+    const { params, currentUser } = this.props;
+    if (currentUser) {
+      return params.username === currentUser.username;
     }
     return false;
   }
 
-  _fetchShopList() {
-    let username = this.props.params.username;
-    if (username) {
-      this.props.fetchShopListByUser(username);
+  _isShopOwner(id) {
+    const {currentUser} = this.props;
+    if (currentUser) {
+      return id === currentUser.id;
     }
+    return false;
   }
 
    render() {
+     const {openModal, modalType, shopId} = this.state;
      return (
        <div className={"shop-board-wrapper"}>
          <div className={"shop-board"}>
            {this.renderShopList()}
          </div>
-         <AddShopModal isOpen={this.state.openModal && this.state.modalType == "AddModal"} modalType={this.state.modalType} toggleModal={this.toggleModal}/>
-         <EditShopModal isOpen={this.state.openModal && this.state.modalType == "EditModal"} modalType={this.state.modalType} toggleModal={this.toggleModal} shopId={this.state.shopId}/>
+         <AddShopModal isOpen={openModal && modalType == "AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
+         <EditShopModal isOpen={openModal && modalType == "EditModal"} modalType={modalType} toggleModal={this.toggleModal} shopId={shopId}/>
        </div>
      );
    }

@@ -35,3 +35,21 @@ export const deleteShopAJAX = (id, success, error) => {
      error
    });
 };
+
+export const followShopAJAX = (id, success, error) => {
+  $.ajax({
+     type: 'POST',
+     url: `api/shop_follows/${id}`,
+     success,
+     error
+   });
+};
+
+export const unfollowShopAJAX = (id, success, error) => {
+  $.ajax({
+     type: 'DELETE',
+     url: `api/shop_follows/${id}`,
+     success,
+     error
+   });
+};

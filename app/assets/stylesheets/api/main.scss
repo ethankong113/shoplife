@@ -14,6 +14,7 @@ $darkgreen: #00695C;
 $plaingrey: #E7E7E8;
 $lightgrey: #C9C9CA;
 $black: #404040;
+$silvergrey: #F4F4F4;
 
 $headerHeight: 55px;
 
@@ -62,6 +63,7 @@ $headerHeight: 55px;
   color: $textColor;
   background-color: $bgColor;
   border: $borderColor $borderWidth solid;
+  text-align: center;
 }
 
 @mixin indigo-btn() {
@@ -86,10 +88,9 @@ $headerHeight: 55px;
   background-color: white;
   color: $mildred;
   border-radius: 50%;
-  float: right;
-  margin-top: -40px;
-  margin-right: -38px;
   cursor: pointer;
+  text-align: right;
+  float: right;
 }
 
 @mixin large-submit-btn() {
@@ -265,59 +266,45 @@ header {
     border-color: $deepred;
     background-color: $deepred;
   }
+  &:after {
+    @include clear-fix();
+  }
 }
 
-.session-form {
+.session-modal {
+  background-color: white;
+  width: 420px;
+  margin: auto;
+  border-radius: 20px;
+  margin-top: 80px;
+  padding: 15px 15px;
 
-  .full-field {
-    @include input-full-field();
-  }
-
-  .half-field {
-    @include input-half-field();
-  }
-
-  .full-field:focus {
-    @include remove-border-style();
-    color: $cyan500;
-    border-bottom: 2px $cyan500 solid;
-  }
-
-  .half-field:focus {
-    @include remove-border-style();
-    color: $cyan500;
-    border-bottom: 2px $cyan500 solid;
-  }
-
-  .submit-btn {
-    @include large-submit-btn;
-    &:hover {
-      @include cyan-btn;
+  .session-form {
+    padding: 50px 0px;
+    width: 80%;
+    margin: auto;
+    .full-field {
+      @include input-full-field();
     }
-    &:active {
-      @include cyan-btn-alt;
+
+    .half-field {
+      @include input-half-field();
     }
-  }
 
-  .form-divider {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background: silver;
-    height: 2px;
-    border: none;
-  }
-
-  .session-toggle-panel {
-    display: flex;
-    justify-content: space-around;
-
-    .indigo-btn {
-      @include block-center();
+    .full-field:focus {
       @include remove-border-style();
-      @include indigo-btn;
-      border-radius: 5px;
-      background-color: white;
-      color: $indigo;
+      color: $cyan500;
+      border-bottom: 2px $cyan500 solid;
+    }
+
+    .half-field:focus {
+      @include remove-border-style();
+      color: $cyan500;
+      border-bottom: 2px $cyan500 solid;
+    }
+
+    .submit-btn {
+      @include large-submit-btn;
       &:hover {
         @include cyan-btn;
       }
@@ -326,32 +313,50 @@ header {
       }
     }
 
-    .session-toggle-btn {
-      @include block-center();
-      @include remove-border-style();
-      @include btn-preset(8px, 10px, 16px);
-      @include indigo-btn;
-      border-radius: 5px;
-      background-color: white;
-      color: $indigo;
-      &:hover {
-        @include cyan-btn;
+    .form-divider {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      background: silver;
+      height: 2px;
+      border: none;
+    }
+
+    .session-toggle-panel {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      p {
+        color: black;
       }
-      &:active {
+
+      .session-toggle-btn {
+        @include block-center();
+        @include remove-border-style();
+        @include btn-preset(8px, 10px, 16px);
+        @include indigo-btn;
+        border-radius: 5px;
+        background-color: white;
+        color: $indigo;
+        &:hover {
+          @include cyan-btn-alt;
+        }
+        &:active {
+          @include cyan-btn;
+        }
+      }
+    }
+
+    .guess-login-btn {
+      @include indigo-btn-alt;
+      margin-top: 5px;
+      width: 100%;
+      &:hover {
         @include cyan-btn-alt;
       }
-    }
-  }
-
-  .guess-login-btn {
-    @include indigo-btn-alt;
-    margin-top: 5px;
-    width: 100%;
-    &:hover {
-      @include cyan-btn-alt;
-    }
-    &:active {
-      @include cyan-btn;
+      &:active {
+        @include cyan-btn;
+      }
     }
   }
 }
@@ -445,6 +450,7 @@ header {
   border: white 10px solid;
   border-radius: 20px;
   margin: 15px 20px;
+  background-color: white;
   .add-shop-btn, .add-trip-btn, .add-product-btn {
     @include remove-border-style();
     border-radius: 8px;
@@ -618,7 +624,7 @@ $forms: shop, trip;
         margin-top: 20px;
       }
 
-      .trip-follow-btn {
+      .shop-follow-btn, .trip-follow-btn {
         @include remove-border-style();
         @include btn-preset(5px, 30px, 24px);
         @include indigo-btn();
@@ -633,7 +639,7 @@ $forms: shop, trip;
         }
       }
 
-      .trip-follow-btn-alt {
+      .shop-follow-btn-alt, .trip-follow-btn-alt {
         @include remove-border-style();
         @include btn-preset(5px, 30px, 24px);
         @include indigo-btn-alt();
@@ -661,13 +667,8 @@ $forms: shop, trip;
 
   .product-board-wrapper {
     @include flex-jc(center);
-    margin-top: 80px;
-    margin-bottom: 80px;
-    .product-board {
-      @include flex-jc(space-around);
-      flex-wrap: wrap;
-      width: 80%;
-    }
+    margin-top: 40px;
+    margin-bottom: 40px;
   }
 }
 
@@ -722,117 +723,212 @@ $forms: shop, trip;
   }
 }
 
-.show-product {
-  @include flex-jc(space-between);
-  .show-product-table {
-    margin-top: 10px;
-    width: 100%;
-    .show-product-img {
-      width: 100%;
-      margin-top: -20px;
-      img {
-        border-radius: 15px;
+.show-product-modal {
+  display: inline-block;
+  background-color: white;
+  color: black;
+  margin: 40px 0px;
+  border-radius: 20px;
+  padding: 15px 15px;
+
+  .show-product {
+    @include flex-jc(space-between);
+    flex-wrap: wrap;
+    margin: 40px auto 0px auto;
+    .show-product-table {
+      padding: 0px 20px;
+      margin: auto;
+      .show-product-img {
+        @include block-center;
+        width: 360px;
+        img {
+          border-radius: 15px;
+          width: 100%;
+          height: auto;
+        }
+      }
+      .show-product-info {
+        margin-top: 10px;
+        @include flex-jc(space-between);
+        .show-product-name {
+          margin-right: 10px;
+          font-size: 22px;
+        }
+        .show-product-price {
+          font-size: 30px;
+        }
+      }
+      .show-product-description {
+        margin-top: 10px;
+        margin-bottom: 40px;
+        width: 360px;
+      }
+      .show-product-btn {
+        @include remove-border-style();
+        @include indigo-btn();
+        @include btn-preset(10px, 30px, 24px);
+        @include block-center();
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+      .show-product-btn:hover {
+        @include cyan-btn();
+      }
+      .show-product-btn:active {
+        @include cyan-btn-alt();
+      }
+
+      .visit-shop {
         width: 100%;
-      }
-    }
-    .show-product-info {
-      margin-top: 10px;
-      @include flex-jc(space-between);
-      .show-product-name {
-        margin-right: 10px;
-        font-size: 22px;
-      }
-      .show-product-price {
-        font-size: 30px;
-      }
-    }
-    .show-product-description {
-      margin-top: 10px;
-      width: 360px;
-    }
-    .show-product-btn {
-      @include remove-border-style();
-      @include indigo-btn();
-      @include btn-preset(10px, 30px, 24px);
-      @include block-center();
-      margin-top: 40px;
-      border-radius: 5px;
-    }
-    .show-product-btn:hover {
-      @include cyan-btn();
-    }
-    .show-product-btn:active {
-      @include cyan-btn-alt();
-    }
-  }
-  .pin-table {
-    width: 80%;
-    margin-left: 20px;
-    border-left: 1px solid $plaingrey;
-    .pin-header {
-      font-size: 20px;
-      padding-left: 10px;
-      padding-bottom: 5px;
-      margin-left: 5px;
-      border-bottom: 1px solid $plaingrey;
-    }
-    .pin-list-wrapper {
-      .pin-list {
-        .pin-item {
-          &:hover {
-            background-color: $plaingrey;
-          }
+        height: 80px;
+        @include flex-jc(space-between);
+        align-items: center;
+        margin-bottom: 40px;
+        .visit-shop-header {
           @include flex-jc(space-between);
           align-items: center;
-          margin-top: 5px;
-          margin-bottom: 5px;
-          padding-top: 5px;
-          padding-bottom: 5px;
-          cursor: pointer;
-          .item-img {
-            width: 50px;
-            height: 50px;
+          .visit-shop-img-frame {
+            width: 60px;
+            height: 60px;
+            border: 1px $lightgrey solid;
             border-radius: 50%;
-            margin-left: 8px;
+            img {
+              border-radius: 50%;
+              width: 100%;
+              height: 100%;
+            }
           }
-          .item-name {
+          .visit-shop-name {
             font-size: 16px;
+            margin-left: 20px;
           }
-          .item-btn {
-            @include remove-border-style();
-            @include btn-preset(2px, 6px, 16px);
-            @include indigo-btn();
-            border-radius: 5px;
-            margin-right: 8px;
+        }
+        .visit-shop-btn {
+          @include remove-border-style;
+          @include btn-preset(5px, 10px, 16px);
+          @include indigo-btn-alt;
+          height: 40px;
+          border-radius: 5px;
+          &:hover {
+            @include cyan-btn-alt;
           }
-          .item-btn-alt {
-            @include remove-border-style();
-            @include btn-preset(2px, 6px, 16px);
-            @include indigo-btn-alt();
-            border-radius: 5px;
-            margin-right: 8px;
+          &:active {
+            @include cyan-btn;
           }
         }
       }
     }
-    .pin-create-trip {
-      @include flex-jc(center);
-      padding: 8px 0px;
-      cursor: pointer;
-      &:hover {
-        background-color: $plaingrey
-      }
-      align-items: center;
-      .create-btn-symbol {
-        border-radius: 50%;
+    .pin-table {
+      width: 400px;
+      margin-left: 20px;
+      border-left: 1px solid $plaingrey;
+      .pin-header {
         font-size: 24px;
-        padding: 0px 9.1px;
-        color: white;
-        background-color: red;
-        margin-right: 30px;
+        padding-left: 10px;
+        padding-bottom: 5px;
+        margin-left: 5px;
+        border-bottom: 1px solid $plaingrey;
       }
-      .create-btn-text {
-        font-size: 16px;
+      .pin-list-wrapper {
+        overflow-y: auto;
+        max-height: 400px;
+        .pin-list {
+          .pin-item {
+            &:hover {
+              background-color: $plaingrey;
+            }
+            @include flex-jc(space-between);
+            align-items: center;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            cursor: pointer;
+            .item-img {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              margin-left: 8px;
+            }
+            .item-name {
+              font-size: 16px;
+            }
+            .item-btn {
+              @include remove-border-style();
+              @include btn-preset(2px, 6px, 16px);
+              @include indigo-btn();
+              border-radius: 5px;
+              margin-right: 8px;
+            }
+            .item-btn-alt {
+              @include remove-border-style();
+              @include btn-preset(2px, 6px, 16px);
+              @include indigo-btn-alt();
+              border-radius: 5px;
+              margin-right: 8px;
+            }
+          }
+        }
+        .pin-create-form {
+          width: 80%;
+          margin: 0px auto;
+          .pin-trip-input {
+            @include input-full-field;
+          }
+          .pin-date-input {
+            @include input-full-field;
+          }
+        }
+      }
+      .pin-create-trip {
+        @include flex-jc(center);
+        padding: 8px 0px;
+        cursor: pointer;
+        &:hover {
+          background-color: $plaingrey
+        }
+        align-items: center;
+        .add-trip-symbol {
+          border-radius: 50%;
+          font-size: 24px;
+          padding: 0px 9.1px;
+          color: white;
+          background-color: red;
+          margin-right: 30px;
+        }
+        .add-trip-text {
+          font-size: 16px;
+        }
+      }
+      .pin-create-trip-alt {
+        @include flex-jc(center);
+        padding: 8px 0px;
+        .add-trip-cancel {
+          @include remove-border-style();
+          @include btn-preset(4px, 8px, 20px);
+          @include indigo-btn-alt();
+          border-radius: 5px;
+          margin-right: 30px;
+          &:hover {
+            @include cyan-btn-alt;
+          }
+          &:active {
+            @include cyan-btn;
+          }
+        }
+        .add-trip-create {
+          @include remove-border-style();
+          @include btn-preset(4px, 8px, 20px);
+          @include indigo-btn();
+          border-radius: 5px;
+          margin-left: 30px;
+          &:hover {
+            @include cyan-btn;
+          }
+          &:active {
+            @include cyan-btn-alt;
+          }
+        }
       }
     }
   }
@@ -909,7 +1005,24 @@ $forms: shop, trip;
 
 .product-board {
   @include block-center();
-  margin-top: 80px;
-  margin-bottom: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   width: 80%;
+}
+
+.test-frame {
+}
+
+.modal-overlay {
+  z-index: 5;
+  color: blue;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
+  text-align: center;
+  * {
+    text-align: left;
+  }
 }

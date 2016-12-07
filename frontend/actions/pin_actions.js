@@ -4,6 +4,7 @@ export const UNPIN_ITEM_FROM_BOARD = "UNPIN_ITEM_FROM_BOARD";
 export const FETCH_PIN_LIST = "FETCH_PIN_LIST";
 export const RECEIVE_PIN_LIST = "RECEIVE_PIN_LIST";
 export const CLEAR_PIN_LIST = "CLEAR_PIN_LIST";
+export const APPEND_PIN = "APPEND_PIN";
 
 export const pinItem = (tripId, productId) => ({
   type: PIN_ITEM,
@@ -37,4 +38,9 @@ export const receivePinList = pins => ({
 
 export const clearPinList = () => ({
   type: CLEAR_PIN_LIST
+});
+
+export const appendPin = (pin) => ({
+  type: APPEND_PIN,
+  pin
 });

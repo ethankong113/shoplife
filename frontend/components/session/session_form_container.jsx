@@ -12,13 +12,4 @@ const mapStateToProps = (state) => ({
     login: (user)=>{dispatch(login(user));}
  });
 
-const validate = values => {
-  const errors = {};
-  if (!values.username) {
-    errors.title = 'Enter Username';
-  }
-  return errors;
-};
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(SessionForm);

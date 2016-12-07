@@ -2,7 +2,12 @@ class Api::TripsController < ApplicationController
   def create
     @trip = Trip.new(trip_params)
     if @trip.save
-      render "api/trips/show"
+      response_type = params[:trip][:response_type]
+      if response_type == "APPEND_TRIP"
+        render "api/trips/show"
+      elsif response_type == "APPEND_PIN"
+        render "api/pins/show"
+      end
     else
       render json: ["Something went bad. Please try again"], status: 400
     end

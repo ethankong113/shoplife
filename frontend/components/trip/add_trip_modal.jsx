@@ -24,17 +24,20 @@ class AddTripModal extends React.Component {
 
   handleSubmit(props) {
     return e => {
+      const { currentUser } = this.props;
       e.preventDefault();
-      this.state.user_id = props.currentUser.id;
-      let result = props.createTrip(this.state);
+      this.state.user_id = currentUser.id;
+      this.state.response_type = "APPEND_TRIP";
+      let result = this.props.createTrip(this.state);
     };
   }
 
   update(field) {
     return e => {
       e.preventDefault();
-      if (field !== "purpose" || e.target.value.length <= 140) {
-        this.setState({[field]: e.target.value});
+      let val = e.target.value;
+      if (field !== "purpose" || val.length <= 140) {
+        this.setState({[field]: val});
       }
     };
   }
@@ -48,10 +51,11 @@ class AddTripModal extends React.Component {
 
    render() {
      const { tripname, purpose, date, img_url } = this.state;
+     const {isOpen, toggleModal} = this.props;
      return (
-       <Modal isOpen={this.props.isOpen} style={mediumModal()} id="trip-modal">
-         <button className="close-form-btn" onClick={this.props.toggleModal("AddTrip")}>X</button>
-         <form method="post" onSubmit={this.handleSubmit(this.props)} className="trip-form">
+       <Modal isOpen={isOpen} style={mediumModal()} id="trip-modal">
+         <button className="close-form-btn" onClick={toggleModal("AddTrip")}>X</button>
+         <form method="post" onSubmit={this.handleSubmit()} className="trip-form">
            <label className="trip-label" id="tripname-label">Trip Name</label><br />
            <input className="trip-field" type="text" name="tripname" onChange={this.update("tripname")} value={tripname}/><br />
            <label className="trip-label">Purpose{this.charLeft()}</label><br />
