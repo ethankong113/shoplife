@@ -1,12 +1,14 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import PinTableContainer from '../pin/pin_table_container';
+import { withRouter } from 'react-router';
 
 class ShowProductModal extends React.Component {
 
   constructor(props) {
     super(props);
     this.stopPropagation = this.stopPropagation.bind(this);
+    this.visitShop =  this.visitShop.bind(this);
   }
 
   componentWillUpdate(nextProps) {
@@ -36,10 +38,30 @@ class ShowProductModal extends React.Component {
             <div className="show-product-price">${ price }</div>
           </div>
           <div className="show-product-description">{ description }</div>
+          { this.renderShopInfo() }
           { this._togglePinTable(this.props.showPin) }
         </div>
       );
     }
+  }
+
+  renderShopInfo() {
+    const { shop_img, shopname,  shop_id } = this.props.product;
+    return (
+      <div className="visit-shop">
+        <div className="visit-shop-header">
+          <div className="visit-shop-img-frame"><img src={shop_img}/></div>
+          <div className="visit-shop-name">{shopname}</div>
+        </div>
+        <button className="visit-shop-btn" onClick={this.visitShop}>Visit Shop</button>
+      </div>
+    );
+  }
+
+  visitShop(e) {
+    e.preventDefault();
+    const {router, product} = this.props;
+    router.push(`/shop/${product.shop_id}`);
   }
 
   _togglePinTable(showPin) {
@@ -79,4 +101,4 @@ class ShowProductModal extends React.Component {
    }
  }
 
- export default ShowProductModal;
+ export default withRouter(ShowProductModal);
