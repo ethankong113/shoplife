@@ -53,11 +53,7 @@ class ShowProductModal extends React.Component {
           <div className="visit-shop-img-frame"><img src={shop_img}/></div>
           <div className="visit-shop-name">{shopname}</div>
         </div>
-<<<<<<< HEAD
         <button className="visit-shop-btn" onClick={this.visitShop}>Visit</button>
-=======
-        <button className="visit-shop-btn" onClick={this.visitShop}>Visit Shop</button>
->>>>>>> e390ff324d2445a49ef3d522aac04ea6377caf54
       </div>
     );
   }
