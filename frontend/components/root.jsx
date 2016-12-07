@@ -26,6 +26,7 @@ const Root = ({store}) => {
         <Route path="/" component={App}>
           <IndexRoute component={SeachBoardContainer} />
           <Route path="profile/:username" component={RequireAuth(UserProfileContainer)}>
+            <IndexRoute component={TripBoardContainer} />
             <Route path="trips" component={TripBoardContainer} />
             <Route path="shops" component={ShopBoardContainer} />
             <Route path="pins" component={PinBoard} />

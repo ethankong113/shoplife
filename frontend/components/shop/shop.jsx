@@ -21,7 +21,7 @@ class Shop extends React.Component {
 
   backToUser(username) {
     return () => {
-      this.props.router.push(`/profile/${username}`);
+      this.props.router.push(`/profile/${username}/shops`);
     };
   }
 
