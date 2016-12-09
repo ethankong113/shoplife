@@ -551,11 +551,23 @@ header {
   border-color: lightgrey;
 }
 
+$modalTypes: add-shop, edit-shop, add-trip, edit-trip;
+@each $modalType in $modalTypes {
+  .#{$modalType}-modal {
+    background-color: white;
+    color: black;
+    width: 420px;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 40px auto 0px auto;
+  }
+}
+
 $forms: shop, trip;
 @each $form in $forms {
   .#{$form}-form {
-    margin-top: 10px;
-
+    margin: 40px auto 20px auto;
+    width: 86%;
     .#{$form}-field {
       @include input-full-field();
     }

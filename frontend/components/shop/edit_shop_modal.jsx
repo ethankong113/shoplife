@@ -55,10 +55,14 @@ class EditShopModal extends React.Component {
     }
   }
 
+  stopPropagation(e) {
+    e.stopPropagation();
+  }
+
    render() {
      const { shopname, description, location, img_url } = this.state;
      return (
-       <Modal isOpen={this.props.isOpen} style={largeModal()} id="shop-modal">
+       <div className="edit-shop-modal" onClick={this.stopPropagation}>
          <button className="close-form-btn" onClick={this.props.toggleModal("EditShop")}>X</button>
          <form method="post" className="shop-form">
            <label className="shop-label" id="shopname-label">Shop Name</label><br />
@@ -72,7 +76,7 @@ class EditShopModal extends React.Component {
            <button className="shop-btn" onClick={this.handleSubmit("edit", this.props)} >Edit Shop</button>
            <button className="shop-btn-alt" onClick={this.handleSubmit("delete", this.props)}>Delete Shop</button>
          </form>
-       </Modal>
+       </div>
      );
    }
  }

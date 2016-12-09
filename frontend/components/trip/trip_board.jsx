@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import AddTripModal from './add_trip_modal';
 import EditTripModal from './edit_trip_modal';
 import { isEmpty } from 'lodash';
+import Modal from '../modal/modal';
 
 class TripBoard extends React.Component {
 
@@ -122,6 +123,11 @@ class TripBoard extends React.Component {
     return false;
   }
 
+  isModalOpen(type) {
+    const {openModal, modalType} = this.state;
+    return openModal && modalType === type;
+  }
+
    render() {
      const {openModal, modalType, tripId} = this.state;
      return (
@@ -129,8 +135,12 @@ class TripBoard extends React.Component {
          <div className={"trip-board"}>
            <div>{this.renderTripList()}</div>
          </div>
-         <AddTripModal isOpen={openModal && modalType == "AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
-         <EditTripModal isOpen={openModal && modalType == "EditModal"} modalType={modalType} toggleModal={this.toggleModal} tripId={tripId}/>
+         <Modal isOpen={this.isModalOpen("AddModal")} modalName="add-trip" closeModal={this.toggleModal(null)}>
+           <AddTripModal modalType={modalType} toggleModal={this.toggleModal}/>
+         </Modal>
+         <Modal isOpen={this.isModalOpen("EditModal")} modalName="edit-trip" closeModal={this.toggleModal(null)}>
+           <EditTripModal modalType={modalType} toggleModal={this.toggleModal} tripId={tripId}/>
+         </Modal>
        </div>
      );
    }

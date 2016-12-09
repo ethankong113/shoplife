@@ -156,20 +156,25 @@ class ProductBoard extends React.Component {
     return currentUser.username === params.username;
   }
 
+  isModalOpen(type) {
+    const {openModal, modalType} = this.state;
+    return openModal && modalType === type;
+  }
+
    render() {
-     const {openModal, modalType, showPin, productId} = this.state;
+     const {modalType, showPin, productId} = this.state;
      return (
        <div className="product-board-wrapper">
          <div className="product-board">
            { this.renderProductList() }
          </div>
-         <Modal isOpen={openModal && modalType==="AddModal"} modalName="add-product" closeModal={this.toggleModal(null)}>
+         <Modal isOpen={this.isModalOpen("AddModal")} modalName="add-product" closeModal={this.toggleModal(null)}>
            <AddProductContainer modalType={modalType} toggleModal={this.toggleModal}/>
          </Modal>
-         <Modal isOpen={openModal && modalType==="EditModal"} modalName="edit-product" closeModal={this.toggleModal(null)}>
+         <Modal isOpen={this.isModalOpen("EditModal")} modalName="edit-product" closeModal={this.toggleModal(null)}>
            <EditProductContainer modalType={modalType} toggleModal={this.toggleModal} productId={productId}/>
          </Modal>
-         <Modal isOpen={openModal && modalType==="ShowModal"} modalName="show-product" closeModal={this.toggleModal(null)}>
+         <Modal isOpen={this.isModalOpen("ShowModal")} modalName="show-product" closeModal={this.toggleModal(null)}>
            <ShowProductContainer modalType={modalType} showPin={showPin} togglePin={this.togglePin} toggleModal={this.toggleModal} productId={productId} tripOwner={this._isOwner()}/>
          </Modal>
        </div>
