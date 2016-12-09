@@ -14,17 +14,18 @@ class EditShopModal extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    let shopId = nextProps.shopId;
-    if (shopId !== null && nextProps.modalType === "EditModal" && isEmpty(nextProps.shop)) {
-      nextProps.readShopToUpdate(shopId);
-    } else if (!isEmpty(nextProps.shop) && nextProps.modalType === "EditModal" && nextProps.msg.includes("SET_SHOP_FIELDS")) {
-      this.setState(nextProps.shop);
-      nextProps.clearShopMessage();
-    } else if (!isEmpty(nextProps.shop) && nextProps.modalType === "EditModal" && nextProps.msg.includes("CLOSE_SHOP_MODAL") ) {
+    const {shopId, modalType, shop, msg} = nextProps;
+    const {readShopToUpdate, clearShopMessage, toggleModal, clearShop} = this.props;
+    if (shopId !== null && modalType === "EditModal" && isEmpty(shop)) {
+      readShopToUpdate(shopId);
+    } else if (!isEmpty(shop) && modalType === "EditModal" && msg.includes("SET_SHOP_FIELDS")) {
+      this.setState(shop);
+      clearShopMessage();
+    } else if (!isEmpty(shop) && modalType === "EditModal" && msg.includes("CLOSE_SHOP_MODAL") ) {
       this.props.toggleModal('EditModal')();
-      nextProps.clearShopMessage();
-    } else if (!isEmpty(nextProps.shop) && this.props.modalType === "EditModal" && nextProps.modalType === null) {
-      nextProps.clearShop();
+      clearShopMessage();
+    } else if (!isEmpty(shop) && this.props.modalType === "EditModal" && modalType === null) {
+      clearShop();
     }
   }
 

@@ -9,17 +9,19 @@ class EditProductModal extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    let productId = nextProps.productId;
-    if (productId !== null && nextProps.modalType === "EditModal" && isEmpty(nextProps.product)) {
-      nextProps.readProduct(productId);
-    } else if (!isEmpty(nextProps.product) && nextProps.modalType === "EditModal" && this.state.productname == "") {
-      this.setState(nextProps.product);
-    } else if (nextProps.msg.includes("CLOSE_PRODUCT_MODAL")) {
-      this.props.toggleModal('EditModal')();
-      nextProps.clearProductMessage();
-    } else if (!isEmpty(nextProps.product) && this.props.modalType === "EditModal" && nextProps.modalType === null) {
+    const {productId, modalType, product, msg} = nextProps;
+    const {readProduct, toggleModal, clearProductMessage, clearProduct} = this.props;
+    const {productname} = this.state;
+    if (productId !== null && modalType === "EditModal" && isEmpty(product)) {
+      readProduct(productId);
+    } else if (!isEmpty(product) && modalType === "EditModal" && productname == "") {
+      this.setState(product);
+    } else if (msg.includes("CLOSE_PRODUCT_MODAL")) {
+      toggleModal('EditModal')();
+      clearProductMessage();
+    } else if (!isEmpty(product) && this.props.modalType === "EditModal" && modalType === null) {
       this.setState({productname: "", description: "", price: 0, img_url: "", id: 0});
-      nextProps.clearProduct();
+      clearProduct();
     }
   }
 
