@@ -358,14 +358,12 @@ header {
 
 .profile-wrapper {
   .profile-detail {
+    @include flex-jc(center);
     margin-top: 40px;
-    display: flex;
-    justify-content: center;
     .first-row {
-      width: 66%;
-      display: flex;
-      justify-content: space-between;
+      @include flex-jc(space-between);
       align-items: center;
+      width: 66%;
       .profile-name {
         font-size: 40px;
       }
@@ -430,32 +428,114 @@ header {
     margin-bottom: 80px;
     .shop-board, .trip-board {
       @include flex-jc(space-around);
-      flex-wrap: wrap;
       width: 80%;
     }
   }
 }
 
-.shop-list, .trip-list, .product-list {
-  @include flex-jc(space-around);
-  flex-wrap: wrap;
+.product-board-wrapper {
+  @include flex-jc(center);
+  margin-top: 40px;
+  margin-bottom: 40px;
+  .product-board {
+    @include flex-jc(space-around);
+  }
+}
+
+$listTypes: shop-list, trip-list, product-list;
+@each $listType in $listTypes {
+  @media (max-width: 699px) {
+    .#{$listType}-1 {
+      column-count: 1;
+      column-gap: 0;
+    }
+    .#{$listType}-2 {
+      column-count: 1;
+      column-gap: 0;
+    }
+    .#{$listType}-3 {
+      column-count: 1;
+      column-gap: 0;
+    }
+    .#{$listType}-4 {
+      column-count: 1;
+      column-gap: 0;
+    }
+  }
+
+  @media (min-width: 700px) and (max-width: 949px) {
+    .#{$listType}-1 {
+      column-count: 1;
+      column-gap: 0;
+    }
+    .#{$listType}-2 {
+      column-count: 2;
+      column-gap: 0;
+    }
+    .#{$listType}-3 {
+      column-count: 2;
+      column-gap: 0;
+    }
+    .#{$listType}-4 {
+      column-count: 2;
+      column-gap: 0;
+    }
+  }
+
+  @media (min-width: 950px) and (max-width: 1199px) {
+    .#{$listType}-1 {
+      column-count: 1;
+      column-gap: 0;
+    }
+    .#{$listType}-2 {
+      column-count: 2;
+      column-gap: 0;
+    }
+    .#{$listType}-3 {
+      column-count: 3;
+      column-gap: 0;
+    }
+    .#{$listType}-4 {
+      column-count: 3;
+      column-gap: 0;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .shop-list-1, .trip-list-1, .product-list-1 {
+      column-count: 1;
+      column-gap: 0;
+    }
+    .shop-list-2, .trip-list-2, .product-list-2 {
+      column-count: 2;
+      column-gap: 0;
+    }
+    .shop-list-3, .trip-list-3, .product-list-3 {
+      column-count: 3;
+      column-gap: 0;
+    }
+    .shop-list-4, .trip-list-4, .product-list-4 {
+      column-count: 4;
+      column-gap: 0;
+    }
+  }
 }
 
 .board-card {
   @include block-center();
-  height: 324px;
   width: 236px;
   border: white 10px solid;
   border-radius: 20px;
   transition: border-color 0.2s ease-out;
   margin: 15px 20px;
   background-color: white;
+  break-inside: avoid;
   .add-shop-btn, .add-trip-btn, .add-product-btn {
     @include remove-border-style();
     border-radius: 8px;
     border: 1px solid lightgrey;
     display: block;
-    height: 100%;
+    height: 324px;
     width: 100%;
     background-color: white;
     cursor: pointer;
@@ -485,24 +565,42 @@ header {
   .card-frame {
     @include block-center();
     border-radius: 8px;
-    height: 100%;
     width: 100%;
     cursor: zoom-in;
-    position: relative;
     .picture-frame {
       @include block-center();
+      position: relative;
       width: 236px;
-      height: 236px;
       border-radius: 7px;
       .shop-picture, .trip-picture, .product-picture {
         border-radius: 7px;
         width: 100%;
-        height: 100%;
+        height: auto;
+      }
+      .shop-btn-field, .trip-btn-field, .product-btn-field {
+        visibility: hidden;
+        width: 100%;
+        bottom: 20px;
+        position: absolute;
+        .shop-btn, .trip-btn, .product-btn {
+          @include remove-border-style();
+          @include block-center();
+          @include btn-preset(3px, 60px, 16px);
+          @include indigo-btn();
+          border-radius: 5px;
+          &:hover {
+            @include cyan-btn();
+          }
+          &:active {
+            @include cyan-btn-alt();
+          }
+        }
       }
     }
     .shop-detail, .trip-detail, .product-detail {
       @include block-center();
       margin-top: 10px;
+      margin-bottom: 40px;
       width: 90%;
       font-size: 20px;
       .shop-name, .trip-name, .product-name {
@@ -514,30 +612,6 @@ header {
     }
     .shop-detail:after, .trip-detail:after, .product-detail:after {
       @include clear-fix();
-    }
-    .shop-btn-field, .trip-btn-field, .product-btn-field {
-      visibility: hidden;
-      width: 100%;
-      top: 200px;
-      position: absolute;
-      .shop-btn, .trip-btn, .product-btn, .trip-btn-static {
-        @include remove-border-style();
-        @include block-center();
-        @include btn-preset(3px, 60px, 16px);
-        @include indigo-btn();
-        border-radius: 5px;
-      }
-      .trip-btn-static {
-        background-color: $googlegreen;
-        border-color: $googlegreen;
-        cursor: zoom-in;
-      }
-    }
-    .shop-btn:hover, .trip-btn:hover, .product-btn:hover {
-      @include cyan-btn();
-    }
-    .shop-btn:active, .trip-btn:active, .product-btn:active {
-      @include cyan-btn-alt();
     }
     &:hover {
       .shop-btn-field, .trip-btn-field, .product-btn-field {
@@ -674,12 +748,6 @@ $forms: shop, trip;
         }
       }
     }
-  }
-
-  .product-board-wrapper {
-    @include flex-jc(center);
-    margin-top: 40px;
-    margin-bottom: 40px;
   }
 }
 
@@ -1030,7 +1098,7 @@ $forms: shop, trip;
   @include block-center();
   margin-top: 20px;
   margin-bottom: 20px;
-  width: 80%;
+  width: 95%;
 }
 
 .test-frame {

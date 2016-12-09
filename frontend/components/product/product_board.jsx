@@ -42,18 +42,16 @@ class ProductBoard extends React.Component {
   }
 
   _renderAddProduct() {
-    if (this._isOwner() && this.props.requestType === "BY_SHOP") {
-      return (
-        <li className={"board-card"} key={0}>
-          <button className={"add-product-btn"} onClick={this.toggleModal("AddModal")}>
-            <div className={"add-product-content"}>
-              <span className={"add-product-sign"}>+</span>
-              <span className={"add-product-text"}>Create Product</span>
-            </div>
-          </button>
-        </li>
-      );
-    }
+    return (
+      <li className={"board-card"} key={0}>
+        <button className={"add-product-btn"} onClick={this.toggleModal("AddModal")}>
+          <div className={"add-product-content"}>
+            <span className={"add-product-sign"}>+</span>
+            <span className={"add-product-text"}>Create Product</span>
+          </div>
+        </button>
+      </li>
+    );
   }
 
   _renderProductButton(id, tripId = null) {
@@ -74,7 +72,11 @@ class ProductBoard extends React.Component {
 
   renderProductList() {
     let list = this.props.products;
-    let renderProductList = [this._renderAddProduct()];
+    const {requestType} = this.props;
+    let renderProductList = [];
+    if (this._isOwner() && requestType === "BY_SHOP") {
+      renderProductList.push(this._renderAddProduct());
+    }
     if (!isEmpty(list)) {
       let productItems = list.map((product, idx) => {
         const {id, productname, price, img_url, trip_id} = product;
@@ -83,12 +85,12 @@ class ProductBoard extends React.Component {
               <div className="card-frame">
                 <div className="picture-frame">
                   <img className="product-picture" src={img_url} />
+                  <div className="product-btn-field">{this._renderProductButton(id, trip_id)}</div>
                 </div>
                 <div className="product-detail">
                   <span className="product-name">{productname}</span>
                   <span className="product-price">${price}</span>
                 </div>
-                <div className="product-btn-field">{this._renderProductButton(id, trip_id)}</div>
               </div>
             </li>
           );
@@ -96,8 +98,9 @@ class ProductBoard extends React.Component {
       );
       renderProductList = renderProductList.concat(productItems);
     }
+    const itemCount = renderProductList.length;
     return (
-      <ul className="product-list">
+      <ul className={`product-list-${itemCount}`}>
         {renderProductList}
       </ul>
     );

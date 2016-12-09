@@ -30,6 +30,7 @@ class Modal extends React.Component {
   componentWillUnmount() {
     let modal = $(`.modal-${this.props.modalName}`);
     modal.remove();
+    $('body').css('overflow', 'auto');
   }
 
   handleClick(e) {

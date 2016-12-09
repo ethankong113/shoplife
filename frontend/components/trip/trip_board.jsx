@@ -28,19 +28,16 @@ class TripBoard extends React.Component {
   }
 
   _renderAddTrip() {
-    const {requestType} = this.props;
-    if (this._isProfileOwner() && requestType !== "BY_FOLLOWER") {
-      return (
-        <li key={0} className={"board-card"}>
-          <button className={"add-trip-btn"} onClick={this.toggleModal("AddModal")}>
-            <div className={"add-trip-content"}>
-              <span className={"add-trip-sign"}>+</span>
-              <span className={"add-trip-text"}>Create Trip</span>
-            </div>
-          </button>
-        </li>
-      );
-    }
+    return (
+      <li key={0} className={"board-card"}>
+        <button className={"add-trip-btn"} onClick={this.toggleModal("AddModal")}>
+          <div className={"add-trip-content"}>
+            <span className={"add-trip-sign"}>+</span>
+            <span className={"add-trip-text"}>Create Trip</span>
+          </div>
+        </button>
+      </li>
+    );
   }
 
   _renderTripButton(id, user_id) {
@@ -59,7 +56,11 @@ class TripBoard extends React.Component {
 
   renderTripList() {
     let list = this.props.trips;
-    let renderTripList = [this._renderAddTrip()];
+    const requestType = this.props.requestType;
+    let renderTripList = [];
+    if (this._isProfileOwner() && requestType !== "BY_FOLLOWER") {
+      renderTripList.push(this._renderAddTrip());
+    }
     if (!isEmpty(list)) {
       let tripItems = list.map((trip) => {
         const {id, tripname, img_url, user_id} = trip;
@@ -68,11 +69,11 @@ class TripBoard extends React.Component {
               <div className="card-frame">
                 <div className="picture-frame">
                   <img className="trip-picture" src={img_url} />
+                  <div className="trip-btn-field">{this._renderTripButton(id, user_id)}</div>
                 </div>
                 <div className="trip-detail">
                   <span className="trip-name">{tripname}</span>
                 </div>
-                <div className="trip-btn-field">{this._renderTripButton(id, user_id)}</div>
               </div>
             </li>
           );
@@ -80,8 +81,9 @@ class TripBoard extends React.Component {
       );
       renderTripList = renderTripList.concat(tripItems);
     }
+    const itemCount = renderTripList.length;
     return (
-      <ul className="trip-list">
+      <ul className={`trip-list-${itemCount}`}>
         {renderTripList}
       </ul>
     );
