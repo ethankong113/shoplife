@@ -1,9 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { isEmpty } from 'lodash';
-import AddProductModal from './add_product_modal';
-import EditProductModal from './edit_product_modal';
-// import ShowProductModal from './show_product_modal';
+import EditProductContainer from './edit_product_container';
+import AddProductContainer from './add_product_container';
 import ShowProductContainer from './show_product_container';
 import Modal from '../modal/modal';
 
@@ -21,16 +20,17 @@ class ProductBoard extends React.Component {
   }
 
   fetchProductList() {
-    const { shopId, tripId, username } = this.props.params;
-    switch (this.props.requestType) {
+    const {props} = this;
+    const { shopId, tripId, username } = props.params;
+    switch (props.requestType) {
       case "BY_SHOP":
-        this.props.fetchProductListByShop(shopId);
+        props.fetchProductListByShop(shopId);
         break;
       case "BY_TRIP":
-        this.props.fetchProductListByTrip(tripId);
+        props.fetchProductListByTrip(tripId);
         break;
       case "BY_PIN_BOARD":
-        this.props.fetchProductListByProfile(username);
+        props.fetchProductListByProfile(username);
         break;
       default:
         break;
@@ -163,8 +163,12 @@ class ProductBoard extends React.Component {
          <div className="product-board">
            { this.renderProductList() }
          </div>
-         <AddProductModal isOpen={openModal && modalType==="AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
-         <EditProductModal isOpen={openModal && modalType=="EditModal"} modalType={modalType} toggleModal={this.toggleModal} productId={productId}/>
+         <Modal isOpen={openModal && modalType==="AddModal"} modalName="add-product" closeModal={this.toggleModal(null)}>
+           <AddProductContainer modalType={modalType} toggleModal={this.toggleModal}/>
+         </Modal>
+         <Modal isOpen={openModal && modalType==="EditModal"} modalName="edit-product" closeModal={this.toggleModal(null)}>
+           <EditProductContainer modalType={modalType} toggleModal={this.toggleModal} productId={productId}/>
+         </Modal>
          <Modal isOpen={openModal && modalType==="ShowModal"} modalName="show-product" closeModal={this.toggleModal(null)}>
            <ShowProductContainer modalType={modalType} showPin={showPin} togglePin={this.togglePin} toggleModal={this.toggleModal} productId={productId} tripOwner={this._isOwner()}/>
          </Modal>
