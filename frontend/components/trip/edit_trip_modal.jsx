@@ -1,9 +1,7 @@
 import React from 'react';
-import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { updateTrip, readTripToUpdate, deleteTrip, clearTrip, clearTripMessage } from '../../actions/trip_actions';
 import { getCurrentUser } from '../../utils/selectors';
-import { largeModal } from '../../utils/modal_style';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'react-router';
 
@@ -55,10 +53,14 @@ class EditTripModal extends React.Component {
     }
   }
 
+  stopPropagation(e) {
+    e.stopPropagation();
+  }
+
    render() {
      const { tripname, purpose, date, img_url } = this.state;
      return (
-       <Modal isOpen={this.props.isOpen} style={largeModal()} id="trip-modal">
+       <div className="edit-trip-modal" onClick={this.stopPropagation}>
          <button className="close-form-btn" onClick={this.props.toggleModal("EditTrip")}>X</button>
          <form method="post" className="trip-form">
            <label className="trip-label" id="tripname-label">Trip Name</label><br />
@@ -72,7 +74,7 @@ class EditTripModal extends React.Component {
            <button className="trip-btn" onClick={this.handleSubmit("edit", this.props)} >Edit Trip</button>
            <button className="trip-btn-alt" onClick={this.handleSubmit("delete", this.props)}>Delete Trip</button>
          </form>
-       </Modal>
+       </div>
      );
    }
  }

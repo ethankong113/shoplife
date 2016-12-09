@@ -1,9 +1,7 @@
 import React from 'react';
-import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { createTrip } from '../../actions/trip_actions';
 import { getCurrentUser } from '../../utils/selectors';
-import { mediumModal } from '../../utils/modal_style';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'react-router';
 
@@ -49,11 +47,15 @@ class AddTripModal extends React.Component {
     }
   }
 
+  stopPropagation(e) {
+    e.stopPropagation();
+  }
+
    render() {
      const { tripname, purpose, date, img_url } = this.state;
      const {isOpen, toggleModal} = this.props;
      return (
-       <Modal isOpen={isOpen} style={mediumModal()} id="trip-modal">
+       <div className="add-trip-modal" onClick={this.stopPropagation}>
          <button className="close-form-btn" onClick={toggleModal("AddTrip")}>X</button>
          <form method="post" onSubmit={this.handleSubmit()} className="trip-form">
            <label className="trip-label" id="tripname-label">Trip Name</label><br />
@@ -66,7 +68,7 @@ class AddTripModal extends React.Component {
            <input className="trip-field" type="text" name="img_url" onChange={this.update("img_url")} value={img_url}/><br />
            <button className="trip-btn">Create Trip</button>
          </form>
-       </Modal>
+       </div>
      );
    }
  }

@@ -8,13 +8,15 @@ class Modal extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    let modal = $(`.modal-${nextProps.modalName}`);
-    if (nextProps.isOpen) {
-      modal.css('display', 'block');
+    const {modalName, isOpen} = nextProps;
+    const wasOpen = this.props.isOpen;
+    let modal = $(`.modal-${modalName}`);
+    if (isOpen) {
       $('body').css('overflow', 'hidden');
-    } else {
-      modal.css('display', 'none');
+      modal.css('display', 'block');
+    } else if (wasOpen && !isOpen){
       $('body').css('overflow', 'auto');
+      modal.css('display', 'none');
     }
   }
 

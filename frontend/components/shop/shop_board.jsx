@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import AddShopModal from './add_shop_modal';
 import EditShopModal from './edit_shop_modal';
 import { isEmpty } from 'lodash';
+import Modal from '../modal/modal';
 
 class ShopBoard extends React.Component {
 
@@ -122,6 +123,11 @@ class ShopBoard extends React.Component {
     return false;
   }
 
+  isModalOpen(type) {
+    const {openModal, modalType} = this.state;
+    return openModal && modalType === type;
+  }
+
    render() {
      const {openModal, modalType, shopId} = this.state;
      return (
@@ -129,8 +135,12 @@ class ShopBoard extends React.Component {
          <div className={"shop-board"}>
            {this.renderShopList()}
          </div>
-         <AddShopModal isOpen={openModal && modalType == "AddModal"} modalType={modalType} toggleModal={this.toggleModal}/>
-         <EditShopModal isOpen={openModal && modalType == "EditModal"} modalType={modalType} toggleModal={this.toggleModal} shopId={shopId}/>
+         <Modal isOpen={this.isModalOpen("AddModal")} modalName="add-shop" closeModal={this.toggleModal(null)}>
+           <AddShopModal modalType={modalType} toggleModal={this.toggleModal}/>
+         </Modal>
+         <Modal isOpen={this.isModalOpen("EditModal")} modalName="edit-shop" closeModal={this.toggleModal(null)}>
+           <EditShopModal modalType={modalType} toggleModal={this.toggleModal} shopId={shopId}/>
+         </Modal>
        </div>
      );
    }

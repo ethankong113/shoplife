@@ -1,9 +1,7 @@
 import React from 'react';
-import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { createShop } from '../../actions/shop_actions';
 import { getCurrentUser } from '../../utils/selectors';
-import { mediumModal } from '../../utils/modal_style';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'react-router';
 
@@ -46,10 +44,14 @@ class AddShopModal extends React.Component {
     }
   }
 
+  stopPropagation(e) {
+    e.stopPropagation();
+  }
+
    render() {
      const { shopname, description, location, img_url } = this.state;
      return (
-       <Modal isOpen={this.props.isOpen} style={mediumModal()} id="shop-modal">
+       <div className="add-shop-modal" onClick={this.stopPropagation}>
          <button className="close-form-btn" onClick={this.props.toggleModal("AddShop")}>X</button>
          <form method="post" onSubmit={this.handleSubmit(this.props)} className="shop-form">
            <label className="shop-label" id="shopname-label">Shop Name</label><br />
@@ -62,7 +64,7 @@ class AddShopModal extends React.Component {
            <input className="shop-field" type="text" name="img_url" onChange={this.update("img_url")} value={img_url}/><br />
            <button className="shop-btn">Create Shop</button>
          </form>
-       </Modal>
+       </div>
      );
    }
  }

@@ -70,32 +70,38 @@ class Profile extends React.Component {
     return (
       <ul className="navbar-list">
         <li className="list-item">
-          <Link to={`/profile/${username}/trips`} className="navbar-item" activeClassName="navbar-item-active">
+          <Link to={`/profile/${username}/trips`} className={this.getNavbarClass("trips")}>
             <span className={"list-number"}>{tripCount}</span><br /> Trips
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/profile/${username}/shops`} className="navbar-item" activeClassName="navbar-item-active">
+          <Link to={`/profile/${username}/shops`} className={this.getNavbarClass("shops")}>
             <span className={"list-number"}>{shopCount}</span><br /> Shops
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/profile/${username}/pins`} className="navbar-item" activeClassName="navbar-item-active">
+          <Link to={`/profile/${username}/pins`} className={this.getNavbarClass("pins")}>
             <span className={"list-number"}>{pinCount}</span><br /> Pins
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/profile/${username}/followers`} className="navbar-item" activeClassName="navbar-item-active">
+          <Link to={`/profile/${username}/followers`} className={this.getNavbarClass("followers")}>
             <span className={"list-number"}>{followerCount}</span><br /> Followers
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/profile/${username}/followings/users`} className="navbar-item" activeClassName="navbar-item-active">
+          <Link to={`/profile/${username}/followings/users`} className={this.getNavbarClass("followings")}>
             <span className={"list-number"}>{followingCount}</span><br /> Followings
           </Link>
         </li>
       </ul>
     );
+  }
+
+  getNavbarClass(item) {
+    const pathArray = this.props.location.pathname.split("/");
+    let path = pathArray[3] || "trips";
+    return item === path ? "navbar-item-active" : "navbar-item";
   }
 
   followUser() {
