@@ -671,53 +671,64 @@ $forms: shop, trip;
   }
 }
 
-.product-form {
-  margin-top: 10px;
+.add-product-modal, .edit-product-modal {
+  width: 420px;
+  margin: 60px 0px;
+  border-radius: 20px;
+  display: inline-block;
+  background-color: white;
+  color: black;
+  padding: 20px;
 
-  .product-field {
-    @include input-full-field();
-  }
+  .product-form {
+    margin: 30px auto;
+    width: 86%;
 
-  .product-field:focus {
-    @include remove-border-style();
-    color: $cyan500;
-    border-bottom: 2px $cyan500 solid;
-  }
-
-  .product-textarea {
-    max-width: 100%;
-    max-height: 80px;
-  }
-
-  .product-btn {
-    @include large-submit-btn;
-    &:hover {
-      @include cyan-btn;
+    .product-field {
+      @include input-full-field();
     }
-    &:active {
-      @include cyan-btn-alt;
-    }
-  }
 
-  .product-btn-alt {
-    @include large-submit-btn;
-    @include indigo-btn-alt;
-    &:hover {
-      @include cyan-btn-alt;
+    .product-field:focus {
+      @include remove-border-style();
+      color: $cyan500;
+      border-bottom: 2px $cyan500 solid;
     }
-    &:active {
-      @include cyan-btn;
-    }
-  }
 
-  .product-price {
-    display: flex;
-    justify-content: space-between;
-    .product-sign {
-      font-size: 20px;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      margin-right: 8px;
+    .product-textarea {
+      max-width: 100%;
+      max-height: 80px;
+    }
+
+    .product-btn {
+      @include large-submit-btn;
+      &:hover {
+        @include cyan-btn;
+      }
+      &:active {
+        @include cyan-btn-alt;
+      }
+    }
+
+    .product-btn-alt {
+      @include large-submit-btn;
+      @include indigo-btn-alt;
+      &:hover {
+        @include cyan-btn-alt;
+      }
+      &:active {
+        @include cyan-btn;
+      }
+    }
+
+    .product-price {
+      display: flex;
+      justify-content: space-between;
+      .product-sign {
+        font-size: 20px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-right: 8px;
+      }
     }
   }
 }

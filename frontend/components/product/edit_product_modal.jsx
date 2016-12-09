@@ -1,8 +1,4 @@
 import React from 'react';
-import Modal from 'react-modal';
-import { largeModal } from '../../utils/modal_style';
-import { connect } from 'react-redux';
-import { readProduct, updateProduct, deleteProduct, clearProduct, clearProductMessage } from '../../actions/product_actions';
 import { isEmpty } from 'lodash';
 
 class EditProductModal extends React.Component {
@@ -52,42 +48,32 @@ class EditProductModal extends React.Component {
     }
   }
 
-   render() {
-     const { productname, description, price, img_url } = this.state;
-     return (
-       <Modal isOpen={this.props.isOpen} style={largeModal()} id="product-modal">
-         <button className="close-form-btn" onClick={this.props.toggleModal('EditModal')}>X</button>
-         <form method="post" className="product-form">
-           <label className="product-label">Product Name</label><br />
-           <input className="product-field" type="text" name="productname" onChange={this.update("productname")} value={productname}/><br />
-           <label className="product-label">Description{this.charLeft()}</label><br />
-           <textarea className="product-field product-textarea" name="description" onChange={this.update("description")} value={description}></textarea><br />
-           <label className="product-label">Price</label><br />
-           <div className="product-price">
-             <span className="product-sign">$</span><input className="product-field" type="number" min="0" max="9999.99" name="price" onChange={this.update("price")} value={price}/><br />
-           </div>
-           <label className="product-label">Image Link</label><br />
-           <input className="product-field" type="text" name="img_url" onChange={this.update("img_url")} value={img_url}/><br />
-           <button className="product-btn" onClick={this.handleSubmit("edit", this.props)}>Edit Product</button>
-           <button className="product-btn-alt" onClick={this.handleSubmit("delete", this.props)}>Delete Product</button>
-         </form>
-       </Modal>
-     );
-   }
- }
+  stopPropagation(e) {
+    e.stopPropagation();
+  }
 
- const mapStateToProps = (state) => ({
-    shop_id: state.shop.shop.id,
-    product: state.product.product,
-    msg: state.product.msg
-  });
+  render() {
+    const { productname, description, price, img_url } = this.state;
+    return (
+     <div className="edit-product-modal" onClick={this.stopPropagation}>
+       <button className="close-form-btn" onClick={this.props.toggleModal('EditModal')}>X</button>
+       <form method="post" className="product-form">
+         <label className="product-label">Product Name</label><br />
+         <input className="product-field" type="text" name="productname" onChange={this.update("productname")} value={productname}/><br />
+         <label className="product-label">Description{this.charLeft()}</label><br />
+         <textarea className="product-field product-textarea" name="description" onChange={this.update("description")} value={description}></textarea><br />
+         <label className="product-label">Price</label><br />
+         <div className="product-price">
+           <span className="product-sign">$</span><input className="product-field" type="number" min="0" max="9999.99" name="price" onChange={this.update("price")} value={price}/><br />
+         </div>
+         <label className="product-label">Image Link</label><br />
+         <input className="product-field" type="text" name="img_url" onChange={this.update("img_url")} value={img_url}/><br />
+         <button className="product-btn" onClick={this.handleSubmit("edit", this.props)}>Edit Product</button>
+         <button className="product-btn-alt" onClick={this.handleSubmit("delete", this.props)}>Delete Product</button>
+       </form>
+      </div>
+    );
+  }
+}
 
- const mapDispatchToProps = (dispatch) => ({
-    updateProduct: (product)=>{dispatch(updateProduct(product));},
-    readProduct: (id)=>{dispatch(readProduct(id));},
-    deleteProduct: (id)=>{dispatch(deleteProduct(id));},
-    clearProduct: ()=>{dispatch(clearProduct());},
-    clearProductMessage: ()=>{dispatch(clearProductMessage());}
- });
-
- export default connect(mapStateToProps, mapDispatchToProps)(EditProductModal);
+ export default EditProductModal;
