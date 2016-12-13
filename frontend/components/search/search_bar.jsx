@@ -26,10 +26,11 @@ class SearchBar extends React.Component {
 
   handleSearch(e) {
     e.preventDefault();
-    this.props.submitSearch(this.state.query);
-    const path = this.props.location.pathname;
+    const {submitSearch, location, router} = this.props;
+    submitSearch(this.state.query);
+    const path = location.pathname;
     if (path !== "/") {
-      this.props.router.push("/");
+      router.push("/");
     }
   }
 

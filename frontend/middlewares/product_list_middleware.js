@@ -16,15 +16,18 @@ const ProductListMiddleware = ({getState, dispatch}) => next => action => {
       fetchProductListByProfileAJAX(action.username, successCB, errorCB);
       return next(action);
     case FETCH_PRODUCT_LIST_BY_SEARCH:
-      if (action.query === "") {
-        fetchProductListByAllAJAX(successCB, errorCB);
-      } else {
-        fetchProductListBySearchAJAX(action.query, successCB, errorCB);
-      }
+      const {query, limit, offset} = action;
+      fetchProductListBySearchAJAX(query, limit, offset, successCB, errorCB);
       return next(action);
     default:
       return next(action);
   }
 };
+
+// if (action.query === "") {
+//   fetchProductListByAllAJAX(successCB, errorCB);
+// } else {
+//   fetchProductListBySearchAJAX(action.query, action.limit, action.offset, successCB, errorCB);
+// }
 
 export default ProductListMiddleware;

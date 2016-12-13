@@ -25,10 +25,10 @@ export const fetchProductListByProfileAJAX = (username, success, error) => {
    });
 };
 
-export const fetchProductListBySearchAJAX = (query, success, error) => {
+export const fetchProductListBySearchAJAX = (query, limit, offset, success, error) => {
   $.ajax({
      type: 'GET',
-     url: `api/productlists/query/${query}`,
+     url: `api/productlists/query/${query}/limit/${limit}/offset/${offset}`,
      success,
      error
    });

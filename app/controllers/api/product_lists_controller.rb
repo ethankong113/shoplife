@@ -29,7 +29,7 @@ class Api::ProductListsController < ApplicationController
   end
 
   def find_by_query
-    @products = Product.where("LOWER(productname) LIKE LOWER(?)", "%#{params[:query]}%")
+    @products = Product.where("LOWER(productname) LIKE LOWER(?)", "%#{params[:query]}%").order(:id).limit(params[:limit]).offset(params[:offset])
     if @products.nil? == false
       render 'api/product_lists/index'
     else

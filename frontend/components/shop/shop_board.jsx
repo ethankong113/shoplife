@@ -28,19 +28,16 @@ class ShopBoard extends React.Component {
   }
 
   _renderAddShop() {
-    const {requestType} = this.props;
-    if (this._isProfileOwner() && requestType !== "BY_FOLLOWER") {
-      return (
-        <li key={0} className={"board-card"}>
-          <button className={"add-shop-btn"} onClick={this.toggleModal("AddModal")}>
-            <div className={"add-shop-content"}>
-              <span className={"add-shop-sign"}>+</span>
-              <span className={"add-shop-text"}>Create Shop</span>
-            </div>
-          </button>
-        </li>
-      );
-    }
+    return (
+      <li key={0} className={"board-card"}>
+        <button className={"add-shop-btn"} onClick={this.toggleModal("AddModal")}>
+          <div className={"add-shop-content"}>
+            <span className={"add-shop-sign"}>+</span>
+            <span className={"add-shop-text"}>Create Shop</span>
+          </div>
+        </button>
+      </li>
+    );
   }
 
   _renderShopButton(id, user_id) {
@@ -59,7 +56,11 @@ class ShopBoard extends React.Component {
 
   renderShopList() {
     let list = this.props.shops;
-    let renderShopList = [this._renderAddShop()];
+    const requestType = this.props.requestType;
+    let renderShopList = [];
+    if (this._isProfileOwner() && requestType !== "BY_FOLLOWER") {
+      renderShopList.push(this._renderAddShop());
+    }
     if (!isEmpty(list)) {
       let shopItems = list.map((shop) => {
         const {id, shopname, img_url, owner_id} = shop;
@@ -68,11 +69,11 @@ class ShopBoard extends React.Component {
               <div className="card-frame">
                 <div className="picture-frame">
                   <img className="shop-picture" src={img_url} />
+                  <div className="shop-btn-field">{this._renderShopButton(id, owner_id)}</div>
                 </div>
                 <div className="shop-detail">
                   <span className="shop-name">{shopname}</span>
                 </div>
-                <div className="shop-btn-field">{this._renderShopButton(id, owner_id)}</div>
               </div>
             </li>
           );
@@ -80,8 +81,9 @@ class ShopBoard extends React.Component {
       );
       renderShopList = renderShopList.concat(shopItems);
     }
+    const itemCount = renderShopList.length < 4 ? renderShopList.length : 4;
     return (
-      <ul className="shop-list">
+      <ul className={`shop-list-${itemCount}`}>
         {renderShopList}
       </ul>
     );

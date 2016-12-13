@@ -26,9 +26,11 @@ export const fetchProductListByProfile = username => ({
   username
 });
 
-export const fetchProductListBySearch = query => ({
+export const fetchProductListBySearch = (query, limit, offset) => ({
   type: FETCH_PRODUCT_LIST_BY_SEARCH,
-  query
+  query,
+  limit,
+  offset
 });
 
 export const receiveProductList = products => ({
