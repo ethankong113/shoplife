@@ -4,7 +4,6 @@ import { fetchProductListByShopAJAX, fetchProductListByTripAJAX, fetchProductLis
 const ProductListMiddleware = ({getState, dispatch}) => next => action => {
   const successCB = products => {dispatch(receiveProductList(products));};
   const errorCB = err => {dispatch(receiveErrors(err));};
-
   switch(action.type) {
     case FETCH_PRODUCT_LIST_BY_SHOP:
       fetchProductListByShopAJAX(action.id, successCB, errorCB);
@@ -23,11 +22,5 @@ const ProductListMiddleware = ({getState, dispatch}) => next => action => {
       return next(action);
   }
 };
-
-// if (action.query === "") {
-//   fetchProductListByAllAJAX(successCB, errorCB);
-// } else {
-//   fetchProductListBySearchAJAX(action.query, action.limit, action.offset, successCB, errorCB);
-// }
 
 export default ProductListMiddleware;

@@ -16,10 +16,11 @@ class SearchBoard extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    const { search } = this.props;
+    const { search, clearProductList } = this.props;
     const newQuery = nextProps.search.query;
     if (search.query !== newQuery) {
-      this.loadProductList(newQuery, 6);
+      clearProductList();
+      this.loadProductList(newQuery, 6, 0);
     }
   }
 
@@ -28,9 +29,8 @@ class SearchBoard extends React.Component {
     this.loadProductList(query, 6);
   }
 
-  loadProductList(query, limit) {
+  loadProductList(query, limit, offset = this.state.offset) {
     const {fetchProductList} = this.props;
-    const {offset} = this.state;
     fetchProductList(query, limit, offset);
     this.setState({offset: offset + limit});
   }
