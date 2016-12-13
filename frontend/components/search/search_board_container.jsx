@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import SearchBoard from './search_board';
 import { getCurrentUser } from '../../utils/selectors';
-import { fetchProductListBySearch } from '../../actions/product_list_actions';
+import { fetchProductListBySearch, clearProductList } from '../../actions/product_list_actions';
 
 const mapStateToProps = (state) => ({
    currentUser: getCurrentUser(state.session),
@@ -9,7 +9,8 @@ const mapStateToProps = (state) => ({
  });
 
  const mapDispatchToProps = (dispatch) => ({
-    fetchProductList: (query, limit, offset)=>{dispatch(fetchProductListBySearch(query, limit, offset));}
+    fetchProductList: (query, limit, offset)=>{dispatch(fetchProductListBySearch(query, limit, offset));},
+    clearProductList: ()=>{dispatch(clearProductList());}
  });
 
  export default connect(mapStateToProps, mapDispatchToProps)(SearchBoard);

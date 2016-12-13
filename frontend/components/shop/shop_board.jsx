@@ -67,7 +67,7 @@ class ShopBoard extends React.Component {
           return (
             <li className="board-card" key={id} onClick={this.enterShopPage(id)}>
               <div className="card-frame">
-                <div className="picture-frame">
+                <div className="picture-frame-square">
                   <img className="shop-picture" src={img_url} />
                   <div className="shop-btn-field">{this._renderShopButton(id, owner_id)}</div>
                 </div>
@@ -81,9 +81,14 @@ class ShopBoard extends React.Component {
       );
       renderShopList = renderShopList.concat(shopItems);
     }
-    const itemCount = renderShopList.length < 4 ? renderShopList.length : 4;
+    // const itemCount = renderShopList.length < 4 ? renderShopList.length : 4;
+    // return (
+    //   <ul className={`shop-list-${itemCount}`}>
+    //     {renderShopList}
+    //   </ul>
+    // );
     return (
-      <ul className={`shop-list-${itemCount}`}>
+      <ul className={'shop-list'}>
         {renderShopList}
       </ul>
     );

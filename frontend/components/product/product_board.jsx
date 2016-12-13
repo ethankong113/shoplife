@@ -13,7 +13,7 @@ class ProductBoard extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.togglePin = this.togglePin.bind(this);
     this.removeLoadingSign = this.removeLoadingSign.bind(this);
-    this.state = {openModal: false, modalType: null, showPin: false, productId: null};
+    this.state = {openModal: false, modalType: null, showPin: false, productId: null, loaded: 0};
   }
 
   componentWillMount() {
@@ -40,6 +40,61 @@ class ProductBoard extends React.Component {
 
   componentWillUnmount() {
     this.props.clearProductList();
+  }
+
+  componentDidUpdate(){
+    this.adjustPositions();
+    this.adjustRow();
+    $(window).resize(()=>{
+      this.adjustPositions();
+      this.adjustRow();
+    });
+  }
+
+  adjustPositions() {
+    const {requestType} = this.props;
+    let {loaded} = this.state;
+    if (this._isOwner() && requestType === "BY_SHOP") {
+      loaded += 1;
+    }
+    let len = $('.board-card').length;
+    if (loaded === len) {
+      let cards = [];
+      for (let i = 0; i < len; i++) {
+        cards.push($($('.board-card')[i]).height());
+      }
+      let listWidth = $('.product-list').width();
+      let factor = Math.floor(listWidth / 286);
+      for (let i = 0; i < cards.length; i++) {
+        let row = Math.floor(i / factor);
+        let pos = i % factor;
+        let offset = 0;
+        if (row > 0) {
+          let prevRow = row - 1;
+          let height = $($('.board-card')[prevRow * factor + pos]).height();
+          let posY = $($('.board-card')[prevRow * factor + pos]).offset().top;
+          $($('.board-card')[i]).offset({top: height + 20 + posY});
+        } else if (row === 0 && i !== 0) {
+          let posY = $($('.board-card')[0]).offset().top;
+          $($('.board-card')[i]).offset({top: posY});
+        }
+      }
+    }
+  }
+
+  adjustRow() {
+    let width = $(window).width() * 0.95;
+    if (width <= 572) {
+      $('.product-list').width(286);
+    } else if (width > 572 && width <= 858) {
+      $('.product-list').width(572);
+    } else if (width > 858 && width <= 1144) {
+      $('.product-list').width(858);
+    } else if (width > 1145 && width <= 1429) {
+      $('.product-list').width(1145);
+    } else if (width > 1430) {
+      $('.product-list').width(1430);
+    }
   }
 
   _renderAddProduct() {
@@ -73,6 +128,8 @@ class ProductBoard extends React.Component {
 
   removeLoadingSign(id) {
     $(`.loading-sign-${id}`).css('display', 'none');
+    const {loaded} = this.state;
+    this.setState({loaded: loaded + 1});
   }
 
   renderProductList() {
@@ -105,9 +162,14 @@ class ProductBoard extends React.Component {
       );
       renderProductList = renderProductList.concat(productItems);
     }
-    const itemCount = renderProductList.length < 4 ? renderProductList.length : 4;
+    // const itemCount = renderProductList.length < 4 ? renderProductList.length : 4;
+    // return (
+    //   <ul className={`product-list-${itemCount}`}>
+    //     {renderProductList}
+    //   </ul>
+    // );
     return (
-      <ul className={`product-list-${itemCount}`}>
+      <ul className={"product-list"}>
         {renderProductList}
       </ul>
     );

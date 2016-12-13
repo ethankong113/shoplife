@@ -67,7 +67,7 @@ class TripBoard extends React.Component {
           return (
             <li className="board-card" key={id} onClick={this.enterTripPage(id)}>
               <div className="card-frame">
-                <div className="picture-frame">
+                <div className="picture-frame-square">
                   <img className="trip-picture" src={img_url} />
                   <div className="trip-btn-field">{this._renderTripButton(id, user_id)}</div>
                 </div>
@@ -81,9 +81,14 @@ class TripBoard extends React.Component {
       );
       renderTripList = renderTripList.concat(tripItems);
     }
-    const itemCount = renderTripList.length < 4 ? renderTripList.length : 4;
+    // const itemCount = renderTripList.length < 4 ? renderTripList.length : 4;
+    // return (
+    //   <ul className={`trip-list-${itemCount}`}>
+    //     {renderTripList}
+    //   </ul>
+    // );
     return (
-      <ul className={`trip-list-${itemCount}`}>
+      <ul className={'trip-list'}>
         {renderTripList}
       </ul>
     );
