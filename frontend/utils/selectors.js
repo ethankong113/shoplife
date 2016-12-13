@@ -62,3 +62,24 @@ export const getPinList = (pins) => {
   }
   return null;
 };
+
+export const showLoadProducts = (list) => {
+  if (list.msg.includes("SHOW_LOAD_PRODUCTS")) {
+    return true;
+  }
+  return false;
+};
+
+export const hideLoadProducts = (list) => {
+  if (list.msg.includes("HIDE_LOAD_PRODUCTS")) {
+    return true;
+  }
+  return false;
+};
+
+export const emptyProductList = (list) => {
+  if (list.msg.includes("NO_PRODUCTS")) {
+    return true;
+  }
+  return false;
+};

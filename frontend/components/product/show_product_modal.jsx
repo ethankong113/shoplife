@@ -24,6 +24,11 @@ class ShowProductModal extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const {clearProduct} = this.props;
+    clearProduct();
+  }
+
   renderProductTable() {
     if (!isEmpty(this.props.product)) {
       let {productname, description, img_url, price} = this.props.product;

@@ -443,6 +443,7 @@ header {
       @include flex-jc(flex-start);
       flex-wrap: wrap;
       margin: 0px auto;
+      height: 100%;
     }
   }
 }
@@ -1076,5 +1077,32 @@ $forms: shop, trip;
   text-align: center;
   * {
     text-align: left;
+  }
+}
+
+.load-products-frame {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  visibility: hidden;
+  img {
+    display: block;
+    position: absolute;
+    bottom: 20px;
+  }
+}
+
+.loading-sign-img {
+  display: block;
+  margin: auto;
+}
+
+.empty-product-list {
+  text-align: center;
+  font-size: 36px;
+  img {
+    display: inline-block;
+    width: 40%;
+    height: auto;
   }
 }
