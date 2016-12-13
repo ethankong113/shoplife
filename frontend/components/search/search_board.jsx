@@ -1,6 +1,5 @@
 import React from 'react';
 import ProductBoardContainer from '../product/product_board_container';
-import InfiniteScroll from 'react-infinite-scroll';
 
 class SearchBoard extends React.Component {
 
@@ -15,13 +14,33 @@ class SearchBoard extends React.Component {
     this.loadProductList(search.query, 6);
   }
 
+  componentDidMount() {
+    $(window).on('scroll', (e)=>{
+      if ($('.product-list').length != 0 && (window.pageYOffset + window.innerHeight) >
+      ($('.product-list').offset().top + $('.product-list').height())) {
+        this.loadMoreProducts();
+      }
+    });
+  }
+
   componentWillUpdate(nextProps) {
-    const { search, clearProductList } = this.props;
+    const { search, clearProductList, showLoadProducts, hideLoadProducts, clearProductListMessage } = this.props;
     const newQuery = nextProps.search.query;
     if (search.query !== newQuery) {
       clearProductList();
       this.loadProductList(newQuery, 6, 0);
     }
+    //NB: Disabling end of list loading sign for now.
+    // if (!showLoadProducts && nextProps.showLoadProducts) {
+    //   $('.load-products-frame').css('visibility', 'visible');
+    // } else if (!hideLoadProducts && nextProps.hideLoadProducts) {
+    //   $('.load-products-frame').css('visibility', 'hidden');
+    //   clearProductListMessage();
+    // }
+  }
+
+  componentWillUnmount() {
+    $(window).off('scroll');
   }
 
   loadMoreProducts() {
@@ -53,7 +72,9 @@ class SearchBoard extends React.Component {
            { this.renderBannerText() }
          </div>
          <ProductBoardContainer requestType="BY_SEARCH" />
-         <button onClick={this.loadMoreProducts}>Load More</button>
+         <div className="load-products-frame">
+           <img src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481663999/assets/shopping_cart_loading.gif" />
+         </div>
        </div>
      );
    }

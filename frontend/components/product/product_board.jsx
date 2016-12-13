@@ -38,17 +38,18 @@ class ProductBoard extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.clearProductList();
-  }
-
   componentDidUpdate(){
     this.adjustPositions();
     this.adjustRow();
-    $(window).resize(()=>{
+    $(window).on('resize', (e)=>{
       this.adjustPositions();
       this.adjustRow();
     });
+  }
+
+  componentWillUnmount() {
+    this.props.clearProductList();
+    $(window).off('resize');
   }
 
   adjustPositions() {
@@ -146,7 +147,9 @@ class ProductBoard extends React.Component {
             <li className="board-card" key={idx + 1} onClick={this.toggleModal("ShowModal", id, false)}>
               <div className="card-frame">
                 <div className="picture-frame">
-                  <div className={`loading-sign-${idx+1}`}>Loading...</div>
+                  <div className={`loading-sign loading-sign-${idx+1}`}>
+                    <img className="loading-sign-img" src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481663999/assets/shopping_cart_loading.gif" />
+                  </div>
                   <img className="product-picture" src={img_url}
                     onLoad={()=>{this.removeLoadingSign(idx+1);}} />
                   <div className="product-btn-field">{this._renderProductButton(id, trip_id)}</div>
@@ -173,6 +176,19 @@ class ProductBoard extends React.Component {
         {renderProductList}
       </ul>
     );
+  }
+
+  renderEmptyList() {
+    const {requestType, emptyProductList} = this.props;
+    if (requestType === "BY_SEARCH" && emptyProductList) {
+      return (
+        <div className="empty-product-list">
+          <span>{"Oooops... we cannot find any results for you."}</span>
+          <br />
+          <img src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481672546/empty_bag_yy872c.gif" />
+        </div>
+      );
+    }
   }
 
   toggleModal(field, id, showPin = false) {
@@ -239,6 +255,7 @@ class ProductBoard extends React.Component {
        <div className="product-board-wrapper">
          <div className="product-board">
            { this.renderProductList() }
+           { this.renderEmptyList() }
          </div>
          <Modal isOpen={this.isModalOpen("AddModal")} modalName="add-product" closeModal={this.toggleModal(null)}>
            <AddProductContainer modalType={modalType} toggleModal={this.toggleModal}/>

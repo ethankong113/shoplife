@@ -12,10 +12,10 @@ const ProductReducer = (state = _nullProduct, action) => {
   let newState;
   switch(action.type) {
     case RECEIVE_PRODUCT:
-      newState = merge({}, state, {product: action.product, errors: []});
+      newState = merge({}, state, {product: action.product});
       return newState;
     case RECEIVE_NEW_PRODUCT:
-      newState = merge({}, state, {product: action.product, errors: [], msg: ["CLOSE_PRODUCT_MODAL"]});
+      newState = merge({}, state, {product: action.product, msg: ["CLOSE_PRODUCT_MODAL"]});
       return newState;
     case CLEAR_PRODUCT:
       return _nullProduct;

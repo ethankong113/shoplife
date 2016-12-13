@@ -10,6 +10,7 @@ export const RENEW_PRODUCT = "RENEW_PRODUCT";
 export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const REMOVE_PRODUCT_FROM_PINS = "REMOVE_PRODUCT_FROM_PINS";
+export const CLEAR_PRODUCT_LIST_MESSAGE = "CLEAR_PRODUCT_LIST_MESSAGE";
 
 export const fetchProductListByShop = id => ({
   type: FETCH_PRODUCT_LIST_BY_SHOP,
@@ -65,4 +66,8 @@ export const removeProductFromPins = pin => ({
 export const receiveErrors = errors => ({
   type: RECEIVE_ERRORS,
   errors
+});
+
+export const clearProductListMessage = () => ({
+  type: CLEAR_PRODUCT_LIST_MESSAGE
 });
