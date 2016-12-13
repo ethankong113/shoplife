@@ -28,7 +28,8 @@ Rails.application.routes.draw do
     get 'productlists/shop_id/:shop_id', to: 'product_lists#find_by_shop_id'
     get 'productlists/trip_id/:trip_id', to: 'product_lists#find_by_trip_id'
     get 'productlists/profile/:username', to: 'product_lists#find_by_profile'
-    get 'productlists/query/:query', to: 'product_lists#find_by_query'
+    get 'productlists/query/limit/:limit/offset/:offset', to: 'product_lists#find_by_query'
+    get 'productlists/query/:query/limit/:limit/offset/:offset', to: 'product_lists#find_by_query'
     get 'productlists/all', to: 'product_lists#find_all'
 
     get 'pins/:id', to: 'pins#index'

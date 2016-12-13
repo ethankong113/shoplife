@@ -81,7 +81,7 @@ class ShopBoard extends React.Component {
       );
       renderShopList = renderShopList.concat(shopItems);
     }
-    const itemCount = renderShopList.length;
+    const itemCount = renderShopList.length < 4 ? renderShopList.length : 4;
     return (
       <ul className={`shop-list-${itemCount}`}>
         {renderShopList}

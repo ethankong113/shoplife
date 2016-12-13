@@ -1,18 +1,38 @@
 import React from 'react';
 import ProductBoardContainer from '../product/product_board_container';
+import InfiniteScroll from 'react-infinite-scroll';
 
 class SearchBoard extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {offset: 0};
+    this.loadMoreProducts = this.loadMoreProducts.bind(this);
+  }
+
   componentWillMount() {
-    const { search, fetchProductList } = this.props;
-    fetchProductList(search.query);
+    const { search } = this.props;
+    this.loadProductList(search.query, 6);
   }
 
   componentWillUpdate(nextProps) {
-    const { search, fetchProductList } = this.props;
-    if (search.query !== nextProps.search.query) {
-      fetchProductList(nextProps.search.query);
+    const { search } = this.props;
+    const newQuery = nextProps.search.query;
+    if (search.query !== newQuery) {
+      this.loadProductList(newQuery, 6);
     }
+  }
+
+  loadMoreProducts() {
+    const query = this.props.search.query;
+    this.loadProductList(query, 6);
+  }
+
+  loadProductList(query, limit) {
+    const {fetchProductList} = this.props;
+    const {offset} = this.state;
+    fetchProductList(query, limit, offset);
+    this.setState({offset: offset + limit});
   }
 
   renderBannerText() {
@@ -33,6 +53,7 @@ class SearchBoard extends React.Component {
            { this.renderBannerText() }
          </div>
          <ProductBoardContainer requestType="BY_SEARCH" />
+         <button onClick={this.loadMoreProducts}>Load More</button>
        </div>
      );
    }

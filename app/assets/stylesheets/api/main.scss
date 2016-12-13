@@ -461,6 +461,10 @@ $listTypes: shop-list, trip-list, product-list;
       column-count: 1;
       column-gap: 0;
     }
+    .#{$listType}-5 {
+      column-count: 1;
+      column-gap: 0;
+    }
   }
 
   @media (min-width: 700px) and (max-width: 949px) {
@@ -477,6 +481,10 @@ $listTypes: shop-list, trip-list, product-list;
       column-gap: 0;
     }
     .#{$listType}-4 {
+      column-count: 2;
+      column-gap: 0;
+    }
+    .#{$listType}-5 {
       column-count: 2;
       column-gap: 0;
     }
@@ -499,23 +507,54 @@ $listTypes: shop-list, trip-list, product-list;
       column-count: 3;
       column-gap: 0;
     }
-  }
-
-  @media (min-width: 1200px) {
-    .shop-list-1, .trip-list-1, .product-list-1 {
-      column-count: 1;
-      column-gap: 0;
-    }
-    .shop-list-2, .trip-list-2, .product-list-2 {
-      column-count: 2;
-      column-gap: 0;
-    }
-    .shop-list-3, .trip-list-3, .product-list-3 {
+    .#{$listType}-5 {
       column-count: 3;
       column-gap: 0;
     }
-    .shop-list-4, .trip-list-4, .product-list-4 {
+  }
+
+  @media (min-width: 1200px) and (max-width: 1449px) {
+    .#{$listType}-1 {
+      column-count: 1;
+      column-gap: 0;
+    }
+    .#{$listType}-2 {
+      column-count: 2;
+      column-gap: 0;
+    }
+    .#{$listType}-3 {
+      column-count: 3;
+      column-gap: 0;
+    }
+    .#{$listType}-4 {
       column-count: 4;
+      column-gap: 0;
+    }
+    .#{$listType}-5 {
+      column-count: 4;
+      column-gap: 0;
+    }
+  }
+
+  @media (min-width: 1450px) {
+    .#{$listType}-1 {
+      column-count: 1;
+      column-gap: 0;
+    }
+    .#{$listType}-2 {
+      column-count: 2;
+      column-gap: 0;
+    }
+    .#{$listType}-3 {
+      column-count: 3;
+      column-gap: 0;
+    }
+    .#{$listType}-4 {
+      column-count: 4;
+      column-gap: 0;
+    }
+    .#{$listType}-5 {
+      column-count: 5;
       column-gap: 0;
     }
   }
@@ -527,7 +566,7 @@ $listTypes: shop-list, trip-list, product-list;
   border: white 10px solid;
   border-radius: 20px;
   transition: border-color 0.2s ease-out;
-  margin: 15px 20px;
+  margin: 0px 15px;
   background-color: white;
   break-inside: avoid;
   .add-shop-btn, .add-trip-btn, .add-product-btn {
@@ -602,12 +641,14 @@ $listTypes: shop-list, trip-list, product-list;
       margin-top: 10px;
       margin-bottom: 40px;
       width: 90%;
-      font-size: 20px;
+      color: darken($lightgrey, 50%);
       .shop-name, .trip-name, .product-name {
         float: left;
+        font-size: 16px;
       }
       .product-price {
         float: right;
+        font-size: 20px;
       }
     }
     .shop-detail:after, .trip-detail:after, .product-detail:after {
@@ -619,10 +660,9 @@ $listTypes: shop-list, trip-list, product-list;
       }
     }
   }
-}
-
-.board-card:hover {
-  border-color: lightgrey;
+  &:hover {
+    border-color: $plaingrey;
+  }
 }
 
 $modalTypes: add-shop, edit-shop, add-trip, edit-trip;

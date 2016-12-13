@@ -9,7 +9,7 @@ const mapStateToProps = (state) => ({
  });
 
  const mapDispatchToProps = (dispatch) => ({
-    fetchProductList: (query)=>{dispatch(fetchProductListBySearch(query));}
+    fetchProductList: (query, limit, offset)=>{dispatch(fetchProductListBySearch(query, limit, offset));}
  });
 
  export default connect(mapStateToProps, mapDispatchToProps)(SearchBoard);

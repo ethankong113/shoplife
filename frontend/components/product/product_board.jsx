@@ -12,6 +12,7 @@ class ProductBoard extends React.Component {
     super(props);
     this.toggleModal = this.toggleModal.bind(this);
     this.togglePin = this.togglePin.bind(this);
+    this.removeLoadingSign = this.removeLoadingSign.bind(this);
     this.state = {openModal: false, modalType: null, showPin: false, productId: null};
   }
 
@@ -70,6 +71,10 @@ class ProductBoard extends React.Component {
     }
   }
 
+  removeLoadingSign(id) {
+    $(`.loading-sign-${id}`).css('display', 'none');
+  }
+
   renderProductList() {
     let list = this.props.products;
     const {requestType} = this.props;
@@ -84,7 +89,9 @@ class ProductBoard extends React.Component {
             <li className="board-card" key={idx + 1} onClick={this.toggleModal("ShowModal", id, false)}>
               <div className="card-frame">
                 <div className="picture-frame">
-                  <img className="product-picture" src={img_url} />
+                  <div className={`loading-sign-${idx+1}`}>Loading...</div>
+                  <img className="product-picture" src={img_url}
+                    onLoad={()=>{this.removeLoadingSign(idx+1);}} />
                   <div className="product-btn-field">{this._renderProductButton(id, trip_id)}</div>
                 </div>
                 <div className="product-detail">
@@ -98,7 +105,7 @@ class ProductBoard extends React.Component {
       );
       renderProductList = renderProductList.concat(productItems);
     }
-    const itemCount = renderProductList.length;
+    const itemCount = renderProductList.length < 4 ? renderProductList.length : 4;
     return (
       <ul className={`product-list-${itemCount}`}>
         {renderProductList}

@@ -81,7 +81,7 @@ class TripBoard extends React.Component {
       );
       renderTripList = renderTripList.concat(tripItems);
     }
-    const itemCount = renderTripList.length;
+    const itemCount = renderTripList.length < 4 ? renderTripList.length : 4;
     return (
       <ul className={`trip-list-${itemCount}`}>
         {renderTripList}
