@@ -10,8 +10,8 @@ class SearchBoard extends React.Component {
   }
 
   componentWillMount() {
-    const { search } = this.props;
-    this.loadProductList(search.query, 6);
+    const query = this.props.search.query;
+    this.loadProductList(query, 6);
   }
 
   componentDidMount() {
@@ -66,12 +66,13 @@ class SearchBoard extends React.Component {
   }
 
    render() {
+     const query = this.props.search.query;
      return (
        <div className="search-board">
          <div className="search-board-banner">
            { this.renderBannerText() }
          </div>
-         <ProductBoardContainer requestType="BY_SEARCH" />
+         <ProductBoardContainer requestType="BY_SEARCH" query={query}/>
          <div className="load-products-frame">
            <img src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481663999/assets/shopping_cart_loading.gif" />
          </div>

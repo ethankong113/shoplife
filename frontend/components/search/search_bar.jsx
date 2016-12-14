@@ -19,7 +19,12 @@ class SearchBar extends React.Component {
   componentWillUpdate(nextProps) {
     const path = this.props.location.pathname;
     const nextPath = nextProps.location.pathname;
-    if (path ==="/" && path !== nextPath ) {
+    const {clearQuery} = this.props;
+    const {query} = this.state;
+    if (path ==="/" && path !== nextPath) {
+      this.setState({query: ""});
+    }
+    if (clearQuery && query !== "") {
       this.setState({query: ""});
     }
   }
