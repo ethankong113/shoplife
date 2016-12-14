@@ -38,6 +38,13 @@ class ProductBoard extends React.Component {
     }
   }
 
+  componentWillUpdate(nextProps) {
+    const query = this.props.query;
+    if (query !== nextProps.query) {
+      this.setState({loaded: 0});
+    }
+  }
+
   componentDidUpdate(){
     this.adjustPositions();
     this.adjustRow();

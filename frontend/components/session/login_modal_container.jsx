@@ -11,9 +11,10 @@ class LoginModalContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {openModal: false, formType: "signup"};
+    this.state = {openModal: false, formType: "login"};
     this.toggleModal = this.toggleModal.bind(this);
     this.showProfile = this.showProfile.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   toggleModal(formType = null) {
@@ -38,6 +39,12 @@ class LoginModalContainer extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (!this._loggedIn()) {
+      this.toggleModal("login")();
+    }
+  }
+
   renderProfileButton() {
     if (this._loggedIn()) {
       return (
@@ -57,7 +64,7 @@ class LoginModalContainer extends React.Component {
   renderSessionButton() {
     if (this._loggedIn()) {
       return (
-        <button onClick={this.props.logout} className={"header-btn"}>
+        <button onClick={this.handleLogout} className={"header-btn"}>
           Log Out
         </button>
       );
@@ -70,9 +77,16 @@ class LoginModalContainer extends React.Component {
     }
   }
 
+  handleLogout() {
+    const {router} = this.props;
+    this.props.logout();
+    router.push("/");
+  }
+
   showProfile() {
-    let username = this.props.currentUser.username;
-    this.props.router.push(`/profile/${username}`);
+    const {currentUser, router} = this.props;
+    let username = currentUser.username;
+    router.push(`/profile/${username}`);
   }
 
    _loggedIn() {
@@ -81,11 +95,12 @@ class LoginModalContainer extends React.Component {
    }
 
    render() {
+     const {openModal, formType} = this.state;
      return (
        <div>
          <div className="header-btn-panel">{this.renderProfileButton()}{this.renderSessionButton()}</div>
-         <Modal isOpen={this.state.openModal} modalName="session" closeModal={this.toggleModal(null)}>
-           <SessionFormContainer toggleModal={this.toggleModal} formType={this.state.formType}/>
+         <Modal isOpen={openModal} modalName="session" closeModal={null}>
+           <SessionFormContainer toggleModal={this.toggleModal} formType={formType}/>
          </Modal>
        </div>
      );
