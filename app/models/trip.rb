@@ -12,7 +12,10 @@ class Trip < ActiveRecord::Base
 
   def ensure_trip_picture
     if self.img_url.nil? || self.img_url == ""
-      self.img_url = "http://betanews.com/wp-content/uploads/2014/02/Mobile-shopping-525x600.jpg"
+      imageURL = ["https://res.cloudinary.com/dmvxkwwde/image/upload/v1481842966/assets/shopping-trolley-full-of-gifts-image-www.pppcorporate.com_.jpg",
+      "https://res.cloudinary.com/dmvxkwwde/image/upload/v1481842824/assets/shopping-bis.jpg",
+      "http://res.cloudinary.com/dmvxkwwde/image/upload/v1481842797/assets/puppy-with-shopping-cart.jpg"]
+      self.img_url = imageURL[rand(0..2)]
     end
   end
 

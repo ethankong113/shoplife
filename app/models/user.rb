@@ -49,7 +49,13 @@ class User < ActiveRecord::Base
 
   def ensure_profile_img
     if (self.img_url.nil? || self.img_url == "")
-      self.img_url = "http://millionpictures.co/media/111/photos/55c0266812111.jpg"
+      imageURL = ["https://res.cloudinary.com/dmvxkwwde/image/upload/v1481843392/assets/working_parrots_4.jpg",
+        "https://res.cloudinary.com/dmvxkwwde/image/upload/v1481843380/assets/Multi-colors-Mini-font-b-Shopping-b-font-Cart-Trolley-font-b-Pet-b-font-Bird.jpg",
+        "http://res.cloudinary.com/dmvxkwwde/image/upload/v1481843310/assets/Dog_Shopping.jpg",
+        "http://res.cloudinary.com/dmvxkwwde/image/upload/v1481843245/assets/9fb94b53c31a0ae977d92dfb775021bd.jpg",
+        "http://res.cloudinary.com/dmvxkwwde/image/upload/v1481843236/assets/shopping-trolley-kitten.png"
+      ]
+      self.img_url = imageURL[rand(0..5)]
     end
   end
 
