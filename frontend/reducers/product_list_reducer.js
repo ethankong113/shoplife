@@ -1,4 +1,4 @@
-import { FETCH_PRODUCT_LIST_BY_SEARCH, RECEIVE_PRODUCT_LIST, CLEAR_PRODUCT_LIST, RECEIVE_ERRORS, APPEND_PRODUCT, RENEW_PRODUCT, REMOVE_PRODUCT, REMOVE_PRODUCT_FROM_PINS, CLEAR_PRODUCT_LIST_MESSAGE } from '../actions/product_list_actions';
+import { FETCH_PRODUCT_LIST_BY_SEARCH, RECEIVE_PRODUCT_LIST, CLEAR_PRODUCT_LIST, RECEIVE_MORE_PRODUCTS, RECEIVE_ERRORS, APPEND_PRODUCT, RENEW_PRODUCT, REMOVE_PRODUCT, REMOVE_PRODUCT_FROM_PINS, CLEAR_PRODUCT_LIST_MESSAGE } from '../actions/product_list_actions';
 import { merge, isEmpty } from 'lodash';
 
 const _nullProductList = {
@@ -16,6 +16,9 @@ const ProductListReducer = (state = _nullProductList, action ) => {
       newState = merge({}, state, {msg: ["SHOW_LOAD_PRODUCTS"]});
       return newState;
     case RECEIVE_PRODUCT_LIST:
+      newState = merge({}, _nullProductList, {products: action.products});
+      return newState;
+    case RECEIVE_MORE_PRODUCTS:
       newState = merge({}, state, {products: action.products});
       newState.msg = ["HIDE_LOAD_PRODUCTS"];
       if (isEmpty(newState.products)) {

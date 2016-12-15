@@ -4,6 +4,7 @@ export const FETCH_PRODUCT_LIST_BY_PROFILE = "FETCH_PRODUCT_LIST_BY_PROFILE";
 export const FETCH_PRODUCT_LIST_BY_SEARCH = "FETCH_PRODUCT_LIST_BY_SEARCH";
 export const FETCH_PRODUCT_LIST_BY_LOCATION = "FETCH_PRODUCT_LIST_BY_LOCATION";
 export const RECEIVE_PRODUCT_LIST = "RECEIVE_PRODUCT_LIST";
+export const RECEIVE_MORE_PRODUCTS = "RECEIVE_MORE_PRODUCTS";
 export const CLEAR_PRODUCT_LIST = "CLEAR_PRODUCT_LIST";
 export const APPEND_PRODUCT = "APPEND_PRODUCT";
 export const RENEW_PRODUCT = "RENEW_PRODUCT";
@@ -36,6 +37,11 @@ export const fetchProductListBySearch = (query, limit, offset) => ({
 
 export const receiveProductList = products => ({
   type: RECEIVE_PRODUCT_LIST,
+  products
+});
+
+export const receiveMoreProducts = products => ({
+  type: RECEIVE_MORE_PRODUCTS,
   products
 });
 
