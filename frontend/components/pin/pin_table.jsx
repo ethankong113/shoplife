@@ -16,7 +16,7 @@ class PinTable extends React.Component {
   componentWillUpdate(nextProps, nextState) {
     let oldPins = this.props.pins;
     let newPins = nextProps.pins;
-    if (oldPins && newPins && oldPins.length !== newPins.length) {
+    if ((oldPins === null && newPins && newPins.length === 1) || (oldPins && newPins && oldPins.length !== newPins.length)) {
       this.setState({createPin: false, tripname: "", date: ""});
     } else if (this.state.createPin && !nextState.createPin) {
       this.setState({tripname: "", date: ""});

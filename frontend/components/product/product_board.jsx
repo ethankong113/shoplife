@@ -13,6 +13,7 @@ class ProductBoard extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.togglePin = this.togglePin.bind(this);
     this.removeLoadingSign = this.removeLoadingSign.bind(this);
+    this.backToSearch = this.backToSearch.bind(this);
     this.state = {openModal: false, modalType: null, showPin: false, productId: null, loaded: 0};
   }
 
@@ -205,13 +206,23 @@ class ProductBoard extends React.Component {
   }
 
   renderEmptyList() {
-    const {requestType, emptyProductList} = this.props;
+    const {requestType, emptyProductList, products} = this.props;
     if (requestType === "BY_SEARCH" && emptyProductList) {
       return (
         <div className="empty-product-list">
           <span>{"Oooops... we cannot find any results for you."}</span>
           <br />
           <img src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481672546/empty_bag_yy872c.gif" />
+        </div>
+      );
+    } else if (requestType === "BY_TRIP" && isEmpty(products)) {
+      return (
+        <div className="empty-trip">
+          <span className="empty-trip-text">{"Your shopping trip is empty now. Why don't you go do some shopping?"}</span>
+          <br />
+          <button className="empty-trip-btn" onClick={this.backToSearch}>Shop Now!</button>
+          <br />
+          <img className="empty-trip-img" src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481839462/assets/4645.jpg" />
         </div>
       );
     }
@@ -273,6 +284,11 @@ class ProductBoard extends React.Component {
   isModalOpen(type) {
     const {openModal, modalType} = this.state;
     return openModal && modalType === type;
+  }
+
+  backToSearch(e) {
+    e.preventDefault();
+    this.props.router.push("/");
   }
 
    render() {

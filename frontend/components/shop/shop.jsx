@@ -91,8 +91,18 @@ class Shop extends React.Component {
            <div className="shop-header">
              <div className="shop-info">
                <h2 className="shop-name">{ shopname }</h2>
-               <div>{ productCount } Products</div>
-               <div>{ followerCount} Followers</div>
+                 <div className="shop-numbers-wrapper">
+                   <div className="shop-numbers">
+                    <div className="product-count">
+                      <span className="count-number">{ productCount }</span>
+                      <span className="count-text"> Products</span>
+                    </div>
+                    <div className="follower-count">
+                      <span className="count-number">{ followerCount }</span>
+                      <span className="count-text"> Followers</span>
+                    </div>
+                   </div>
+                 </div>
                { this.renderFollowShopBtn() }
              </div>
              <div className="shop-img-frame">
