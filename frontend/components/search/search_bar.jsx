@@ -48,6 +48,7 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div className={"search-bar"}>
+        <img className="search-icon" src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481766301/assets/search-icon-png-2.png" />
         <input className={"search-bar-input"}
           type="text" placeholder="Search for products..."
           value={this.state.query} onChange={this.update} onKeyUp={this.handleKeyUp}/>

@@ -11,12 +11,16 @@ class Shop extends React.Component {
   }
 
   componentWillMount() {
-    let shop_id = this.props.params.shopId;
-    this.props.readShop(shop_id);
+    const {params, readShop, getShopFollowers} = this.props;
+    let shop_id = params.shopId;
+    readShop(shop_id);
+    getShopFollowers(shop_id);
   }
 
   componentWillUnmount() {
-    this.props.clearShop();
+    const {clearShop, clearFollowers} = this.props;
+    clearShop();
+    clearFollowers();
   }
 
   backToUser(username) {
@@ -47,14 +51,42 @@ class Shop extends React.Component {
     return false;
   }
 
+  renderOtherFollowers() {
+    const {followers} = this.props;
+    if (followers.length != 0) {
+      const barText = "Other Followers of this Shop";
+      return (
+        <div className="follower-bar">
+          <span className="follower-text">{barText}</span>
+          <ul className="follower-list">
+            {followers.map((follower) => {
+              return (
+                <li key={follower.id} className="follower-item">
+                  <img className="follower-img" src={follower.img_url} onClick={this.handleClick(follower.username)}/>
+                  <span className="follower-name">{follower.username}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    }
+  }
+
+  handleClick(username) {
+    return e => {
+      const {router} = this.props;
+      router.push(`/profile/${username}/pins`);
+    };
+  }
+
    render() {
      const { shopname, username, user_img, img_url, description, productCount, followerCount } = this.props.shop.shop;
      return (
        <div className="shop-detail-wrapper">
          <div className="shop-detail">
            <div className="shop-nav">
-             <img className="owner-img" src={ user_img } onClick={this.backToUser(username)} />
-             <img className="share-img" src="https://blog.addthiscdn.com/wp-content/uploads/2015/11/share.png"/>
+             { this.renderOtherFollowers()}
            </div>
            <div className="shop-header">
              <div className="shop-info">

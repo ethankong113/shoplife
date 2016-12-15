@@ -50,11 +50,13 @@ class Profile extends React.Component {
   }
 
   renderProfileButton() {
-    if (this.props.currentUser) {
+    const {currentUser, profile} = this.props;
+    if (currentUser) {
       let status = this.state.owner;
+      // unblock below if we are adding edit profile feature.
       if (status) {
-        return (<button className="profile-btn">Edit Profile</button>);
-      } else if (this.props.profile && this.props.profile.followed) {
+        // return (<button className="profile-btn">Edit Profile</button>);
+      } else if (profile && profile.followed) {
         return (<button className="profile-btn-alt" onClick={this.unfollowUser}>Unfollow</button>);
       } else {
         return (<button className="profile-btn" onClick={this.followUser}>Follow</button>);
@@ -75,11 +77,6 @@ class Profile extends React.Component {
           </Link>
         </li>
         <li className="list-item">
-          <Link to={`/profile/${username}/shops`} className={this.getNavbarClass("shops")}>
-            <span className={"list-number"}>{shopCount}</span><br /> Shops
-          </Link>
-        </li>
-        <li className="list-item">
           <Link to={`/profile/${username}/pins`} className={this.getNavbarClass("pins")}>
             <span className={"list-number"}>{pinCount}</span><br /> Pins
           </Link>
@@ -97,6 +94,12 @@ class Profile extends React.Component {
       </ul>
     );
   }
+  //unblock below to put it back for shop list.
+  // <li className="list-item">
+  //   <Link to={`/profile/${username}/shops`} className={this.getNavbarClass("shops")}>
+  //     <span className={"list-number"}>{shopCount}</span><br /> Shops
+  //   </Link>
+  // </li>
 
   getNavbarClass(item) {
     const pathArray = this.props.location.pathname.split("/");

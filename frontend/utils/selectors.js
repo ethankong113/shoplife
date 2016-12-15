@@ -42,6 +42,13 @@ export const selectFollowers = (followers) => {
   return {};
 };
 
+export const extractFollowers = (followers) => {
+  if (followers && !_.isEmpty(followers.list)) {
+    return _.values(followers.list);
+  }
+  return [];
+};
+
 export const getFollowees = (followings) => {
   if (followings && !_.isEmpty(followings.followees)) {
     return _.values(followings.followees);
@@ -54,6 +61,13 @@ export const getTripList = (list) => {
     return _.values(list.trips);
   }
   return {};
+};
+
+export const extractTripList = (trips) => {
+  if (trips && !_.isEmpty(trips)) {
+    return _.values(trips);
+  }
+  return [];
 };
 
 export const getPinList = (pins) => {

@@ -68,6 +68,11 @@ class Api::ShopsController < ApplicationController
     end
   end
 
+  def get_followers
+    @followers = Shop.find(params[:id]).followers.where.not(id: current_user.id).limit(3)
+    render "api/shops/followers"
+  end
+
   private
   def shop_params
     params.require(:shop).permit(:shopname, :description, :location, :lat, :lng, :img_url, :owner_id)

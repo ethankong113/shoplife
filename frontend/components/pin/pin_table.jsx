@@ -9,6 +9,8 @@ class PinTable extends React.Component {
     this.update = this.update.bind(this);
     this.toggleCreatePin = this.toggleCreatePin.bind(this);
     this.addTrip = this.addTrip.bind(this);
+    this.validateForm = this.validateForm.bind(this);
+    this.removeWarning = this.removeWarning.bind(this);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -50,11 +52,46 @@ class PinTable extends React.Component {
     return (
       <form className="pin-create-form">
         <label className="pin-trip-label">Trip Name</label>
-        <input className="pin-trip-input" type="text" name="tripname" value={tripname} onChange={this.update("tripname")} placeholder="Trip Name"/>
+        {this.displayWarning("tripname")}
+        <input className="pin-trip-input" type="text"
+          name="tripname" value={tripname} onChange={this.update("tripname")}
+          onBlur={this.validateForm("tripname")}
+          onFocus={this.removeWarning("tripname")}
+          placeholder="Trip Name"/>
         <label className="pin-date-label">Date</label>
         <input className="pin-date-input" type="date" name="date" value={date} onChange={this.update("date")}/>
       </form>
     );
+  }
+
+  validateForm(field) {
+    return e => {
+      const {tripname} = this.state;
+      if (field === "tripname") {
+        if (tripname.length < 1) {
+          $($('.pin-create-form')[0][field]).removeClass('full-field').addClass('full-field-bad');
+          $(`.warning-pin-form-${field}`).css('visibility', 'visible');
+        } else {
+          $(`.warning-pin-form-${field}`).css('visibility', 'hidden');
+        }
+      }
+    };
+  }
+
+  displayWarning(field) {
+    if (field === "tripname") {
+      const warning = "(Trip name cannot be empty)";
+      return <span className="warning-pin-form-tripname warning-text">{warning}</span>;
+    }
+  }
+
+  removeWarning(field) {
+    return e => {
+      const isBad = $($('.pin-create-form')[0][field]).hasClass("full-field-bad");
+      if (isBad) {
+        $($('.pin-create-form')[0][field]).removeClass('full-field-bad').addClass('full-field');
+      }
+    };
   }
 
   handlePin(tripId, has_pin) {
@@ -83,8 +120,11 @@ class PinTable extends React.Component {
     const {createTripToPin, currentUser} = this.props;
     const {tripname, date} = this.state;
     e.stopPropagation();
-    let response_type = "APPEND_PIN";
-    createTripToPin({tripname, date, user_id: currentUser.id, response_type});
+    this.validateForm("tripname")();
+    if (tripname.length >= 1) {
+      let response_type = "APPEND_PIN";
+      createTripToPin({tripname, date, user_id: currentUser.id, response_type});
+    }
   }
 
   _renderToggleBtn() {

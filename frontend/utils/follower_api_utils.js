@@ -6,3 +6,12 @@ export const getFollowersAJAX = (username, success, error) => {
      error
    });
 };
+
+export const getShopFollowersAJAX = (shopId, success, error) => {
+  $.ajax({
+     type: 'GET',
+     url: `api/get_shop_followers/${shopId}`,
+     success,
+     error
+   });
+};

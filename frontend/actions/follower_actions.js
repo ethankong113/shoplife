@@ -1,4 +1,5 @@
 export const GET_FOLLOWERS = "GET_FOLLOWERS";
+export const GET_SHOP_FOLLOWERS = "GET_SHOP_FOLLOWERS";
 export const RECEIVE_FOLLOWER_LIST = "RECEIVE_FOLLOWER_LIST";
 export const RECEIVE_FOLLOWER = "RECEIVE_FOLLOWER";
 export const CLEAR_FOLLOWERS = "CLEAR_FOLLOWERS";
@@ -8,6 +9,11 @@ export const REMOVE_FOLLOWER = "REMOVE_FOLLOWER";
 export const getFollowers = username => ({
   type: GET_FOLLOWERS,
   username
+});
+
+export const getShopFollowers = shopId => ({
+  type: GET_SHOP_FOLLOWERS,
+  shopId
 });
 
 export const receiveFollowerList = followers => ({
