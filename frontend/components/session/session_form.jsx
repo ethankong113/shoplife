@@ -13,7 +13,6 @@ class SessionForm extends React.Component {
     this.stopPropagation = this.stopPropagation.bind(this);
     this.validateForm = this.validateForm.bind(this);
     this.removeWarning = this.removeWarning.bind(this);
-    this.displayWarning = this.displayWarning.bind(this);
   }
 
   componentWillUpdate(nextProps) {
@@ -124,6 +123,9 @@ class SessionForm extends React.Component {
     if (clickCount < 2) {
       this.setState({clickCount: clickCount + 1});
     } else {
+      this.removeWarning("username")();
+      this.removeWarning("password")();
+      $('.warning-text').css('visibility', 'hidden');
       this.props.toggleModal(null)();
       this.setState({clickCount: 0});
     }
@@ -139,6 +141,9 @@ class SessionForm extends React.Component {
       let userInfo = {username: "john123", password: "john123"};
       this.setState(userInfo);
       login(userInfo);
+      this.removeWarning("username")();
+      this.removeWarning("password")();
+      $('.warning-text').css('visibility', 'hidden');
     };
   }
 
@@ -166,10 +171,10 @@ class SessionForm extends React.Component {
   displayWarning(field) {
     if (field === "username") {
       const warning = "Username cannot be empty";
-      return <span className="warning-username warning-text">{warning}</span>
+      return <span className="warning-username warning-text">{warning}</span>;
     } else if (field === "password") {
       const warning = "Password must be at least 6 digits long";
-      return <span className="warning-password warning-text">{warning}</span>
+      return <span className="warning-password warning-text">{warning}</span>;
     }
   }
 

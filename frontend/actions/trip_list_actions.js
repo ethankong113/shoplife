@@ -2,7 +2,9 @@ export const FETCH_TRIP_LIST_BY_USER = "FETCH_TRIP_LIST_BY_USER";
 export const FETCH_TRIP_LIST_BY_FOLLOWER = "FETCH_TRIP_LIST_BY_FOLLOWER";
 export const FETCH_TRIP_LIST_BY_QUERY = "FETCH_TRIP_LIST_BY_QUERY";
 export const FETCH_TRIP_LIST_BY_LOCATION = "FETCH_TRIP_LIST_BY_LOCATION";
+export const FETCH_TRIP_LIST_BY_SIDE_BAR = "FETCH_TRIP_LIST_BY_SIDE_BAR";
 export const RECEIVE_TRIP_LIST = "RECEIVE_TRIP_LIST";
+export const RECEIVE_SIDE_BAR_TRIP_LIST = "RECEIVE_SIDE_BAR_TRIP_LIST";
 export const CLEAR_TRIP_LIST = "CLEAR_TRIP_LIST";
 export const APPEND_TRIP = "APPEND_TRIP";
 export const RENEW_TRIP = "RENEW_TRIP";
@@ -19,8 +21,18 @@ export const fetchTripListByFollower = username => ({
   username
 });
 
+export const fetchTripListBySideBar = username => ({
+  type: FETCH_TRIP_LIST_BY_SIDE_BAR,
+  username
+});
+
 export const receiveTripList = trips => ({
   type: RECEIVE_TRIP_LIST,
+  trips
+});
+
+export const receiveSideBarTripList = trips => ({
+  type: RECEIVE_SIDE_BAR_TRIP_LIST,
   trips
 });
 

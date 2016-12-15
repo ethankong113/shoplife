@@ -194,12 +194,17 @@ header {
     margin-bottom: 5px;
     display: flex;
     align-items: center;
+    .search-icon {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 2px;
+    }
     .search-bar-input {
       @include remove-border-style();
       font-size: 20px;
       width: 100%;
       height: 30px;
-      padding-left: 20px;
+      padding-left: 10px;
       font-family: 'Open Sans', sans-serif;
       border-bottom: 2px solid white;
     }
@@ -654,18 +659,62 @@ $forms: shop, trip;
   .shop-detail, .trip-detail {
     @include block-center();
     margin-top: 20px;
-    width: 60%;
-    .shop-nav, .trip-nav {
-      .owner-img, .user-img, .share-img {
-        float: left;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        cursor: pointer;
-        margin-right: 20px;
-        &:hover {
-          content: url(http://www.abitofgreen.com/wp-content/themes/abitofgreen/images/blank-user.gif);
+    width: 66%;
+    .shop-nav {
+      display: inline-block;
+      margin: -10px 0px 0px -80px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      .follower-list {
+        .follower-item {
+          display: inline-block;
+          margin: 0px 5px;
+          position: relative;
+          .follower-name {
+            display: none;
+            position: absolute;
+            left: -5px;
+            bottom: -20px;
+          }
+          .follower-img {
+            cursor: pointer;
+            border: 3px white solid;
+            transition: border-color 0.2s ease;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            &:hover {
+              border-color: $shoplifered;
+            }
+            &:hover + .follower-name {
+              display: inline-block;
+            }
+          }
         }
+      }
+    }
+    .trip-nav {
+      display: inline-block;
+      cursor: pointer;
+      margin: -10px 0px 0px -80px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      transition: 0.2s ease;
+      .trip-nav-items {
+        display: flex;
+        align-items: center;
+        .owner-img, .user-img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+        .nav-text {
+          font-size: 14px;
+        }
+      }
+      &:hover {
+        background-color: $silvergrey;
       }
       &:after {
         @include clear-fix();
@@ -673,19 +722,33 @@ $forms: shop, trip;
     }
     .shop-header, .trip-header {
       @include flex-jc(space-between);
-      margin-top: 20px;
+      margin-top: 40px;
+      .shop-info, .trip-info {
+        margin-right: 40px;
+      }
       .shop-name, .trip-name {
         font-size: 42px;
-        margin-top: 20px;
       }
-
+      .trip-numbers {
+        @include flex-jc(flex-start);
+        .follower-count {
+          margin: 0px 30px;
+        }
+        .count-number {
+          color: $shoplifered;
+          font-size: 26px;
+        }
+        .count-text {
+          color: darken($lightgrey, 22%);
+          font-size: 14px;
+        }
+      }
       .shop-follow-btn, .trip-follow-btn {
         @include remove-border-style();
         @include btn-preset(5px, 30px, 24px);
         @include indigo-btn();
-        margin-top: 20px;
-        margin-left: 10px;
         border-radius: 5px;
+        margin-top: 14px;
         &:hover {
           @include cyan-btn();
         }
@@ -693,14 +756,12 @@ $forms: shop, trip;
           @include cyan-btn-alt();
         }
       }
-
       .shop-follow-btn-alt, .trip-follow-btn-alt {
         @include remove-border-style();
         @include btn-preset(5px, 30px, 24px);
         @include indigo-btn-alt();
-        margin-top: 20px;
-        margin-left: 10px;
         border-radius: 5px;
+        margin-top: 14px;
         &:hover {
           @include cyan-btn-alt();
         }
@@ -708,7 +769,6 @@ $forms: shop, trip;
           @include cyan-btn();
         }
       }
-
       .shop-img-frame, .trip-img-frame {
         .shop-img, .trip-img {
           width: 220px;
@@ -933,6 +993,9 @@ $forms: shop, trip;
         .pin-create-form {
           width: 80%;
           margin: 0px auto;
+          .pin-trip-label {
+            margin-right: 8px;
+          }
           .pin-trip-input {
             @include input-full-field;
           }
@@ -1119,4 +1182,25 @@ $forms: shop, trip;
   font-size: 14px;
   color: red;
   visibility: hidden;
+}
+
+.side-bar {
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  .side-bar-item {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    .side-bar-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-left: 5px;
+      &:hover {
+        background-color: $shoplifered;
+      }
+    }
+  }
 }

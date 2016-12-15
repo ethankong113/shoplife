@@ -15,3 +15,12 @@ export const fetchTripListByFollowerAJAX = (username, success, error) => {
      error
    });
 };
+
+export const fetchTripListBySideBarAJAX = (username, success, error) => {
+  $.ajax({
+     type: 'GET',
+     url: `api/triplist/sidebar/${username}`,
+     success,
+     error
+   });
+};
