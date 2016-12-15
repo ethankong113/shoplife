@@ -138,7 +138,7 @@ class SessionForm extends React.Component {
   guestLogin(login) {
     return e => {
       e.preventDefault();
-      let userInfo = {username: "guest", password: "guest"};
+      let userInfo = {username: "guest123", password: "guest123"};
       this.setState(userInfo);
       login(userInfo);
       this.removeWarning("username")();
