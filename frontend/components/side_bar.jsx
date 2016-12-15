@@ -2,9 +2,14 @@ import React from 'react';
 import { Link, withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { getCurrentUser, extractTripList } from '../utils/selectors';
-import { fetchTripListBySideBar } from '../actions/trip_list_actions';
+import { fetchTripListBySideBar, clearSideBar } from '../actions/trip_list_actions';
+import { clearTrip } from '../actions/trip_actions';
 
 class SideBar extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
 
   renderTripList() {
     const {currentUser, trips} = this.props;
@@ -12,10 +17,12 @@ class SideBar extends React.Component {
       return (
         trips.map((trip) => {
           return (
-            <li key={trip.id} className="side-bar-item">
-              <img className="side-bar-img" src={trip.img_url} />
-              <span>{trip.tripname}</span>
-            </li>
+            <Link to={`trip/${trip.id}`} key={trip.id}>
+              <li className="side-bar-item">
+                <img className="side-bar-img" src={trip.img_url} />
+                <span className="side-bar-text">{trip.tripname}</span>
+              </li>
+            </Link>
           );
         })
       );
@@ -30,12 +37,13 @@ class SideBar extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const {trips} = nextProps;
-    if (this.props.trips.length !== trips.length) {
-      console.log(trips);
+    const oldSession = this.props.currentUser;
+    const {trips, fetchTripList, clearTripList, currentUser} = nextProps;
+    if (!oldSession && currentUser) {
+      fetchTripList(currentUser.username);
+    } else if (oldSession && !currentUser) {
+      clearTripList();
     }
-
-    //clear list when logout too
   }
 
   render() {
@@ -44,16 +52,20 @@ class SideBar extends React.Component {
         { this.renderTripList() }
         <li className="side-bar-item">
           <img className="side-bar-img" src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481772452/assets/827.png" alt="about"/>
-          <span>About ShopLife</span>
+          <span className="side-bar-text">About ShopLife</span>
         </li>
-        <li className="side-bar-item">
-          <img className="side-bar-img" src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481772529/assets/github.png" alt="github"/>
-          <span>Ethan's Github</span>
-        </li>
-        <li className="side-bar-item">
-          <img className="side-bar-img" src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481772071/assets/linkedin_circle_black-512.png" alt="linkedin"/>
-          <span>Ethan's LinkedIn</span>
-        </li>
+        <a href="https://github.com/ethankong113/shoplife" target="_blank">
+          <li className="side-bar-item">
+            <img className="side-bar-img" src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481772529/assets/github.png" alt="github"/>
+            <span className="side-bar-text">Ethan's Github</span>
+          </li>
+        </a>
+        <a href="https://www.linkedin.com/in/ethanwkong/" target="_blank">
+          <li className="side-bar-item">
+            <img className="side-bar-img" src="https://res.cloudinary.com/dmvxkwwde/image/upload/v1481772071/assets/linkedin_circle_black-512.png" alt="linkedin"/>
+            <span className="side-bar-text">Ethan's LinkedIn</span>
+          </li>
+        </a>
       </ul>
     );
   }
@@ -65,7 +77,9 @@ const mapStateToProps = (state) => ({
  });
 
 const mapDispatchToProps = (dispatch) => ({
-   fetchTripList: (username)=>{dispatch(fetchTripListBySideBar(username));}
+   fetchTripList: (username)=>{dispatch(fetchTripListBySideBar(username));},
+   clearTripList: ()=>{dispatch(clearSideBar());},
+   clearTrip: ()=>{dispatch(clearTrip());}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

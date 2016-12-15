@@ -15,6 +15,14 @@ class Trip extends React.Component {
     readTrip(params.tripId);
   }
 
+  componentWillUpdate(nextProps) {
+    const {tripId} = nextProps.params;
+    const {params, readTrip} = this.props;
+    if (params.tripId !== tripId) {
+      readTrip(tripId);
+    }
+  }
+
   componentWillUnmount() {
     this.props.clearTrip();
   }

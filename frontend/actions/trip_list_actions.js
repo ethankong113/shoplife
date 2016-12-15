@@ -6,7 +6,10 @@ export const FETCH_TRIP_LIST_BY_SIDE_BAR = "FETCH_TRIP_LIST_BY_SIDE_BAR";
 export const RECEIVE_TRIP_LIST = "RECEIVE_TRIP_LIST";
 export const RECEIVE_SIDE_BAR_TRIP_LIST = "RECEIVE_SIDE_BAR_TRIP_LIST";
 export const CLEAR_TRIP_LIST = "CLEAR_TRIP_LIST";
+export const CLEAR_SIDE_BAR = "CLEAR_SIDE_BAR";
 export const APPEND_TRIP = "APPEND_TRIP";
+export const APPEND_TRIP_TO_SIDE_BAR = "APPEND_TRIP_TO_SIDE_BAR";
+export const REMOVE_TRIP_FROM_SIDE_BAR = "REMOVE_TRIP_FROM_SIDE_BAR";
 export const RENEW_TRIP = "RENEW_TRIP";
 export const REMOVE_TRIP = "REMOVE_TRIP";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
@@ -40,8 +43,22 @@ export const clearTripList = () => ({
   type: CLEAR_TRIP_LIST
 });
 
+export const clearSideBar = () => ({
+  type: CLEAR_SIDE_BAR
+});
+
 export const appendTrip = trip => ({
   type: APPEND_TRIP,
+  trip
+});
+
+export const appendTripToSideBar = trip => ({
+  type: APPEND_TRIP_TO_SIDE_BAR,
+  trip
+});
+
+export const removeTripFromSideBar = trip => ({
+  type: REMOVE_TRIP_FROM_SIDE_BAR,
   trip
 });
 

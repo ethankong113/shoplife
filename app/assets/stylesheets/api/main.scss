@@ -120,6 +120,12 @@ $headerHeight: 55px;
   clear: both;
 }
 
+@mixin box-shadow($h, $v, $blur, $color) {
+  -moz-box-shadow: $h $v $blur $color;
+  -webkit-box-shadow: $h $v $blur $color;
+  box-shadow: $h $v $blur $color;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -463,19 +469,24 @@ header {
 
 .board-card {
   @include block-center();
+  @include box-shadow(10px, 10px, 5px, $plaingrey);
   // display: inline-block;
   width: 236px;
   height: 100%;
   border: white 10px solid;
-  border-radius: 20px;
-  transition: border-color 0.2s ease-out, background-color 0.2s ease-out;
-  margin: 0px 15px;
+  border-radius: 15px;
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+  margin: 15px 15px;
   background-color: white;
-  // break-inside: avoid;
+  &:hover {
+    border-color: $plaingrey;
+    // border-color: $googlegreen;
+    // @include box-shadow(10px, 10px, 5px, $googlegreen);
+  }
   .add-shop-btn, .add-trip-btn, .add-product-btn {
     @include remove-border-style();
-    border-radius: 8px;
-    border: 1px solid lightgrey;
+    border-radius: 5px;
+    border: 1px solid $plaingrey;
     display: inline-block;
     height: 308px;
     width: 100%;
@@ -585,6 +596,18 @@ header {
         float: right;
         font-size: 20px;
       }
+      .price-color-green {
+        color: darken($googlegreen, 5%);
+      }
+      .price-color-blue {
+        color: darken($cyan500, 5%);
+      }
+      .price-color-red {
+        color: darken($mildred, 5%);
+      }
+      .price-color-orange {
+        color: darken(#ff6600, 5%);
+      }
     }
     .shop-detail:after, .trip-detail:after, .product-detail:after {
       @include clear-fix();
@@ -594,9 +617,6 @@ header {
         visibility: visible;
       }
     }
-  }
-  &:hover {
-    border-color: $plaingrey;
   }
 }
 
@@ -1191,16 +1211,68 @@ $forms: shop, trip;
   .side-bar-item {
     display: flex;
     flex-direction: row-reverse;
+    // justify-content: flex-end;
     align-items: center;
+    margin: 10px 0px;
     .side-bar-img {
-      width: 40px;
-      height: 40px;
+      @include box-shadow(4px, 4px, 2px, $lightgrey);
+      width: 46px;
+      height: 46px;
+      border: 1px $pinterestgrey solid;
       border-radius: 50%;
       cursor: pointer;
       margin-left: 5px;
-      &:hover {
-        background-color: $shoplifered;
+      z-index: 4;
+    }
+    .side-bar-text {
+      @include box-shadow(2px, 2px, 1px, $lightgrey);
+      visibility: hidden;
+      display: inline-block;
+      cursor: pointer;
+      width: 0px;
+      background-color: $indigo;
+      color: white;
+      padding: 2px 6px;
+      // border: 1px solid white;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    &:hover {
+      .side-bar-text {
+        visibility: visible;
+        width: 100%;
+        transition: width 0.4s ease-in;
       }
     }
   }
+}
+
+.error-field {
+  @include flex-jc(flex-start);
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  z-index: 6;
+  width: 100%;
+  .error-item {
+    display: inline-block;
+    border-radius: 5px;
+    border: 2px $mildred solid;
+    background-color: white;
+    padding: 5px 10px;
+    margin: auto;
+    .error-message {
+      color: $mildred;
+    }
+    .error-btn {
+      @include btn-style(white, $mildred, $mildred, 2px);
+      padding: 2px 4px;
+      margin-left: 5px;
+      border-radius: 5px;
+    }
+  }
+}
+
+.empty-item {
+  display: none;
 }

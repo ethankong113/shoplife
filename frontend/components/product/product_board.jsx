@@ -39,9 +39,12 @@ class ProductBoard extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    const query = this.props.query;
+    const {query, requestType, fetchProductListByTrip, params} = this.props;
+    const {tripId} = nextProps.params;
     if (query !== nextProps.query) {
       this.setState({loaded: 0});
+    } else if (requestType === "BY_TRIP" && tripId !== params.tripId) {
+      fetchProductListByTrip(tripId);
     }
   }
 
@@ -79,9 +82,10 @@ class ProductBoard extends React.Component {
         let offset = 0;
         if (row > 0) {
           let prevRow = row - 1;
-          let height = $($('.board-card')[prevRow * factor + pos]).height();
-          let posY = $($('.board-card')[prevRow * factor + pos]).offset().top;
-          $($('.board-card')[i]).offset({top: height + 20 + posY});
+          let aboveIndex = prevRow * factor + pos;
+          let height = $($('.board-card')[aboveIndex]).height();
+          let posY = $($('.board-card')[aboveIndex]).offset().top;
+          $($('.board-card')[i]).offset({top: height + 20 + posY + 20});
         } else if (row === 0 && i !== 0) {
           let posY = $($('.board-card')[0]).offset().top;
           $($('.board-card')[i]).offset({top: posY});
@@ -163,7 +167,7 @@ class ProductBoard extends React.Component {
                 </div>
                 <div className="product-detail">
                   <span className="product-name">{productname}</span>
-                  <span className="product-price">${price}</span>
+                  <span className={`product-price price-color-${this._priceTag(price)}`}>${Math.round(price)}</span>
                 </div>
               </div>
             </li>
@@ -183,6 +187,21 @@ class ProductBoard extends React.Component {
         {renderProductList}
       </ul>
     );
+  }
+
+  _priceTag(price) {
+    if (price < 100){
+      return "green";
+    }
+    else if (price >= 100 && price < 500){
+      return "blue";
+    }
+    else if (price >= 500 && price < 1000){
+      return "orange";
+    }
+    else if (price >= 1000){
+      return "red";
+    }
   }
 
   renderEmptyList() {
