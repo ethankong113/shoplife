@@ -2,6 +2,8 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'react-router';
 import ProductBoardContainer from '../product/product_board_container';
+import ProductTableContainer from '../product/product_table_container';
+import Map from '../map/map';
 
 class Trip extends React.Component {
 
@@ -88,8 +90,9 @@ class Trip extends React.Component {
              </div>
            </div>
          </div>
-         <div className="product-board">
-           <ProductBoardContainer requestType={"BY_TRIP"} />
+         <div className="trip-body">
+           <ProductTableContainer requestType={"BY_TRIP"} />
+           <Map />
          </div>
        </div>
      );
