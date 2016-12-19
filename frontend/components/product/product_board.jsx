@@ -5,6 +5,7 @@ import EditProductContainer from './edit_product_container';
 import AddProductContainer from './add_product_container';
 import ShowProductContainer from './show_product_container';
 import Modal from '../modal/modal';
+import Map from '../map/map';
 
 class ProductBoard extends React.Component {
 
@@ -146,14 +147,13 @@ class ProductBoard extends React.Component {
   }
 
   renderProductList() {
-    let list = this.props.products;
-    const {requestType} = this.props;
+    const {products, requestType} = this.props;
     let renderProductList = [];
     if (this._isOwner() && requestType === "BY_SHOP") {
       renderProductList.push(this._renderAddProduct());
     }
-    if (!isEmpty(list)) {
-      let productItems = list.map((product, idx) => {
+    if (!isEmpty(products)) {
+      let productItems = products.map((product, idx) => {
         const {id, productname, price, img_url, trip_id} = product;
           return (
             <li className="board-card" key={idx + 1} onClick={this.toggleModal("ShowModal", id, false)}>
