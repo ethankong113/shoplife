@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get 'productlists/query/limit/:limit/offset/:offset', to: 'product_lists#find_by_query'
     get 'productlists/query/:query/limit/:limit/offset/:offset', to: 'product_lists#find_by_query'
     get 'productlists/all', to: 'product_lists#find_all'
+    get 'productlists/markers/:trip_id', to: 'product_lists#markers'
 
     get 'pins/:id', to: 'pins#index'
     post 'pins/:trip_id/:product_id', to: 'pins#create'

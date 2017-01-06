@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import ProductTable from './product_table';
 import { getCurrentUser, getProductList, emptyProductList } from '../../utils/selectors';
 import { fetchProductListByTrip, clearProductList } from '../../actions/product_list_actions';
+import { unpinItemFromTable } from '../../actions/pin_actions';
 
 const mapStateToProps = (state) => ({
    currentUser: getCurrentUser(state.session),
@@ -12,7 +13,8 @@ const mapStateToProps = (state) => ({
 
  const mapDispatchToProps = (dispatch) => ({
     fetchProductListByTrip: (id)=>{dispatch(fetchProductListByTrip(id));},
-    clearProductList: ()=>{dispatch(clearProductList());}
+    clearProductList: ()=>{dispatch(clearProductList());},
+    unpinItemFromTable: (tripId, productId) => {dispatch(unpinItemFromTable(tripId, productId));}
  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductTable);

@@ -1,6 +1,7 @@
-import { PIN_ITEM, UNPIN_ITEM, UNPIN_ITEM_FROM_BOARD, UNPIN_ITEM_FROM_PINS, FETCH_PIN_LIST, receivePinList } from '../actions/pin_actions';
+import { PIN_ITEM, UNPIN_ITEM, UNPIN_ITEM_FROM_TABLE, UNPIN_ITEM_FROM_PINS, FETCH_PIN_LIST, receivePinList } from '../actions/pin_actions';
 import { pinItemAJAX, unpinItemAJAX, unpinItemFromBoardAJAX, unpinItemFromPinsAJAX, fetchPinListAJAX } from '../utils/pin_api_utils';
 import { removeProduct, removeProductFromPins } from '../actions/product_list_actions';
+import { removeMarker } from '../actions/map_actions';
 import { updateTripProductCount } from '../actions/trip_actions';
 import { updatePinCount } from '../actions/profile_actions';
 
@@ -9,6 +10,7 @@ const PinMiddleware = ({getState, dispatch}) => next => action => {
   const removeProductCB = product => {
     dispatch(removeProduct(product));
     dispatch(updateTripProductCount(-1));
+    dispatch(removeMarker(product.id));
   };
   const removePinCB = pin => {
     dispatch(removeProductFromPins(pin));
@@ -22,7 +24,7 @@ const PinMiddleware = ({getState, dispatch}) => next => action => {
     case UNPIN_ITEM:
       unpinItemAJAX(action.tripId, action.productId, successCB, errorCB);
       return next(action);
-    case UNPIN_ITEM_FROM_BOARD:
+    case UNPIN_ITEM_FROM_TABLE:
       unpinItemFromBoardAJAX(action.tripId, action.productId, removeProductCB, errorCB);
       return next(action);
     case UNPIN_ITEM_FROM_PINS:

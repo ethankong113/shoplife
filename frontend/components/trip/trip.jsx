@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { withRouter } from 'react-router';
 import ProductBoardContainer from '../product/product_board_container';
 import ProductTableContainer from '../product/product_table_container';
-import Map from '../map/map';
+import MapContainer from '../map/map_container';
 
 class Trip extends React.Component {
 
@@ -57,8 +57,17 @@ class Trip extends React.Component {
     return false;
   }
 
+  renderMap(productCount, tripId) {
+    if (productCount !== 0 ) {
+      return (
+        <MapContainer tripId={tripId}/>
+      );
+    }
+  }
+
    render() {
      const { tripname, username, user_img, img_url, productCount, followerCount } = this.props.trip.trip;
+     const { tripId } = this.props.params;
      return (
        <div className="trip-detail-wrapper">
          <div className="trip-detail">
@@ -92,7 +101,7 @@ class Trip extends React.Component {
          </div>
          <div className="trip-body">
            <ProductTableContainer requestType={"BY_TRIP"} />
-           <Map />
+           { this.renderMap(productCount, tripId) }
          </div>
        </div>
      );

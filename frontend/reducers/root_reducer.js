@@ -12,6 +12,7 @@ import FollowingReducer from './following_reducer';
 import PinReducer from './pin_reducer';
 import SearchReducer from './search_reducer';
 import SideBarReducer from './side_bar_reducer';
+import MapReducer from './map_reducer';
 
 const RootReducer = combineReducers({
   session: SessionReducer,
@@ -26,7 +27,8 @@ const RootReducer = combineReducers({
   followings: FollowingReducer,
   pins: PinReducer,
   search: SearchReducer,
-  sideBar: SideBarReducer
+  sideBar: SideBarReducer,
+  markers: MapReducer
 });
 
 export default RootReducer;

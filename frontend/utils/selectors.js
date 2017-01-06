@@ -97,3 +97,10 @@ export const emptyProductList = (list) => {
   }
   return false;
 };
+
+export const extractMarkers = markers => {
+  if (markers && !_.isEmpty(markers.list)) {
+    return _.values(markers.list);
+  }
+  return [];
+};
