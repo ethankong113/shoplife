@@ -45,4 +45,13 @@ class Api::ProductListsController < ApplicationController
       render json: ["Could not find products."], status: 400
     end
   end
+
+  def markers
+    @products = Trip.find(params[:trip_id]).products
+    if @products.nil? == false
+      render 'api/product_lists/coord'
+    else
+      render json: ["Could not find markers."], status: 400
+    end
+  end
 end

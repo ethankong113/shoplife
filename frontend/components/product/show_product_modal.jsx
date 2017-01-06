@@ -44,7 +44,7 @@ class ShowProductModal extends React.Component {
           </div>
           <div className="show-product-description">{ description }</div>
           { this.renderShopInfo() }
-          { this._togglePinTable(this.props.showPin) }
+          { this.renderTogglePinBtn(this.props.showPin) }
         </div>
       );
     }
@@ -69,7 +69,7 @@ class ShowProductModal extends React.Component {
     router.push(`/shop/${product.shop_id}`);
   }
 
-  _togglePinTable(showPin) {
+  renderTogglePinBtn(showPin) {
     const {currentUser, togglePin} = this.props;
     if (currentUser && !this.isOwner()) {
       if (showPin) {

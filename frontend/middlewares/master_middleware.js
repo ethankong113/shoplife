@@ -10,9 +10,10 @@ import ProductListMiddleware from './product_list_middleware';
 import FollowerMiddleware from './follower_middleware';
 import FollowingMiddleware from './following_middleware';
 import PinMiddleware from './pin_middleware';
+import MapMiddleware from './map_middleware';
 
 export default applyMiddleware(SessionMiddleware, ProfileMiddleware,
   ShopMiddleware, ShopListMiddleware, ProductMiddleware, ProductListMiddleware,
   FollowerMiddleware, FollowingMiddleware, TripMiddleware, TripListMiddleware,
-  PinMiddleware
+  PinMiddleware, MapMiddleware
 );

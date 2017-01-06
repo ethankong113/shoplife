@@ -621,12 +621,12 @@ header {
 .trip-body {
   @include flex-jc(center);
   flex-wrap: wrap-reverse;
-  // background-color: $silvergrey;
   border-top: $lightgrey 1px solid;
   margin: 15px 0px 80px 0px;
 }
 
 .map-frame {
+  display: block;
   width: 560px;
   height: 560px;
   border-radius: 5px;
@@ -646,7 +646,6 @@ header {
       border: 1px solid $lightgrey;
       margin: 15px 0px;
       margin-right: 20px;
-      // border: 2px solid $shoplifered;
       background-color: white;
       width: 600px;
       transition: 0.2s ease;
@@ -673,8 +672,21 @@ header {
           margin-left: 20px;
           font-size: 22px;
         }
-        .product-price {
-          margin-left: 20px;
+        // .product-price {
+        //   margin-left: 20px;
+        // }
+        .product-remove-btn {
+          @include btn-preset(4px, 8px, 14px);
+          @include indigo-btn;
+          visibility: hidden;
+          border-radius: 5px;
+          outline: none;
+          &:hover {
+            @include cyan-btn;
+          }
+          &:active {
+            @include cyan-btn-alt;
+          }
         }
         .check-box {
           margin-left: 20px;
@@ -682,7 +694,13 @@ header {
       }
       &:hover {
         background-color: $pinterestgrey;
+        .product-remove-btn {
+          visibility: visible;
+        }
       }
+    }
+    .selected {
+      background-color: $pinterestgrey;
     }
     &::-webkit-scrollbar {
       height: 580px;
@@ -1357,6 +1375,7 @@ $forms: shop, trip;
 }
 
 .empty-trip {
+  margin-top: 40px;
   text-align: center;
   .empty-trip-text {
     font-size: 24px;
@@ -1377,7 +1396,7 @@ $forms: shop, trip;
   }
   .empty-trip-img {
     border-radius: 15px;
-    width: 40%;
+    width: 60%;
     height: auto;
   }
 }

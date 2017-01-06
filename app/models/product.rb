@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   validates :productname, :shop_id, presence: true
   validate :description_length_limit
-  after_initialize :ensure_product_picture
+  before_save :ensure_product_picture, :ensure_product_price
 
   belongs_to :shop
   has_one :user,
@@ -10,7 +10,7 @@ class Product < ActiveRecord::Base
 
   has_many :pins,
   dependent: :destroy
-  
+
   has_many :trips,
   through: :pins
 
@@ -27,6 +27,10 @@ class Product < ActiveRecord::Base
   end
 
   def ensure_product_picture
-    self.img_url = "http://cdn.techgyd.com/2015/11/cute-robot.jpg" if self.img_url == ""
+    self.img_url = "https://res.cloudinary.com/dmvxkwwde/image/upload/v1483742076/assets/Super-Mario-Question-Mark-Sound-Plush.jpg" if self.img_url == "" || self.img_url.nil?
+  end
+
+  def ensure_product_price
+    self.price ||= 0
   end
 end
