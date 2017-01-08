@@ -12,7 +12,7 @@ class Shop < ActiveRecord::Base
   def auto_fill_coords
     if self.lat.nil? || self.lng.nil?
       self.lat = 37.7811
-      self.lng = 122.4115
+      self.lng = -122.4115
     end
   end
 
