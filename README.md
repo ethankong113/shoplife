@@ -1,47 +1,81 @@
 # ShopLife
 
-[Heroku link] [heroku-link]
+[ShopLife LIVE!] [heroku-link]
 [heroku-link]: https://shoplife.herokuapp.com/
 
-ShopLife is a web application for discovering nearby products and organizing a shopping trip. It is built with Ruby on Rails, React/Redux for the frontend, and a PostgreSQL database.
+ShopLife is a web application for discovering nearby products and organizing them into your shopping trips. The app is built with Ruby on Rails for backend, React/Redux for frontend, and PostgreSQL for database.
+
+Shoppers nowadays love to check out the physical items before they make a purchase decision (either online or at the store), shopLife is all about enhancing that physical screening aspect of your shopping experience.
+
+![image01](docs/pictures/feature01.png)
 
 ## Features & Implementation
 
 ### Discover Products on Feeds Page
 
-Users can search for products on the home page.
+Once you click onto a product you like, the modal will expand and show the detailed information, including the description, image, and the shop that sells it. If you like the product, you can pin it to an existing trip or create a new one before pinning.
 
-![image01](docs/pictures/readme01.png)
+Multiple AJAX requests are fired to complete the modal. First, a request to Product controller to get all the product's detailed information. Second, a request to Trip controller to get all the current user's trips. Third, a request to Pin controller to see which trip has pinned the selected product. In our MODEL, Trip and Product has a many-to-many relationship through Pin.
 
-### Product Show Page
+![image02](docs/pictures/feature02.png)
 
-Users can click on a product and look for its details.
+### Quick Navigation Sidebar
 
-![image02](docs/pictures/readme02.png)
+While users can check their trips in the profile page, they can also quickly navigate into one from the sidebar on the left. This sidebar shows five or fewer recently updated trips.
 
-### Add Product to a Trip
+The sidebar is achieved by some CSS tricks, including "position: fixed", "flex-direction", and "z-index".
 
-If a user likes the product, s/he can add it to a shopping trip.
+![image08](docs/pictures/better_ui04.png)
 
-![image03](docs/pictures/readme03.png)
+### Check Pinned Products in a Trip
+
+At its core, shopLife allows users to discover products sold by physical stores. Because listed products are restricted by geophysical location, the shopping trips will display where to buy the pinned products on a map. Hovering on the map marker will highlight the corresponding product. The map is powered by Google Map API embedded in our Map component.
+
+One of the most challenging parts of shopLife is to update multiple components at once. When a user removes a product from a trip, React dispatches one action to the middleware to delete the selected pin in our database; in turn, the success callback dispatches two actions to update the page: first, it removes the product from the product list and second, it decreases the product count by one.
+
+![image03](docs/pictures/feature03.png)
 
 ### Profile Page
 
-A user can visit his or her profile page or another user's profile page. The profile page would show a statistics of the profile owner's activities on ShopLife.
+A user can visit his/her or another user's profile page. This page shows you a summary of Trips, Pins, Followers, and Followings. The "Following" section is further broken into the users, trips, and shops that the profile owner is following.
 
-![image04](docs/pictures/readme04.png)
+Many-to-many relationships also exist between different users and users and shops. React router is used in this page for routing.
 
-### Create a Shop and See the List of Shops
+![image04](docs/pictures/feature04.png)
 
-If a user wants to sell something, it is possible to open a new shop on ShopLife. A user can also view another user's list of shops.
+## Interesting User Experience
 
-![image05](docs/pictures/readme05.png)
+### Loading Picture as Placeholder
 
-### Create a Trip and See the List of Trips
+When a picture is still loading, shopLife displays an animated shopping cart as a placeholder. All of the product pictures are loaded from Cloudinary's CDN. Also, the product frames will adjust their positions into a masonry style when all the pictures are loaded and their positionY and height are calculated.
 
-If a user wants to create a new trip, s/he can do it in the profile page. S/he can also see a list of his or her own trips or someone else's trips.
+![image05](docs/pictures/better_ui01.png)
 
-![image06](docs/pictures/readme06.png)
+### Empty Search Result
+
+If a query does not return any search results, shopLife will return a "no result" message and show you a sad face.
+
+![image06](docs/pictures/better_ui02.png)
+
+### Empty Shopping Trip
+
+If a user clicks into an empty shopping trip, shopLife will show a "Shop Now" button for quick navigation back to home page, instead of rendering an empty list or blank page.
+
+![image07](docs/pictures/better_ui03.png)
+
+## Error Handling
+
+### Front-end Authentication
+
+If the user has not entered a username or password is too short, the login modal will display the error messages and block users from logging in or signing up. This front-end authentication feature will reduce the traffic load on the server.
+
+![image07](docs/pictures/error_handle01.png)
+
+### Login Failure
+
+If we could not find the user in our database or there are some other errors not screened by front-end auth, the login modal will display the error message at the top. These are errors that will go through our server and get verified by our MODEL.
+
+![image08](docs/pictures/error_handle02.png)
 
 ## Future Directions for the Project
 
@@ -53,4 +87,4 @@ Users are only allowed to search products by their names right now. It's better 
 
 ### Map
 
-Users should be able to discover the stores and products by location. They should be able to map a trip on Google Map.  
+Users can add a product from Tokyo and a product from San Francisco into the same trip. This might confuse users as the products are not organized into a "real" and "physical" shopping trip. We can warn the users when they add a product that is too far away from other products in that list.
